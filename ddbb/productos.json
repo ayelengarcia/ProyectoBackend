@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "Pañales",
+    "description": "Pampers",
+    "price": 90,
+    "thumbnail": "#",
+    "stock": 80,
+    "code": "PROD1"
+  },
+  {
+    "id": 2,
+    "title": "Pañales2",
+    "description": "Pampers",
+    "price": 90,
+    "thumbnail": "#",
+    "stock": 80,
+    "code": "PROD2"
+  },
+  {
+    "id": 3,
+    "title": "Pañales3",
+    "description": "Pampers",
+    "price": 90,
+    "thumbnail": "#",
+    "stock": 80,
+    "code": "PROD3"
+  },
+  {
+    "id": 4,
+    "title": "Pañales4",
+    "description": "Pampers",
+    "price": 90,
+    "thumbnail": "#",
+    "stock": 80,
+    "code": "PROD4"
+  },
+  {
+    "id": 5,
+    "title": "Pañales5",
+    "description": "Pampers",
+    "price": 90,
+    "thumbnail": "#",
+    "stock": 80,
+    "code": "PROD5"
+  },
+  {
+    "id": 6,
+    "title": "Pañales---",
+    "description": "Pampers",
+    "price": 90,
+    "thumbnail": "#",
+    "stock": 80,
+    "code": "PROD6"
+  }
+]

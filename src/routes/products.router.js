@@ -1,11 +1,11 @@
 import { Router } from "express";
-import ProductManager from "../ProductManager.js";
+import ProductManager from "../Manager/ProductManager.js";
 
 const router = Router();
 
-const producto = new ProductManager("db.json");
+const producto = new ProductManager("ddbb/productos.json");
 
-//query
+//query - Mostrar todos los productos
 router.get("/products", async (req, res) => {
   const limit = parseInt(req.query.limit);
 
@@ -25,7 +25,7 @@ router.get("/products", async (req, res) => {
 });
 // http://127.0.0.1:8080/api/products o // http://127.0.0.1:8080/api/products?limit=5
 
-//params
+//params - Mostrar producto por ID
 router.get("/products/:pid", async (req, res) => {
   let id = parseInt(req.params.pid);
 
@@ -40,7 +40,8 @@ router.get("/products/:pid", async (req, res) => {
 });
 // http://127.0.0.1:8080/api/products/2
 
-router.post("/", async (req, res) => {
+//Agregar producto (body)
+router.post("/products", async (req, res) => {
   const { title, description, price, thumbnail } = req.body;
 
   try {
@@ -51,6 +52,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+//Actualizar producto
 router.put("/products/:pid", async (req, res) => {
   const id = parseInt(req.params.pid);
   const { title, description, price, thumbnail } = req.body;
@@ -68,6 +70,8 @@ router.put("/products/:pid", async (req, res) => {
   }
 });
 
+
+//Eliminar Producto
 router.delete("/products/:pid", async (req, res) => {
   const id = parseInt(req.params.pid);
 
