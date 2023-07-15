@@ -70,7 +70,6 @@ router.put("/products/:pid", async (req, res) => {
   }
 });
 
-
 //Eliminar Producto
 router.delete("/products/:pid", async (req, res) => {
   const id = parseInt(req.params.pid);

@@ -64,42 +64,5 @@
       }
     ],
     "code": "CART5"
-  },
-  { "id": 5, "products": [], "code": "CART5" },
-  {
-    "id": 6,
-    "products": [
-      {
-        "product": {
-          "id": 6,
-          "title": "Pañales---",
-          "description": "Pampers",
-          "price": 90,
-          "thumbnail": "#",
-          "stock": 80,
-          "code": "PROD6"
-        },
-        "quantity": 1
-      }
-    ],
-    "code": "CART6"
-  },
-  {
-    "id": 7,
-    "products": [
-      {
-        "product": {
-          "id": 5,
-          "title": "Pañales5",
-          "description": "Pampers",
-          "price": 90,
-          "thumbnail": "#",
-          "stock": 80,
-          "code": "PROD5"
-        },
-        "quantity": 1
-      }
-    ],
-    "code": "CART7"
   }
 ]

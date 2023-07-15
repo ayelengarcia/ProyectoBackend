@@ -1,0 +1,34 @@
+<li><a href="/">Inicio</a></li>
+<h2>Todos los productos</h2>
+
+<a href="/form-products">Crear productos</a>
+<hr />
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Título</th>
+    <th>Descripción</th>
+    <th>Precio</th>
+    <th>Imagen</th>
+    <th>Stock</th>
+    <th>Código</th>
+  </tr>
+  {{#each products}}
+    <tr>
+      <td>{{this.id}}</td>
+      <td>{{this.title}}</td>
+      <td>{{this.description}}</td>
+      <td>{{this.price}}</td>
+      <td>{{this.thumbnail}}</td>
+      <td>{{this.stock}}</td>
+      <td>{{this.code}}</td>
+    </tr>
+  {{/each}}
+</table>
+
+<style>
+  table { width: 100%; border-collapse: collapse; } th, td { padding: 8px;
+  text-align: left; border-bottom: 1px solid #ddd; } th { background-color:
+  #f2f2f2; }
+</style>

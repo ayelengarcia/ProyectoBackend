@@ -1,0 +1,84 @@
+<style>
+  table { width: 100%; border-collapse: collapse; } th, td { padding: 8px;
+  text-align: left; border-bottom: 1px solid #ddd; } th { background-color:
+  #f2f2f2; }
+</style>
+
+<li><a href="/">Inicio</a></li>
+<h2>Products Real Time</h2>
+
+<form id="form">
+  <i>Título:</i>
+  <input type="text" name="title" />
+  <br />
+  <i>Descripción:</i>
+  <input type="text" name="description" />
+  <br />
+  <i>Precio:</i>
+  <input type="number" name="price" />
+  <br />
+  <i>Imagen</i>
+  <input type="text" name="thumbnail" />
+
+  <button type="submit">Enviar</button>
+</form>
+
+<hr />
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Título</th>
+      <th>Descripción</th>
+      <th>Precio</th>
+      <th>Imagen</th>
+      <th>Stock</th>
+      <th>Código</th>
+    </tr>
+  </thead>
+  <tbody id="table-list">
+    {{#each products}}
+      <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.title}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.price}}</td>
+        <td>{{this.thumbnail}}</td>
+        <td>{{this.stock}}</td>
+        <td>{{this.code}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+  const socket = io(); const tableList = document.getElementById("table-list");
+  // Función para actualizar la tabla de productos function
+  updateTable(products) { tableList.innerHTML = ""; products.forEach((product)
+  => { const row = document.createElement("tr"); const idCell =
+  document.createElement("td"); idCell.textContent = product.id;
+  row.appendChild(idCell); const titleCell = document.createElement("td");
+  titleCell.textContent = product.title; row.appendChild(titleCell); const
+  descriptionCell = document.createElement("td"); descriptionCell.textContent =
+  product.description; row.appendChild(descriptionCell); const priceCell =
+  document.createElement("td"); priceCell.textContent = product.price;
+  row.appendChild(priceCell); const thumbnailCell =
+  document.createElement("td"); thumbnailCell.textContent = product.thumbnail;
+  row.appendChild(thumbnailCell); const stockCell =
+  document.createElement("td"); stockCell.textContent = product.stock;
+  row.appendChild(stockCell); const codeCell = document.createElement("td");
+  codeCell.textContent = product.code; row.appendChild(codeCell);
+  tableList.appendChild(row); }); } // Escuchar el evento "update-products" y
+  llamar a la función de actualización socket.on("update-products", (products)
+  => { updateTable(products); }); document.getElementById("form").onsubmit = (e)
+  => { e.preventDefault(); const title =
+  document.querySelector("input[name=title]").value; const description =
+  document.querySelector("input[name=description]").value; const price =
+  document.querySelector("input[name=price]").value; const thumbnail =
+  document.querySelector("input[name=thumbnail]").value; const product = {
+  title, description, price, thumbnail }; socket.emit("new-product", product);
+  };
+</script>
