@@ -1,9 +1,7 @@
 import { Router } from "express";
-import ProductManager from "../Manager/ProductManager.js";
+import ProductModel from "../Dao/mongoManager/models/productModel.js";
 
 const router = Router();
-
-const producto = new ProductManager("ddbb/productos.json");
 
 //query - Mostrar todos los productos
 router.get("/products", async (req, res) => {
@@ -11,7 +9,7 @@ router.get("/products", async (req, res) => {
 
   if (limit) {
     try {
-      const products = await producto.getProducts();
+      const products = await ProductModel.find();
       const limitedProducts = products.slice(0, limit); // Agregar límite acá
 
       return res.status(200).json(limitedProducts);
@@ -19,18 +17,32 @@ router.get("/products", async (req, res) => {
       return res.status(404).json({ error: "Error al obtener los productos" });
     }
   } else {
-    const products = await producto.getProducts();
+    const products = await ProductModel.find();
     return res.status(200).json(products);
   }
 });
 // http://127.0.0.1:8080/api/products o // http://127.0.0.1:8080/api/products?limit=5
 
-//params - Mostrar producto por ID
-router.get("/products/:pid", async (req, res) => {
-  let id = parseInt(req.params.pid);
+//Agregar producto (body)
+router.post("/products", async (req, res) => {
+  const data = req.body;
 
   try {
-    const productoId = await producto.getProductById(id);
+    const result = await ProductModel.create(data);
+    return res
+      .status(201)
+      .json({ message: "Producto agregado exitosamente", result });
+  } catch (error) {
+    return res.status(500).json({ error: "Error al agregar el producto" });
+  }
+});
+
+//params - Mostrar producto por ID
+router.get("/products/:pid", async (req, res) => {
+  let id = req.params.pid;
+
+  try {
+    const productoId = await ProductModel.findById(id);
     id = productoId;
 
     return res.status(200).json(id);
@@ -40,42 +52,49 @@ router.get("/products/:pid", async (req, res) => {
 });
 // http://127.0.0.1:8080/api/products/2
 
-//Agregar producto (body)
-router.post("/products", async (req, res) => {
-  const { title, description, price, thumbnail } = req.body;
-
-  try {
-    await producto.addProduct(title, description, price, thumbnail);
-    return res.status(201).json({ message: "Producto agregado exitosamente" });
-  } catch (error) {
-    return res.status(500).json({ error: "Error al agregar el producto" });
-  }
-});
-
-//Actualizar producto
+// Actualizar producto
 router.put("/products/:pid", async (req, res) => {
-  const id = parseInt(req.params.pid);
-  const { title, description, price, thumbnail } = req.body;
+  const productId = req.params.pid;
+  const { title, description, price, thumbnail, stock, code } = req.body;
 
   try {
-    const updatedProduct = await producto.updateProduct(id, {
-      title,
-      description,
-      price,
-      thumbnail,
-    });
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      productId,
+      {
+        $set: {
+          title,
+          description,
+          price,
+          thumbnail,
+          stock,
+          code,
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ error: "Producto no encontrado." });
+    }
+
     return res.status(200).json(updatedProduct);
   } catch (error) {
     return res.status(500).json({ error: "Error al actualizar el producto" });
   }
 });
 
+
 //Eliminar Producto
 router.delete("/products/:pid", async (req, res) => {
-  const id = parseInt(req.params.pid);
+  const productId = req.params.pid;
 
   try {
-    await producto.deleteProduct(id);
+    const deletedProduct = await ProductModel.findByIdAndDelete(productId);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ error: "Producto no encontrado." });
+    }
+
     return res.status(200).json({ message: "Producto eliminado exitosamente" });
   } catch (error) {
     return res.status(500).json({ error: "Error al eliminar el producto" });

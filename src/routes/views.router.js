@@ -1,7 +1,7 @@
 //solo contendra renderizaciones
 
 import { Router } from "express";
-import ProductManager from "../Manager/ProductManager.js";
+import ProductManager from "../Dao/fileManager/ProductManager.js";
 
 const producto = new ProductManager("ddbb/productos.json");
 const router = Router();

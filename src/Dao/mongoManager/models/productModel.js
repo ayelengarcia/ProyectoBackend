@@ -6,11 +6,11 @@ const productsSchema = new mongoose.Schema({
   title: String,
   thumbnail: String,
   description: String,
-  code: String,
   stock: Number,
   price: Number,
+  code: String,
 });
 
-const productModel = mongoose.model(productsCollections, productsSchema);
+const ProductModel = mongoose.model(productsCollections, productsSchema);
 
-export default productModel;
+export default ProductModel;
