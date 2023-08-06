@@ -24,28 +24,22 @@ router.post("/carts/:cid/:pid", async (req, res) => {
 
   try {
     const cart = await CartModel.findById(cid);
-    const productos = await productModel.findById(pid);
+    const existingProduct = cart.products.find((product) => product.id === pid);
 
-    cart.products.push({ products: { id: pid, quantity: quantity } });
-    await cart.save();
-
-    if (productos) {
-      const existProduct = cart.products.find((item) => item.pid === pid);
-
-      if (existProduct) {
-        existProduct.quantity += quantity;
-        await cart.save();
-      } else {
-        cart.products.push({ pid, quantity });
-        await cart.save();
-      }
-      res.send({ message: "producto agregado" });
+    if (existingProduct) {
+      existingProduct.quantity += quantity;
+    } else {
+      cart.products.push({ id: pid, quantity });
     }
+
+    await cart.save();
+    res.send({ message: "Producto agregado al carrito" });
   } catch (e) {
     console.error("Error al agregar el producto:", e);
     res.status(500).send({ error: "Error al agregar el producto" });
   }
 });
+
 
 //Mostrar todos los carritos
 router.get("/carts", async (req, res) => {
