@@ -50,14 +50,22 @@ router.post("/form-products", async (req, res) => {
 //PAGINATE
 router.get("/products/paginate", async (req, res) => {
   const page = parseInt(req.query?.page || 1);
+  const limit = parseInt(req.query?.limit ||2)
 
   const products = await ProductModel.paginate(
     {},
-    { limit: 2, page, lean: true }
+    { limit, page, lean: true }
   );
+
+  products.prevLink = products.hasPrevPage
+    ? `/products/paginate/?page=${products.prevPage}&limit=${limit}`
+    : "";
+  products.nextLink = products.hasNextPage
+    ? `/products/paginate/?page=${products.nextPage}&limit=${limit}`
+    : "";
 
   return res.render("paginate", products);
 });
-//http://127.0.0.1:8080/products/paginate?page=1
+//http://127.0.0.1:8080/products/paginate?page=1&limit=5
 
 export default router;

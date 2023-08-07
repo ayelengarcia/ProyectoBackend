@@ -17,6 +17,16 @@
 
 </div>
 
+<div class="container">
+ {{#if hasPrevPage}}
+  <a href="{{prevLink}}">Anterior</a>
+ {{/if}}
+
+ {{#if hasNextPage}}
+  <a href="{{nextLink}}">Siguiente</a>
+ {{/if}}
+</div>
+
 
 <style>
   h2{
