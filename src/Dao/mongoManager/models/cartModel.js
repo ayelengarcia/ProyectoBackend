@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const cartCollection = "cart";
 
@@ -11,6 +11,10 @@ const cartSchema = new mongoose.Schema({
       },
     ],
   },
+});
+
+cartSchema.pre("findOne", function () {
+  this.populate("products.pid");
 });
 
 const cartModel = mongoose.model(cartCollection, cartSchema);

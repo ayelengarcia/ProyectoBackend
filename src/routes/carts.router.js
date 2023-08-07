@@ -78,7 +78,7 @@ router.get("/carts/:cid", async (req, res) => {
   const cid = req.params.cid;
 
   try {
-    const cart = await CartModel.findOne({ _id: cid }).populate("products.pid");
+    const cart = await CartModel.findOne({ _id: cid });
 
     if (cart) {
       return res.status(200).json(cart);
