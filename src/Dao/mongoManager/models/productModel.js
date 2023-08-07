@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const productsCollections = "products";
+const productsCollections = "product";
 
 const productsSchema = new mongoose.Schema({
   title: String,
