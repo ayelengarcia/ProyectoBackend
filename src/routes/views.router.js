@@ -1,7 +1,7 @@
 //solo contendra renderizaciones
-
 import { Router } from "express";
 import ProductManager from "../Dao/fileManager/ProductManager.js";
+import ProductModel from "../Dao/mongoManager/models/productModel.js";
 
 const producto = new ProductManager("ddbb/productos.json");
 const router = Router();
@@ -45,6 +45,16 @@ router.post("/form-products", async (req, res) => {
   io.emit("new-product", { title, description, price, thumbnail });
 
   res.redirect("/products-realtime");
+});
+
+//PAGINATE
+router.get("/products/paginate", async (req, res) => {
+  const products = await ProductModel.paginate(
+    {},
+    { limit: 2, page: 1, lean: true }
+  );
+
+  return res.render("paginate", products);
 });
 
 export default router;

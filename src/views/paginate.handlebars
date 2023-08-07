@@ -1,0 +1,74 @@
+<h2>Products Paginate</h2>
+
+<div class="container">
+{{#each docs}}
+  <div class="tarjeta">
+    <div class="titulo">{{this.title}}</div>
+    <div class="cuerpo">
+      <img src="{{this.thumbnail}}" alt="muestra" />
+      <br>
+      <span class="description">Descripción: {{this.description}}</span>
+    </div>
+    <div class="pie">
+      <a href="#">${{this.price}}</a>
+    </div>
+  </div>
+{{/each}}
+
+</div>
+
+
+<style>
+  h2{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+
+.container{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+  
+.tarjeta{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  width:420px;
+  border: 1px solid lightgray;
+  box-shadow: 2px 2px 8px 4px #d3d3d3d1;
+  border-radius:15px;
+  font-family: sans-serif;
+}
+
+.titulo{
+  font-size: 24px;
+  padding: 10px 10px 0 10px;;
+  color: rgb(15, 15, 15);
+}
+
+.cuerpo{
+  padding: 10px;
+  color: black;
+}
+
+img{
+  padding: 20px;
+  padding-left: 0px;
+}
+
+.pie{
+  background: #6699ff;
+  border-radius:0 0 15px 15px;
+  padding: 10px;
+  text-align:center;
+}
+
+.pie a{
+  text-decoration: none;
+  color: white;
+}
+
+</style>

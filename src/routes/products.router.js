@@ -3,23 +3,6 @@ import ProductModel from "../Dao/mongoManager/models/productModel.js";
 
 const router = Router();
 
-//PAGINATE
-router.get("/products/paginate", async (req, res) => {
-  const searchTerm = req.query.title || "";
-
-  try {
-    const products = await ProductModel.paginate(
-      { title: { $regex: searchTerm, $options: "i" } },
-      { limit: 2, page: 1 }
-    );
-
-    return res.status(200).json(products);
-  } catch (error) {
-    console.error("Error al obtener los productos:", error);
-    return res.status(500).json({ error: "Error al obtener los productos" });
-  }
-});
-
 //query - Mostrar todos los productos
 router.get("/products", async (req, res) => {
   const limit = parseInt(req.query.limit);
