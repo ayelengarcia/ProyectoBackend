@@ -12,6 +12,7 @@ const producto = new ProductManager("ddbb/productos.json");
 
 const app = express();
 
+app.use("/static", express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -33,6 +34,7 @@ mongoose
     console.log("DB connectada");
     const httpServer = app.listen("8080", () => console.log("Listening..."));
     const io = new Server(httpServer);
+    let messages = [];
 
     io.on("connection", (socket) => {
       socket.on("new-product", async (data) => {
@@ -46,6 +48,13 @@ mongoose
 
         const products = await producto.getProducts();
         io.emit("update-products", products);
+      });
+
+      socket.on("new", (user) => console.log(`${user} se acaba de conectar`));
+
+      socket.on("message", (data) => {
+        messages.push(data);
+        io.emit("logs", messages);
       });
     });
   })

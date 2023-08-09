@@ -68,4 +68,8 @@ router.get("/products/paginate", async (req, res) => {
 });
 //http://127.0.0.1:8080/products/paginate?page=1&limit=5
 
+router.get("/messages", (req, res) => {
+  res.render("messages", {});
+});
+
 export default router;

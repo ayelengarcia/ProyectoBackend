@@ -2,18 +2,20 @@
 <h2>Todos los productos</h2>
 
 <a href="/form-products">Crear productos</a>
-<hr />
 
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Título</th>
-    <th>Descripción</th>
-    <th>Precio</th>
-    <th>Imagen</th>
-    <th>Stock</th>
-    <th>Código</th>
-  </tr>
+<table class="tabla">
+  <thead>
+    <tr class="columna">
+      <th>ID</th>
+      <th>Título</th>
+      <th>Descripción</th>
+      <th>Precio</th>
+      <th>Imagen</th>
+      <th>Stock</th>
+      <th>Código</th>
+    </tr>
+  </thead>
+
   {{#each products}}
     <tr>
       <td>{{this.id}}</td>
@@ -26,9 +28,3 @@
     </tr>
   {{/each}}
 </table>
-
-<style>
-  table { width: 100%; border-collapse: collapse; } th, td { padding: 8px;
-  text-align: left; border-bottom: 1px solid #ddd; } th { background-color:
-  #f2f2f2; }
-</style>

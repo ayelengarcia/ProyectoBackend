@@ -1,0 +1,143 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  font-family: "Belanosima", sans-serif;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #1f1722;
+  color: #f9f9f9;
+  padding: 15px;
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.columna {
+  color: #1f1722;
+}
+
+.tabla {
+  margin-top: 10px;
+  background-color: #9c59b6a2;
+}
+
+hr {
+  margin-top: 20px;
+}
+
+thead {
+  background-color: #f9f9f9;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.container-chat {
+  padding: 20px;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 420px;
+  border: 1px solid lightgray;
+  box-shadow: 2px 2px 8px 4px #d3d3d3d1;
+  border-radius: 15px;
+  font-family: sans-serif;
+}
+
+.titulo {
+  font-size: 24px;
+  padding: 10px 10px 0 10px;
+}
+
+.cuerpo {
+  padding: 10px;
+}
+
+img {
+  padding: 20px;
+  padding-left: 0px;
+}
+
+.pie {
+  background: #6699ff;
+  border-radius: 0 0 15px 15px;
+  padding: 10px;
+  text-align: center;
+}
+
+a {
+  color: #ce87ec;
+  padding: 8px;
+}
+
+.pie a {
+  text-decoration: none;
+  color: white;
+}
+
+h1 {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f9f9f9;
+}
+
+.bruju {
+  margin: 8px 8px 0px 8px;
+  color: #ce87ec;
+}
+
+.dialogo {
+  display: flex;
+  justify-content: start;
+  color: #f9f9f9;
+  width: 80vw;
+  padding: 20px;
+}
+
+#username {
+  color: white;
+  margin-right: 10px;
+  width: 30%;
+}
+
+#chatbox {
+  color: #1f1722;
+  border: 2px solid rgb(167, 167, 167);
+  border-radius: 3px;
+  width: 70%;
+  padding: 3px;
+  outline: none;
+}
+
+#chatbox:focus {
+  border: 2px solid #ce87ec;
+}
+
+#logs {
+  margin-top: 20px;
+  background-color: #9c59b6a2;
+  color: #ce87ec;
+  border: 2px solid rgba(167, 167, 167, 0.795);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.nickname {
+  color: #f9f9f9;
+  margin-right: 10px;
+}
