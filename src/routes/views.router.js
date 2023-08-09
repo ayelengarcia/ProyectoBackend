@@ -47,28 +47,72 @@ router.post("/form-products", async (req, res) => {
   res.redirect("/products-realtime");
 });
 
-//PAGINATE
+// PAGINATE
 router.get("/products/paginate", async (req, res) => {
   const page = parseInt(req.query?.page || 1);
-  const limit = parseInt(req.query?.limit ||2)
+  const limit = parseInt(req.query?.limit || 3);
 
-  const products = await ProductModel.paginate(
-    {},
-    { limit, page, lean: true }
-  );
+  const queryParams = req.query?.query || "";
+  const query = {};
 
-  products.prevLink = products.hasPrevPage
-    ? `/products/paginate/?page=${products.prevPage}&limit=${limit}`
-    : "";
-  products.nextLink = products.hasNextPage
-    ? `/products/paginate/?page=${products.nextPage}&limit=${limit}`
-    : "";
+  if (queryParams) {
+    const [field, value] = queryParams.split(",");
+    if (!isNaN(parseInt(value))) {
+      query[field] = value;
+    }
+  }
 
-  return res.render("paginate", products);
+  const sortField = req.query?.sortField || "createdAt";
+  const sortOrder = req.query?.sortOrder === "desc" ? -1 : 1;
+
+  try {
+    const products = await ProductModel.paginate(query, {
+      limit,
+      page,
+      lean: true,
+      sort: { [sortField]: sortOrder },
+    });
+
+    products.prevLink = products.hasPrevPage
+      ? `/products/paginate/?page=${products.prevPage}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}`
+      : "";
+    products.nextLink = products.hasNextPage
+      ? `/products/paginate/?page=${products.nextPage}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}`
+      : "";
+
+    return res.render("paginate", products);
+  } catch (error) {
+    return res.status(500).send("Error al enviar products.");
+  }
 });
-//http://127.0.0.1:8080/products/paginate?page=1&limit=5
 
-router.get("/messages", (req, res) => {
+//127.0.0.1:8080/products/paginate/?page=&limit=7&sortField=price&sortOrder=desc
+
+//Para enviar rta:
+
+// const totalPages = Math.ceil(products.totalCount / limit);
+// const hasPrevPage = page > 1;
+// const hasNextPage = page < totalPages;
+
+// const response = {
+//   status: "success",
+//   payload: products,
+//   totalPages,
+//   prevPage: hasPrevPage ? page - 1 : null,
+//   nextPage: hasNextPage ? page + 1 : null,
+//   page,
+//   hasPrevPage,
+//   hasNextPage,
+//   prevLink: hasPrevPage
+//     ? `/products/paginate/?page=${products.prevPage}&limit=${limit}`
+//     : "",
+//   nextLink: hasNextPage
+//     ? `/products/paginate/?page=${products.nextPage}&limit=${limit}`
+//     : "",
+// };
+// res.status(200).json(response);
+
+http: router.get("/messages", (req, res) => {
   res.render("messages", {});
 });
 

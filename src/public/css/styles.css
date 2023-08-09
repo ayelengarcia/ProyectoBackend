@@ -40,6 +40,7 @@ thead {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .container-chat {
@@ -55,6 +56,7 @@ thead {
   box-shadow: 2px 2px 8px 4px #d3d3d3d1;
   border-radius: 15px;
   font-family: sans-serif;
+  margin: 5px;
 }
 
 .titulo {
@@ -140,4 +142,27 @@ h1 {
 .nickname {
   color: #f9f9f9;
   margin-right: 10px;
+}
+
+#form-paginate {
+  background-color: #9c59b6a2;
+  display: flex;
+  justify-content: space-around;
+  padding: 1% 15%;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.btn {
+  padding: 3px 20px;
+  background-color: #1f1722;
+  color: #f9f9f9;
+  border-radius: 3px;
+  border: none;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: #3b2b41;
+  transition: 0.5s;
 }

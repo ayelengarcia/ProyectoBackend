@@ -1,5 +1,15 @@
 <h2>Products Paginate</h2>
 
+<form id="form-paginate">
+   |<label for="page">Página:</label>
+    <input id="page" type="number">
+
+    <label for="limit">Limite:</label>
+    <input id="limit" type="number">
+
+  <button class="btn" type="submit">Ir</button>|
+</form>
+
 <div class="container">
 {{#each docs}}
   <div class="tarjeta">
@@ -26,3 +36,6 @@
   <a href="{{nextLink}}">Siguiente</a>
  {{/if}}
 </div>
+
+<script src="/static/js/paginate.js" ></script>
+
