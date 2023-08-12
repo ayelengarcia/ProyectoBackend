@@ -1,0 +1,36 @@
+<h2>Registrarme</h2>
+
+<form class="displayColumn" action="/api/sessions/register" method="post">
+
+  <label for="first_name">Nombre:</label>
+  <input
+    id="first_name"
+    type="text"
+    name="first_name"
+    placeholder="Tu nombre"
+  />
+
+  <label for="last_name">Apellido</label>
+  <input
+    id="last_name"
+    type="text"
+    name="last_name"
+    placeholder="Tu apellido"
+  />
+
+  <label for="age">Edad</label>
+  <input id="age" type="number" name="age" placeholder="Tu edad" />
+
+  <label for="email-R">Email</label>
+  <input id="email-R" type="text" name="email" placeholder="Tu email" />
+
+  <label for="pass-R">Contraseña</label>
+  <input
+    id="pass-R"
+    type="password"
+    name="password"
+    placeholder="Tu contraseña"
+  />
+
+  <button type="submit">Enviar</button>
+</form>

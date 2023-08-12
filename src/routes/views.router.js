@@ -11,6 +11,34 @@ router.get("/", (req, res) => {
   res.render("index", {});
 });
 
+//Iniciar sesión
+router.get("/login", (req, res) => {
+  if (req.session?.user) return res.redirect("/profile");
+
+  res.render("login", {});
+});
+
+//Registro
+router.get("/register", (req, res) => {
+  if (req.session?.user) return res.redirect("/profile");
+
+  res.render("register", {});
+});
+
+//midleware para autenticacion
+const autenticacion = (req, res, next) => {
+  if (req.session?.user) return next();
+
+  return res.status(401).redirect("/login");
+};
+
+//Perfil
+router.get("/profile", autenticacion, (req, res) => {
+  const user = req.session.user;
+
+  res.render("profile", user);
+});
+
 //Todos los productos
 router.get("/products", async (req, res) => {
   const products = await producto.getProducts();
@@ -85,7 +113,6 @@ router.get("/products/paginate", async (req, res) => {
     return res.status(500).send("Error al enviar products.");
   }
 });
-
 //127.0.0.1:8080/products/paginate/?page=&limit=7&sortField=price&sortOrder=desc
 
 //Para enviar rta:
@@ -112,8 +139,32 @@ router.get("/products/paginate", async (req, res) => {
 // };
 // res.status(200).json(response);
 
-http: router.get("/messages", (req, res) => {
+//Chat socket io
+router.get("/messages", (req, res) => {
   res.render("messages", {});
 });
+
+//Setear cookie
+// router.get("/cookieSet", (req, res) => {
+//   res
+//     .cookie("cookieApp", "Probando cookie", { maxAge: 3000 }) //maxAge (tiempo de vida de la cookie)
+//     .cookie("cookieForever", "Cookie por siempreee")
+//     .cookie("cookieSigned", "El valor de la cookie", { signed: true }) //cookie cifrada para q no de edite la info
+//     .send("Cookie seteada");
+// });
+
+//Obtener cookie
+// router.get("/cookieGet", (req, res) => {
+//   const cookie = req.cookies;
+//   const cookieSigned = req.signedCookies;
+
+//   console.log(cookie, cookieSigned); //cookieSigned descifrar cookie
+//   res.send("Se han leido las cookies");
+// });
+
+//Eliminar cookie
+// router.get("/cookieDelete", (req, res) => {
+//   res.clearCookie("cookieForever").send("Cookie borrada");
+// });
 
 export default router;

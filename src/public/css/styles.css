@@ -29,7 +29,7 @@ h2 {
 }
 
 hr {
-  margin-top: 20px;
+  margin: 20px 0px;
 }
 
 thead {
@@ -78,6 +78,11 @@ img {
   border-radius: 0 0 15px 15px;
   padding: 10px;
   text-align: center;
+}
+
+li {
+  list-style: none;
+  padding: 0 15px;
 }
 
 a {
@@ -165,4 +170,17 @@ h1 {
   cursor: pointer;
   background-color: #3b2b41;
   transition: 0.5s;
+}
+
+.displayColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.displayRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
