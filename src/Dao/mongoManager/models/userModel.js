@@ -8,6 +8,7 @@ const UserModel = mongoose.model(
     email: String,
     age: Number,
     password: String,
+    roles: { type: String, default: "Usuario" },
   })
 );
 

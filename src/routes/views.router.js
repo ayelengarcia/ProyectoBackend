@@ -39,40 +39,26 @@ router.get("/profile", autenticacion, (req, res) => {
   res.render("profile", user);
 });
 
-//Todos los productos
+//midleware para Admins
+const checkAdmin = (req, res, next) => {
+  if (req.session?.user && req.session.user.roles === "Admin") {
+    return next();
+  }
+  return res.status(401).redirect("/login");
+};
+
+//Perfil admin
+router.get("/admin", checkAdmin, (req, res) => {
+  const user = req.session.user;
+
+  res.render("admin", user);
+});
+
+// Productos Real-times
 router.get("/products", async (req, res) => {
   const products = await producto.getProducts();
 
   res.render("products", { products });
-});
-
-//Form crear productos
-router.get("/form-products", async (req, res) => {
-  res.render("form", {});
-});
-
-router.post("/form-products", async (req, res) => {
-  const { title, description, price, thumbnail } = req.body;
-
-  await producto.addProduct(title, description, price, thumbnail);
-  res.redirect("/products");
-});
-
-// Real times products
-router.get("/products-realtime", async (req, res) => {
-  const products = await producto.getProducts();
-
-  res.render("products-realtime", { products });
-});
-
-router.post("/form-products", async (req, res) => {
-  const { title, description, price, thumbnail } = req.body;
-
-  await producto.addProduct(title, description, price, thumbnail);
-
-  io.emit("new-product", { title, description, price, thumbnail });
-
-  res.redirect("/products-realtime");
 });
 
 // PAGINATE

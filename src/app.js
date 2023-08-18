@@ -80,12 +80,13 @@ mongoose
         io.emit("update-products", products);
       });
 
-      socket.on("new", (user) => console.log(`${user} se acaba de conectar`));
+      socket.on("new", (user) => console.log(`${user} se acaba de conectar al chat`));
 
       socket.on("message", (data) => {
         messages.push(data);
         io.emit("logs", messages);
       });
+      
     });
   })
   .catch((e) => {

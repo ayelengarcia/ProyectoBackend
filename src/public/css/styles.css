@@ -160,7 +160,7 @@ h1 {
 
 .btn {
   padding: 3px 20px;
-  background-color: #1f1722;
+  background-color: #48384e;
   color: #f9f9f9;
   border-radius: 3px;
   border: none;
@@ -168,7 +168,22 @@ h1 {
 
 .btn:hover {
   cursor: pointer;
-  background-color: #3b2b41;
+  background-color: #694f72;
+  transition: 0.5s;
+}
+
+.btn-session {
+  margin: 10px;
+  padding: 3px 20px;
+  background-color: #6b4779;
+  color: #f9f9f9;
+  border-radius: 3px;
+  border: none;
+}
+
+.btn-session:hover {
+  cursor: pointer;
+  background-color: #ce87ec;
   transition: 0.5s;
 }
 
@@ -183,4 +198,16 @@ h1 {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+
+.Home {
+  color: white;
+  text-decoration: none;
+}
+
+.Home:hover {
+  color: #ce87ec;
+  transition: 1s;
 }

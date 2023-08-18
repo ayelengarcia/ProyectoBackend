@@ -1,7 +1,20 @@
-<li><a href="/">Inicio</a></li>
-<h2>Todos los productos</h2>
+<h2>Products Real-Times</h2>
 
-<a href="/form-products">Crear productos</a>
+<form class="displayRow" id="form">
+  <i>Título:</i>
+  <input type="text" name="title" />
+  <br />
+  <i>Descripción:</i>
+  <input type="text" name="description" />
+  <br />
+  <i>Precio:</i>
+  <input type="number" name="price" />
+  <br />
+  <i>Imagen</i>
+  <input type="text" name="thumbnail" />
+
+  <button class="btn" type="submit">Enviar</button>
+</form>
 
 <table class="tabla">
   <thead>
@@ -15,16 +28,20 @@
       <th>Código</th>
     </tr>
   </thead>
-
-  {{#each products}}
-    <tr>
-      <td>{{this.id}}</td>
-      <td>{{this.title}}</td>
-      <td>{{this.description}}</td>
-      <td>{{this.price}}</td>
-      <td>{{this.thumbnail}}</td>
-      <td>{{this.stock}}</td>
-      <td>{{this.code}}</td>
-    </tr>
-  {{/each}}
+  <tbody id="table-list">
+    {{#each products}}
+      <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.title}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.price}}</td>
+        <td>{{this.thumbnail}}</td>
+        <td>{{this.stock}}</td>
+        <td>{{this.code}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
 </table>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/static/js/productRealtime.js"></script>
