@@ -1,32 +1,49 @@
 import { Router } from "express";
-import UserModel from "../Dao/mongoManager/models/userModel.js";
+import passport from "passport";
 
 const router = Router();
 
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await UserModel.findOne({ email, password });
+//Login local
+router.post(
+  "/login",
+  passport.authenticate("login", {
+    failureRedirect: "/login",
+  }),
+  async (req, res) => {
+    if (!req.user) return res.status(400).send("Credenciales inválidas");
 
-  if (!user) return res.redirect("/login");
+    req.session.user = req.user;
+    console.log(`${req.user.first_name} acaba de iniciar sesión`);
 
-  req.session.user = user;
-
-  console.log(`${user.first_name} acaba de iniciar sesión`);
-
-  if (user.roles === "Admin") {
-    return res.redirect("/admin"); // Redirige a la vista de administrador si es un admin
-  } else {
-    return res.redirect("/profile"); // Redirige al perfil si no es un admin
+    if (req.user.roles === "Admin") {
+      return res.redirect("/admin"); // Vista admin
+    } else {
+      return res.redirect("/profile"); // Vista User
+    }
   }
-});
+);
 
+//Register local
+router.post(
+  "/register",
+  passport.authenticate("register", { failureRedirect: "/register" }),
+  async (req, res) => {
+    return res.redirect("/login");
+  }
+);
 
-router.post("/register", async (req, res) => {
-  const user = req.body;
-  await UserModel.create(user);
-
-  return res.redirect("/login");
-});
+//login Github
+router.get(
+  "/githubcallback",
+  passport.authenticate(
+    "github",
+    { failureRedirect: "/login" },
+    async (req, res) => {
+      req.session.user = req.user;
+      res.redirect("/profile");
+    }
+  )
+);
 
 // Cerrar sesión
 router.get("/logout", (req, res) => {

@@ -10,28 +10,31 @@ import ProductManager from "./Dao/fileManager/ProductManager.js";
 import mongoose from "mongoose";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import initPassport from "./config/passport.config.js";
+import passport from "passport";
 // import cookieParser from "cookie-parser";
-// import FileStore from "session-file-store";
 
 const producto = new ProductManager("ddbb/productos.json");
 
 const app = express();
-// const fileStore = FileStore(session);
 const dbName = "DBecommerce";
 const URL =
   "mongodb+srv://ayelengarcia7:eIXUnjHpOu7NgSKF@clustercoder.t6a33ln.mongodb.net/?retryWrites=true&w=majority";
 
+//Data for post JSON
+app.use(express.json());
 app.use("/static", express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-// app.use(cookieParser("HacemosLasCookiesCifradas")); //conectamos cookies con nuestro sv
+// app.use(cookieParser("HacemosLasCookiesCifradas"));Conectamos cookies con nuestro sv
+
+//Handlebars
+app.engine("handlebars", handlebars.engine());
+app.set("views", __dirname + "/views");
+app.set("view engine", "handlebars");
+
+//Mongo session
 app.use(
   session({
-    // store: new fileStore({
-    //   path: "./sessions",
-    //   ttl: 100,
-    //   retries: 2,
-    // }),
     store: MongoStore.create({
       mongoUrl: URL,
       dbName,
@@ -42,19 +45,21 @@ app.use(
       ttl: 100,
     }),
     secret: "ParaFirmarElIDenElBrowser",
-    resave: true, //Para mantener la sesion activa
-    saveUninitialized: true, //Guardar cualquier cosa, así esté vacío
+    resave: true, //Mantener sesion activa
+    saveUninitialized: true, //Save sesion, así esté vacía
   })
 );
 
-app.engine("handlebars", handlebars.engine());
-app.set("views", __dirname + "/views");
-app.set("view engine", "handlebars");
+//Passport
+initPassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
+//Rutas
 app.use("/", viewsRouter);
-app.use("/api/sessions", sessionsRouter);
 app.use("/api", productsRouter);
 app.use("/api", cartsRouter);
+app.use("/api/sessions", sessionsRouter);
 
 mongoose.set("strictQuery", false);
 
@@ -80,13 +85,14 @@ mongoose
         io.emit("update-products", products);
       });
 
-      socket.on("new", (user) => console.log(`${user} se acaba de conectar al chat`));
+      socket.on("new", (user) =>
+        console.log(`${user} se acaba de conectar al chat`)
+      );
 
       socket.on("message", (data) => {
         messages.push(data);
         io.emit("logs", messages);
       });
-      
     });
   })
   .catch((e) => {

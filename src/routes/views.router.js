@@ -2,7 +2,7 @@
 import { Router } from "express";
 import ProductManager from "../Dao/fileManager/ProductManager.js";
 import ProductModel from "../Dao/mongoManager/models/productModel.js";
-import CartModel from "../Dao/mongoManager/models/cartModel.js";
+import passport from "passport";
 
 const producto = new ProductManager("ddbb/productos.json");
 const router = Router();
@@ -25,6 +25,13 @@ router.get("/register", (req, res) => {
 
   res.render("register", {});
 });
+
+//Iniciar sesion con github
+router.get(
+  "/login-github",
+  passport.authenticate("github", { scope: ["user:email"] }),
+  async (req, res) => {}
+);
 
 //midleware para autenticacion
 const autenticacion = (req, res, next) => {
@@ -100,30 +107,6 @@ router.get("/products/paginate", async (req, res) => {
   }
 });
 //127.0.0.1:8080/products/paginate/?page=&limit=7&sortField=price&sortOrder=desc
-
-//Para enviar rta:
-
-// const totalPages = Math.ceil(products.totalCount / limit);
-// const hasPrevPage = page > 1;
-// const hasNextPage = page < totalPages;
-
-// const response = {
-//   status: "success",
-//   payload: products,
-//   totalPages,
-//   prevPage: hasPrevPage ? page - 1 : null,
-//   nextPage: hasNextPage ? page + 1 : null,
-//   page,
-//   hasPrevPage,
-//   hasNextPage,
-//   prevLink: hasPrevPage
-//     ? `/products/paginate/?page=${products.prevPage}&limit=${limit}`
-//     : "",
-//   nextLink: hasNextPage
-//     ? `/products/paginate/?page=${products.nextPage}&limit=${limit}`
-//     : "",
-// };
-// res.status(200).json(response);
 
 //Chat socket io
 router.get("/messages", (req, res) => {
