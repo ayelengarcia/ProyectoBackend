@@ -2,6 +2,7 @@
 import { Router } from "express";
 import ProductManager from "../Dao/fileManager/ProductManager.js";
 import ProductModel from "../Dao/mongoManager/models/productModel.js";
+import CartModel from "../Dao/mongoManager/models/cartModel.js";
 
 const producto = new ProductManager("ddbb/productos.json");
 const router = Router();
@@ -41,9 +42,8 @@ router.get("/profile", autenticacion, (req, res) => {
 
 //midleware para Admins
 const checkAdmin = (req, res, next) => {
-  if (req.session?.user && req.session.user.roles === "Admin") {
-    return next();
-  }
+  if (req.session?.user && req.session.user.roles === "Admin") return next();
+
   return res.status(401).redirect("/login");
 };
 

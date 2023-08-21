@@ -1,41 +1,43 @@
 <h2>Products Paginate</h2>
 
 <form id="form-paginate">
-   |<label for="page">Página:</label>
-    <input id="page" type="number">
+  |<label for="page">Página:</label>
+  <input id="page" type="number" />
 
-    <label for="limit">Limite:</label>
-    <input id="limit" type="number">
+  <label for="limit">Limite:</label>
+  <input id="limit" type="number" />
 
   <button class="btn" type="submit">Ir</button>|
 </form>
 
 <div class="container">
-{{#each docs}}
-  <div class="tarjeta">
-    <div class="titulo">{{this.title}}</div>
-    <div class="cuerpo">
-      <img src="{{this.thumbnail}}" alt="muestra" />
-      <br>
-      <span class="description">Descripción: {{this.description}}</span>
+  {{#each docs}}
+    <div class="tarjeta">
+      <div class="titulo">{{this.title}}</div>
+      <div class="cuerpo">
+        <img src="{{this.thumbnail}}" alt="muestra" />
+        <br />
+        <span class="description">Descripción: {{this.description}}</span>
+        <br />
+        <span class="description">Precio: ${{this.price}}</span>
+      </div>
+      <div class="pie">
+        <button class="btn" onclick="showDetail('{{this._id}}')">Ver detalle</button>
+        <button class="btn" onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+      </div>
     </div>
-    <div class="pie">
-      <a href="#">${{this.price}}</a>
-    </div>
-  </div>
-{{/each}}
+  {{/each}}
 
 </div>
 
 <div class="container">
- {{#if hasPrevPage}}
-  <a href="{{prevLink}}">Anterior</a>
- {{/if}}
+  {{#if hasPrevPage}}
+    <a href="{{prevLink}}">Anterior</a>
+  {{/if}}
 
- {{#if hasNextPage}}
-  <a href="{{nextLink}}">Siguiente</a>
- {{/if}}
+  {{#if hasNextPage}}
+    <a href="{{nextLink}}">Siguiente</a>
+  {{/if}}
 </div>
 
-<script src="/static/js/paginate.js" ></script>
-
+<script src="/static/js/paginate.js"></script>

@@ -4,10 +4,11 @@ import ProductModel from "../Dao/mongoManager/models/productModel.js";
 
 const router = Router();
 
+const cart = CartModel.create({ products: [] });
+
 //Crear carrito nuevo
 router.post("/carts", async (req, res) => {
   try {
-    const cart = await CartModel.create({ products: [] });
     return res
       .status(200)
       .json({ message: "Carrito creado exitosamente", cart });
@@ -16,7 +17,7 @@ router.post("/carts", async (req, res) => {
   }
 });
 
-// Agregar productos a un carrito existente
+// Agregar productos a carrito existente
 router.post("/carts/:cid/:pid", async (req, res) => {
   const cid = req.params.cid;
   const pid = req.params.pid;
