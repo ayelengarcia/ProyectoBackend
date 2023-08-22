@@ -26,11 +26,22 @@ router.get("/register", (req, res) => {
   res.render("register", {});
 });
 
-//Iniciar sesion con github
+//Iniciar session Github
 router.get(
   "/login-github",
   passport.authenticate("github", { scope: ["user:email"] }),
   async (req, res) => {}
+);
+
+router.get(
+  "/githubcallback",
+  passport.authenticate("github", { failureRedirect: "/" }),
+  async (req, res) => {
+    console.log("Callback: ", req.user);
+    req.session.user = req.user;
+    console.log(req.session);
+    res.redirect("/profile");
+  }
 );
 
 //midleware para autenticacion

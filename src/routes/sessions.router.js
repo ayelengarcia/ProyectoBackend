@@ -32,19 +32,6 @@ router.post(
   }
 );
 
-//login Github
-router.get(
-  "/githubcallback",
-  passport.authenticate(
-    "github",
-    { failureRedirect: "/login" },
-    async (req, res) => {
-      req.session.user = req.user;
-      res.redirect("/profile");
-    }
-  )
-);
-
 // Cerrar sesión
 router.get("/logout", (req, res) => {
   if (req.session.user) {

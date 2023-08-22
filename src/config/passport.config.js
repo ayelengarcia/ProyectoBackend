@@ -13,36 +13,38 @@ const initPassport = () => {
     new GitHubStrategy(
       {
         clientID: "Iv1.c2c35b26dad584be",
-        clientSecret: "02615c26ddd1a880a60d026e41f5b48ab2c71ee7",
+        clientSecret: "b85ac61104c76571ca85988c7e61b7d5573a7b70",
         callbackURL: "http://127.0.0.1:8080/githubcallback",
       },
       async (accessToken, refreshToken, profile, done) => {
-        console.log(profile);
         try {
           const user = await UserModel.findOne({ email: profile._json.email });
 
           if (user) {
-            console.log("El usuario existe", user.email);
+            console.log("El user existe ");
             return done(null, user);
           }
+
           const newUser = {
             first_name: profile._json.name,
             last_name: "",
             email: profile._json.email,
+            age: 0,
             password: "",
-            age: "",
-            roles: { type: String, default: "Usuario" },
+            roles: "usuario",
           };
 
           const result = await UserModel.create(newUser);
+
+          console.log(result);
           return done(null, result);
-        } catch (error) {
-          console.log("Error al iniciar sesión con github", error);
-          return done(error);
+        } catch (e) {
+          return done(new Error("Error al ingresar con GitHub"));
         }
       }
     )
   );
+
   //Register local
   passport.use(
     "register",
