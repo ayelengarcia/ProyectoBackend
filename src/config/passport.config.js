@@ -1,10 +1,19 @@
 import passport from "passport";
 import local from "passport-local";
 import GitHubStrategy from "passport-github2";
+import passportJWT from "passport-jwt";
 import UserModel from "../Dao/mongoManager/models/userModel.js";
-import { createHash, isValidPass } from "../utils.js";
+import CartModel from "../Dao/mongoManager/models/cartModel.js";
+import {
+  createHash,
+  isValidPass,
+  extractCookie,
+  generateToken,
+} from "../utils.js";
 
 const LocalStrategy = local.Strategy;
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJwt = passportJWT.ExtractJwt;
 
 const initPassport = () => {
   //Login github
@@ -14,32 +23,41 @@ const initPassport = () => {
       {
         clientID: "Iv1.c2c35b26dad584be",
         clientSecret: "b85ac61104c76571ca85988c7e61b7d5573a7b70",
-        callbackURL: "http://127.0.0.1:8080/githubcallback",
+        callbackURL: "http://127.0.0.1:8080/api/sessions/githubcallback",
       },
       async (accessToken, refreshToken, profile, done) => {
+        console.log(profile);
         try {
-          const user = await UserModel.findOne({ email: profile._json.email });
+          const user = await UserModel.findOne({ email: profile._json.email })
+            .lean()
+            .exec();
+          const cart = await CartModel.findOne();
 
           if (user) {
-            console.log("El user existe ");
+            console.log("El user ya existe ");
+            const token = generateToken(user);
+            user.token = token;
             return done(null, user);
+          } else {
+            const newUser = {
+              first_name: profile._json.name,
+              last_name: "",
+              email: profile._json.email,
+              age: 0,
+              password: "",
+              cart: cart._id,
+              roles: "usuario",
+            };
+
+            const result = await UserModel.create(newUser);
+            console.log(result);
+
+            const token = generateToken(result);
+            result.token = token;
+            return done(null, result);
           }
-
-          const newUser = {
-            first_name: profile._json.name,
-            last_name: "",
-            email: profile._json.email,
-            age: 0,
-            password: "",
-            roles: "usuario",
-          };
-
-          const result = await UserModel.create(newUser);
-
-          console.log(result);
-          return done(null, result);
         } catch (e) {
-          return done(new Error("Error al ingresar con GitHub"));
+          return done(e);
         }
       }
     )
@@ -59,29 +77,37 @@ const initPassport = () => {
         const { first_name, last_name, email, age, roles } = req.body;
         try {
           const user = await UserModel.findOne({ email: username });
+          const cart = await CartModel.findOne();
 
           if (user) {
-            console.log("El usuario ya existe");
-            return done(null, false);
+            console.log("El user ya existe ");
+            const token = generateToken(user);
+            user.token = token;
+          } else {
+            const newUser = {
+              first_name,
+              last_name,
+              email,
+              password: createHash(password),
+              age,
+              cart: cart._id,
+              roles,
+            };
+
+            const result = await UserModel.create(newUser);
+            console.log(result);
+
+            const token = generateToken(result);
+            result.token = token;
+            return done(null, result);
           }
-
-          const newUser = {
-            first_name,
-            last_name,
-            email,
-            password: createHash(password),
-            age,
-            roles,
-          };
-
-          const result = await UserModel.create(newUser);
-          return done(null, result);
-        } catch (error) {
-          return done("Error de registro", error);
+        } catch (e) {
+          return done(e);
         }
       }
     )
   );
+
   //Login local
   passport.use(
     "login",
@@ -102,9 +128,24 @@ const initPassport = () => {
           }
 
           return done(null, user);
-        } catch (error) {
-          return done("No has podido iniciar sesión", error);
+        } catch (e) {
+          return done(e);
         }
+      }
+    )
+  );
+
+  //Autenticación. Extrae y valida el JWT
+  passport.use(
+    "jwt",
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJwt.fromExtractors([extractCookie]),
+        secretOrKey: "secretForJWT",
+      },
+      (jwt_payload, done) => {
+        console.log({ jwt_payload });
+        return done(null, jwt_payload);
       }
     )
   );
@@ -127,4 +168,4 @@ export default initPassport;
 // Client ID: Iv1.c2c35b26dad584be
 
 //Client Secret
-// 02615c26ddd1a880a60d026e41f5b48ab2c71ee7
+// b85ac61104c76571ca85988c7e61b7d5573a7b70

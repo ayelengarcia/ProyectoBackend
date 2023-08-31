@@ -11,6 +11,7 @@ const UserModel = mongoose.model(
     },
     age: Number,
     password: String,
+    cart: { type: mongoose.Schema.Types.ObjectId, ref: "cart" },
     roles: { type: String, default: "Usuario" },
   })
 );

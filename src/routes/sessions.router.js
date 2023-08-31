@@ -32,6 +32,22 @@ router.post(
   }
 );
 
+//Iniciar session Github
+
+router.get(
+  "/githubcallback",
+  passport.authenticate("github", { failureRedirect: "/" }),
+  async (req, res) => {
+    console.log("Callback: ", req.user);
+
+    req.session.user = req.user;
+    console.log(req.session);
+
+    res.cookie("keyCookieForJWT", req.user.token).redirect("/profile");
+  }
+);
+
+
 // Cerrar sesión
 router.get("/logout", (req, res) => {
   if (req.session.user) {

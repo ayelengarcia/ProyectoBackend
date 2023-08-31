@@ -19,13 +19,6 @@ router.get("/login", (req, res) => {
   res.render("login", {});
 });
 
-//Registro
-router.get("/register", (req, res) => {
-  if (req.session?.user) return res.redirect("/profile");
-
-  res.render("register", {});
-});
-
 //Iniciar session Github
 router.get(
   "/login-github",
@@ -33,30 +26,24 @@ router.get(
   async (req, res) => {}
 );
 
-router.get(
-  "/githubcallback",
-  passport.authenticate("github", { failureRedirect: "/" }),
-  async (req, res) => {
-    console.log("Callback: ", req.user);
-    req.session.user = req.user;
-    console.log(req.session);
-    res.redirect("/profile");
-  }
-);
+//Registro
+router.get("/register", (req, res) => {
+  if (req.session?.user) return res.redirect("/profile");
 
-//midleware para autenticacion
-const autenticacion = (req, res, next) => {
-  if (req.session?.user) return next();
-
-  return res.status(401).redirect("/login");
-};
+  res.render("register", {});
+});
 
 //Perfil
-router.get("/profile", autenticacion, (req, res) => {
-  const user = req.session.user;
+router.get(
+  "/profile",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const user = req.session.user;
 
-  res.render("profile", user);
-});
+    console.log(user);
+    res.render("profile", user);
+  }
+);
 
 //midleware para Admins
 const checkAdmin = (req, res, next) => {
@@ -124,6 +111,11 @@ router.get("/messages", (req, res) => {
   res.render("messages", {});
 });
 
+export default router;
+
+
+
+
 //Setear cookie
 // router.get("/cookieSet", (req, res) => {
 //   res
@@ -146,5 +138,3 @@ router.get("/messages", (req, res) => {
 // router.get("/cookieDelete", (req, res) => {
 //   res.clearCookie("cookieForever").send("Cookie borrada");
 // });
-
-export default router;

@@ -12,7 +12,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import initPassport from "./config/passport.config.js";
 import passport from "passport";
-// import cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 
 const producto = new ProductManager("ddbb/productos.json");
 
@@ -25,7 +25,7 @@ const URL =
 app.use(express.json());
 app.use("/static", express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser("HacemosLasCookiesCifradas"));Conectamos cookies con nuestro sv
+app.use(cookieParser()); //Conectamos cookies con nuestro sv
 
 //Handlebars
 app.engine("handlebars", handlebars.engine());
@@ -44,7 +44,7 @@ app.use(
       },
       ttl: 100,
     }),
-    secret: "ParaFirmarElIDenElBrowser",
+    secret: "mysecret",
     resave: true, //Mantener sesion activa
     saveUninitialized: true, //Save sesion, así esté vacía
   })
