@@ -45,19 +45,22 @@ router.get(
   }
 );
 
-//midleware para Admins
-const checkAdmin = (req, res, next) => {
-  if (req.session?.user && req.session.user.roles === "Admin") return next();
+//Perfil admin (CHEQUEAR NO FUNCIONA)
+// user: admincoder@coder.com
+// contraseña: 1234
+router.get(
+  "/admin",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const user = req.user;
 
-  return res.status(401).redirect("/login");
-};
-
-//Perfil admin
-router.get("/admin", checkAdmin, (req, res) => {
-  const user = req.session.user;
-
-  res.render("admin", user);
-});
+    if (user.roles === "Admin") {
+      res.render("admin", user);
+    } else {
+      res.status(403).send("Acceso denegado para usuarios no administradores");
+    }
+  }
+);
 
 // Productos Real-times
 router.get("/products", async (req, res) => {
@@ -112,9 +115,6 @@ router.get("/messages", (req, res) => {
 });
 
 export default router;
-
-
-
 
 //Setear cookie
 // router.get("/cookieSet", (req, res) => {

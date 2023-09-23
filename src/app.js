@@ -13,6 +13,7 @@ import MongoStore from "connect-mongo";
 import initPassport from "./config/passport.config.js";
 import passport from "passport";
 import cookieParser from "cookie-parser";
+import config from "./config/config.js";
 
 const producto = new ProductManager("ddbb/productos.json");
 
@@ -64,10 +65,12 @@ app.use("/api/sessions", sessionsRouter);
 mongoose.set("strictQuery", false);
 
 mongoose
-  .connect(URL, { dbName })
+  .connect(config.dbURL, { dbName: config.dbName })
   .then(() => {
     console.log("DB connectada");
-    const httpServer = app.listen("8080", () => console.log("Listening..."));
+    const httpServer = app.listen(config.port, () =>
+      console.log("Listening...")
+    );
     const io = new Server(httpServer);
     let messages = [];
 

@@ -46,7 +46,7 @@ const initPassport = () => {
               age: 0,
               password: "",
               cart: cart._id,
-              roles: "usuario",
+              roles: "Usuario",
             };
 
             const result = await UserModel.create(newUser);
@@ -127,7 +127,13 @@ const initPassport = () => {
             return done(null, false);
           }
 
-          return done(null, user);
+          const payload = {
+            sub: user._id,
+            roles: user.roles,
+          };
+
+          const token = generateToken(payload);
+          return done(null, user, { token });
         } catch (e) {
           return done(e);
         }

@@ -3,6 +3,11 @@ import passport from "passport";
 
 const router = Router();
 
+// router.post("/login", loginLocal);
+// router.get("/register", registerLocal);
+// router.get("/githubcallback", loginGithub);
+// router.get("/logout", logout);
+
 //Login local
 router.post(
   "/login",
@@ -33,7 +38,6 @@ router.post(
 );
 
 //Iniciar session Github
-
 router.get(
   "/githubcallback",
   passport.authenticate("github", { failureRedirect: "/" }),
@@ -46,7 +50,6 @@ router.get(
     res.cookie("keyCookieForJWT", req.user.token).redirect("/profile");
   }
 );
-
 
 // Cerrar sesión
 router.get("/logout", (req, res) => {
