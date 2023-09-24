@@ -115,26 +115,3 @@ router.get("/messages", (req, res) => {
 });
 
 export default router;
-
-//Setear cookie
-// router.get("/cookieSet", (req, res) => {
-//   res
-//     .cookie("cookieApp", "Probando cookie", { maxAge: 3000 }) //maxAge (tiempo de vida de la cookie)
-//     .cookie("cookieForever", "Cookie por siempreee")
-//     .cookie("cookieSigned", "El valor de la cookie", { signed: true }) //cookie cifrada para q no de edite la info
-//     .send("Cookie seteada");
-// });
-
-//Obtener cookie
-// router.get("/cookieGet", (req, res) => {
-//   const cookie = req.cookies;
-//   const cookieSigned = req.signedCookies;
-
-//   console.log(cookie, cookieSigned); //cookieSigned descifrar cookie
-//   res.send("Se han leido las cookies");
-// });
-
-//Eliminar cookie
-// router.get("/cookieDelete", (req, res) => {
-//   res.clearCookie("cookieForever").send("Cookie borrada");
-// });
