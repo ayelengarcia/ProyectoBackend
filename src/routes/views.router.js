@@ -1,10 +1,10 @@
 //solo contendra renderizaciones
 import { Router } from "express";
-import ProductManager from "../Dao/fileManager/managers/ProductManager.js";
+// import ProductManager from "../Dao/fileManager/managers/ProductManager.js";
 import ProductModel from "../Dao/mongoManager/models/productModel.js";
 import passport from "passport";
 
-const producto = new ProductManager("ddbb/productos.json");
+// const producto = new ProductManager("ddbb/productos.json");
 const router = Router();
 
 //Ruta principal
@@ -63,11 +63,11 @@ router.get(
 );
 
 // Productos Real-times
-router.get("/products", async (req, res) => {
-  const products = await producto.getProducts();
+// router.get("/products", async (req, res) => {
+//   const products = await producto.getProducts();
 
-  res.render("products", { products });
-});
+//   res.render("products", { products });
+// });
 
 // PAGINATE
 router.get("/products/paginate", async (req, res) => {

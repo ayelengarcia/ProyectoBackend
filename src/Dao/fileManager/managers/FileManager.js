@@ -1,9 +1,10 @@
+import { error } from "console";
 import fs from "fs";
 
 class FileManager {
   constructor(filename = "/db.json") {
     this.filename = filename;
-    this.getObjets();
+    this.getObjects();
   }
 
   generarCode(index) {
@@ -19,7 +20,7 @@ class FileManager {
     }
   };
 
-  getObjets = async () => {
+  getObjects = async () => {
     try {
       const data = await fs.promises.readFile(this.filename, "utf-8");
       return JSON.parse(data);
@@ -29,19 +30,24 @@ class FileManager {
     }
   };
 
-  getObjetsById = async (objetID) => {
-    const objetsAll = await this.getObjets();
-    const object = objetsAll.find((objet) => objet.id === objetID);
+  getObjectsById = async (objectID) => {
+    const objectsAll = await this.getObjects();
+    const object = objectsAll.find(
+      (object) => object.id === parseInt(objectID)
+    );
 
-    if (object) return object;
-    else return console.log("Objeto no identificado.");
+    if (!object) {
+      throw new Error("No se encuentra.");
+    }
+
+    return object;
   };
 
   updateObject = async (objectId, updatedFields) => {
     try {
-      const objectsAll = await this.getObjets();
+      const objectsAll = await this.getObjects();
       const objectIndex = objectsAll.findIndex(
-        (object) => object.id === objectId
+        (object) => object.id === parseInt(objectId)
       );
 
       if (objectIndex) {
@@ -62,9 +68,9 @@ class FileManager {
 
   deleteObjets = async (objectId) => {
     try {
-      const objectsAll = await this.getObjets();
-      const objectsIndex = objectsAll.findIndex(
-        (object) => object.id === objectId
+      const objectsAll = await this.getObjects();
+      const objectsIndex = objectsAll.find(
+        (object) => object.id === parseInt(objectId)
       );
 
       if (objectsIndex !== -1) {

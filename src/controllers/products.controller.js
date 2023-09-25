@@ -32,8 +32,9 @@ export const getProductById = async (req, res) => {
   try {
     const result = await productService.getProductById(id);
 
-    res.status(200).json({ message: "Producto encontrado", payload: result });
+    res.send({ message: "Producto encontrado", payload: result });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Error al obtener el producto" });
   }
 };
