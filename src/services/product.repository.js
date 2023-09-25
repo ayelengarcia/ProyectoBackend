@@ -15,8 +15,8 @@ export default class ProductDTO {
     return await this.dao.getProductById(id);
   };
 
-  updatedProductById = async (id) => {
-    return await this.dao.updatedProductById(id);
+  updatedProductById = async (id, updatedProduct) => {
+    return await this.dao.updatedProductById(id, updatedProduct);
   };
 
   deleteProduct = async (id) => {

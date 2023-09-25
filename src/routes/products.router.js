@@ -9,6 +9,11 @@ import {
 
 const router = Router();
 
+// {
+//             "_id": "650f7065044ec98b7f661fb8",
+//             "__v": 0
+//         }
+
 //query - Mostrar todos los productos
 router.get("/products", getProducts);
 // http://127.0.0.1:8080/api/products o
