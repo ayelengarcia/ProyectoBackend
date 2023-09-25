@@ -1,5 +1,3 @@
-import ProductDTO from "../Dao/DTO/product.dto.js";
-
 export default class ProductDTO {
   constructor(dao) {
     this.dao = dao;

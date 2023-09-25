@@ -1,6 +1,6 @@
 //solo contendra renderizaciones
 import { Router } from "express";
-import ProductManager from "../Dao/fileManager/ProductManager.js";
+import ProductManager from "../Dao/fileManager/managers/ProductManager.js";
 import ProductModel from "../Dao/mongoManager/models/productModel.js";
 import passport from "passport";
 

@@ -19,6 +19,10 @@ export default class Cart {
     return await CartModel.findOne({ _id: id });
   };
 
+  deleteCartById = async (id) => {
+    return await CartModel.findByIdAndDelete(id);
+  };
+
   addProductCart = async (cid, pid, quantity) => {
     const cart = await CartModel.findById(cid);
     const product = await ProductModel.findById(pid);
@@ -45,9 +49,5 @@ export default class Cart {
 
     await cart.save();
     return cart;
-  };
-
-  deleteCartById = async (id) => {
-    return await CartModel.findByIdAndDelete(id);
   };
 }

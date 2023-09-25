@@ -1,12 +1,12 @@
-import ProductMongo from "../Dao/mongoManager/product.mongo.js";
+// import ProductMongo from "../Dao/mongoManager/product.mongo.js";
+import { productService } from "../services/index.js";
 
-const productsService = new ProductMongo();
-// const productsService = new Product();
+// const productService = new ProductMongo();
 
 export const getProducts = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit);
-    const result = await productsService.getProducts(limit);
+    const result = await productService.getProducts(limit);
 
     res.send({ status: "success", payload: result });
   } catch (error) {
@@ -17,7 +17,7 @@ export const getProducts = async (req, res) => {
 export const addProducts = async (req, res) => {
   const data = req.body;
   try {
-    const result = await productsService.addProducts(data);
+    const result = await productService.addProducts(data);
     res
       .status(201)
       .json({ message: "Producto agregado exitosamente", payload: result });
@@ -30,7 +30,7 @@ export const getProductById = async (req, res) => {
   const id = req.params.pid;
 
   try {
-    const result = await productsService.getProductById(id);
+    const result = await productService.getProductById(id);
 
     res.status(200).json({ message: "Producto encontrado", payload: result });
   } catch (error) {
@@ -42,7 +42,7 @@ export const updatedProductById = async (req, res) => {
   const productId = req.params.pid;
   const { title, description, price, thumbnail, stock, code } = req.body;
   try {
-    const result = await productsService.updatedProductById(productId, {
+    const result = await productService.updatedProductById(productId, {
       $set: {
         title,
         description,
@@ -63,7 +63,7 @@ export const updatedProductById = async (req, res) => {
 export const deletedProduct = async (req, res) => {
   const productId = req.params.pid;
   try {
-    const result = await productsService.deleteProduct(productId);
+    const result = await productService.deleteProduct(productId);
 
     res.send({ status: "Producto eliminado exitosamente", payload: result });
   } catch (error) {
