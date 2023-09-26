@@ -25,8 +25,6 @@ export default class CartDTO {
   };
 
   addProductCart = async (cid, pid, quantity) => {
-    const cart = this.getCartById(cid);
-    cart.products.quantity = quantity;
-    return await this.dao.addProductCart(cid, pid);
+    return await this.dao.addProductCart(cid, pid, quantity);
   };
 }

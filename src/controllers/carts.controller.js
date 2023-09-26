@@ -1,7 +1,4 @@
-// import CartMongo from "../Dao/mongoManager/cart.mongo.js";
 import { cartService } from "../services/index.js";
-
-// const cartService = new CartMongo();
 
 export const createCart = async (req, res) => {
   try {
@@ -39,7 +36,11 @@ export const addProductCart = async (req, res) => {
 
   try {
     const result = await cartService.addProductCart(cid, pid, quantity);
-    res.send({ status: "Producto agregado al carrito", payload: result });
+    if (result) {
+      res.send({ status: "Producto agregado al carrito", payload: result });
+    } else {
+      res.status(404).json({ error: "Carrito no encontrado" });
+    }
   } catch (error) {
     res.status(500).json({ error: "Error al agregar el producto al carrito" });
   }

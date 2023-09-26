@@ -26,7 +26,7 @@ class FileManager {
       return JSON.parse(data);
     } catch (error) {
       console.log("Error, no se encontró el archivo");
-      return [];
+      return []
     }
   };
 
