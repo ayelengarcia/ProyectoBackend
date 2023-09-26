@@ -18,7 +18,6 @@ export default class Product extends FileManager {
     return await this.getObjectsById(id);
   };
 
-  //Upgradea mal (Editar $set)
   updatedProductById = async (id, updatedProduct) => {
     return await this.updateObject(id, updatedProduct);
   };

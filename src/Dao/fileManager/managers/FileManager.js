@@ -50,7 +50,7 @@ class FileManager {
         (object) => object.id === parseInt(objectId)
       );
 
-      if (objectIndex) {
+      if (objectIndex !== -1) {
         const updatedObject = {
           ...objectsAll[objectIndex],
           ...updatedFields,
@@ -69,17 +69,20 @@ class FileManager {
   deleteObjets = async (objectId) => {
     try {
       const objectsAll = await this.getObjects();
-      const objectsIndex = objectsAll.find(
+      const objectIndex = objectsAll.findIndex(
         (object) => object.id === parseInt(objectId)
       );
 
-      if (objectsIndex !== -1) {
-        const eliminado = objectsAll.splice(objectId, 1);
+      if (objectIndex !== -1) {
+       const eliminado = objectsAll.splice(objectIndex, 1);
         await this.writeObjects(objectsAll);
 
-        return eliminado;
+        return eliminado; 
+      } else{
+        console.log("no se pudo eliminar")
       }
-    } catch (error) {
+      }
+     catch (error) {
       return console.error("Error al eliminar el objeto:", error);
     }
   };

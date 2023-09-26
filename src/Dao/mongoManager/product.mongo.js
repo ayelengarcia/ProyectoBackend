@@ -19,10 +19,15 @@ export default class Product {
   };
 
   updatedProductById = async (id, updatedProduct) => {
-    return await ProductModel.findByIdAndUpdate(id, updatedProduct, {
+    const update = {
+      $set: updatedProduct,
+    };
+  
+    return await ProductModel.findByIdAndUpdate(id, update, {
       new: true,
     });
   };
+  
 
   deleteProduct = async (id) => {
     return await ProductModel.findByIdAndDelete(id);
