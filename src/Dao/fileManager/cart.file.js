@@ -55,7 +55,6 @@ export default class Cart extends FileManager {
   };
 
 
-//Aun no agrega los productos desde el productos.json
 addProductCart = async (cartId, productId, quantity) => {
   const cartsAll = await this.getObjects();
   const cartIndex = cartsAll.findIndex((c) => c.id === parseInt(cartId));
@@ -80,8 +79,6 @@ addProductCart = async (cartId, productId, quantity) => {
 
   return cartsAll[cartIndex];
 };
-
-
 
   
 }
