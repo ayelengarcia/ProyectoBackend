@@ -30,9 +30,11 @@ switch (config.persistence) {
 
     const { default: ProductFile } = await import("./fileManager/product.file.js");
     const { default: CartFile } = await import("./fileManager/cart.file.js");
+    const { default: UserFile } = await import("./fileManager/user.file.js");
 
     Product = ProductFile;
     Cart = CartFile;
+    User = UserFile;
     break;
 
   default:

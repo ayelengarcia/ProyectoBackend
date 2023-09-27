@@ -1,8 +1,8 @@
 import { userService } from "../services/index.js";
 
 export const createUser = async (req, res) => {
+    const user = req.body;
     try {
-      const user = req.body
       const userCreate = userService.createUser(user);
       res.send({ status: "success", payload: userCreate });
     } catch (e) {

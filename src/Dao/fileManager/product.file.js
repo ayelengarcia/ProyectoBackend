@@ -22,12 +22,10 @@ export default class Product extends FileManager {
     return await this.updateObject(id, updatedProduct);
   };
 
-  //Elimina al azar revisar
   deleteProduct = async (id) => {
     return await this.deleteObjets(id);
   };
 
-  //No funca revisar
   addProducts = async (title, description, price, thumbnail) => {
     const productosAll = await this.getObjects();
     const newIndex = productosAll.length;
@@ -55,5 +53,7 @@ export default class Product extends FileManager {
     productosAll.push(newProduct);
 
     await this.writeObjects(productosAll);
+
+    return newProduct;
   };
 }
