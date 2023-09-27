@@ -15,9 +15,6 @@ import cookieParser from "cookie-parser";
 import config from "./config/config.js";
 
 const app = express();
-const dbName = "DBecommerce";
-const URL =
-  "mongodb+srv://ayelengarcia7:eIXUnjHpOu7NgSKF@clustercoder.t6a33ln.mongodb.net/?retryWrites=true&w=majority";
 
 //Data for post JSON
 app.use(express.json());
@@ -43,7 +40,7 @@ app.use(
       ttl: 100,
     }),
     secret: "mysecret",
-    resave: true, //Mantener sesion activa
+    resave: true, //Sesion activa
     saveUninitialized: true, //Save sesion, así esté vacía
   })
 );

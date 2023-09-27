@@ -21,9 +21,9 @@ const initPassport = () => {
     "github",
     new GitHubStrategy(
       {
-        clientID: "Iv1.c2c35b26dad584be",
-        clientSecret: "b85ac61104c76571ca85988c7e61b7d5573a7b70",
-        callbackURL: "http://127.0.0.1:8080/api/sessions/githubcallback",
+        clientID: config.client_id_gith,
+        clientSecret: config.client_secret_gith,
+        callbackURL: config.callback_url_gith,
       },
       async (accessToken, refreshToken, profile, done) => {
         console.log(profile);
@@ -147,7 +147,7 @@ const initPassport = () => {
     new JWTStrategy(
       {
         jwtFromRequest: ExtractJwt.fromExtractors([extractCookie]),
-        secretOrKey: "secretForJWT",
+        secretOrKey: config.secret_jwt,
       },
       (jwt_payload, done) => {
         console.log({ jwt_payload });
@@ -168,10 +168,3 @@ const initPassport = () => {
 
 export default initPassport;
 
-// http://127.0.0.1:8080/githubcallback
-
-// App ID: 378939
-// Client ID: Iv1.c2c35b26dad584be
-
-//Client Secret
-// b85ac61104c76571ca85988c7e61b7d5573a7b70
