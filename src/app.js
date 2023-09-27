@@ -3,6 +3,7 @@ import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
+import usersRouter from "./routes/users.router.js";
 import viewsRouter from "./routes/views.router.js";
 import sessionsRouter from "./routes/sessions.router.js";
 import __dirname from "./utils.js";
@@ -31,8 +32,8 @@ app.set("view engine", "handlebars");
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl: URL,
-      dbName,
+      mongoUrl: config.dbURL,
+      dbName: config.dbName,
       mongoOptions: {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -40,8 +41,8 @@ app.use(
       ttl: 100,
     }),
     secret: "mysecret",
-    resave: true, //Sesion activa
-    saveUninitialized: true, //Save sesion, así esté vacía
+    resave: true,
+    saveUninitialized: true,
   })
 );
 
@@ -54,6 +55,7 @@ app.use(passport.session());
 app.use("/", viewsRouter);
 app.use("/api", productsRouter);
 app.use("/api", cartsRouter);
+app.use("/api", usersRouter);
 app.use("/api/sessions", sessionsRouter);
 
 mongoose.set("strictQuery", false);

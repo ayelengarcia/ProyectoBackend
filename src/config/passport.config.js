@@ -4,6 +4,7 @@ import GitHubStrategy from "passport-github2";
 import passportJWT from "passport-jwt";
 import UserModel from "../Dao/mongoManager/models/userModel.js";
 import CartModel from "../Dao/mongoManager/models/cartModel.js";
+import config from "./config.js";
 import {
   createHash,
   isValidPass,

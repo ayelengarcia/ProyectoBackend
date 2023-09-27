@@ -15,5 +15,4 @@ const UserModel = mongoose.model(
     roles: { type: String, default: "Usuario" },
   })
 );
-
 export default UserModel;

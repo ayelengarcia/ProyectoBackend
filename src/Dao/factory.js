@@ -3,26 +3,27 @@ import mongoose, { mongo } from "mongoose";
 
 export let Cart;
 export let Product;
+export let User;
 
 console.log(`Persistencia con ${config.persistence}`);
 
 switch (config.persistence) {
 
   case "MONGO":
-    
+
     mongoose.connect(config.dbURL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       dbName: config.dbName,
     });
 
-    const { default: ProductMongo } = await import(
-      "./mongoManager/product.mongo.js"
-    );
+    const { default: ProductMongo } = await import("./mongoManager/product.mongo.js");
     const { default: CartMongo } = await import("./mongoManager/cart.mongo.js");
+    const { default: UserMongo } = await import("./mongoManager/user.mongo.js");
 
     Product = ProductMongo;
     Cart = CartMongo;
+    User = UserMongo;
     break;
 
   case "FILE":

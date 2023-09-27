@@ -1,7 +1,4 @@
-// import ProductMongo from "../Dao/mongoManager/product.mongo.js";
 import { productService } from "../services/index.js";
-
-// const productService = new ProductMongo();
 
 export const getProducts = async (req, res) => {
   try {
@@ -56,7 +53,6 @@ export const updatedProductById = async (req, res) => {
 
     res.send({ status: "Producto actualizado exitosamente", payload: result });
   } catch (error) {
-    console.error("Error al actualizar el producto:", error);
     res.status(500).json({ error: "Error al actualizar el producto" });
   }
 };

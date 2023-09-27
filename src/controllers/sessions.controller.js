@@ -1,4 +1,3 @@
-// const sessionsService = new Session();
 
 export const registerLocal = async (req, res) => {
   async (req, res) => {
