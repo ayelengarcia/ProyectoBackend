@@ -17,15 +17,10 @@ router.post(
 );
 
 //Login local
-router.post(
-  "/login",
-  passport.authenticate("login", { failureRedirect: "/login" }),
-  loginLocal
-);
+router.post("/login", passport.authenticate("login"), loginLocal);
 
 //Iniciar session Github
-router.get(
-  "/githubcallback",
+router.get("/githubcallback",
   passport.authenticate("github", { failureRedirect: "/" }),
   loginGithub
 );

@@ -1,48 +1,49 @@
-//solo contendra renderizaciones
 import { Router } from "express";
-// import ProductManager from "../Dao/fileManager/managers/ProductManager.js";
 import ProductModel from "../Dao/mongoManager/models/productModel.js";
 import passport from "passport";
 
-// const producto = new ProductManager("ddbb/productos.json");
 const router = Router();
 
+//vistas de session
+function auth(req, res, next) {
+  if(req.user) return res.redirect("/")
+  return next()
+}
+// Perfil de usuario
+function profile(req, res, next) {
+  if(req.user) return next()
+  return res.redirect("/login")
+}
+
+const renderLogin = (req, res) => {
+  res.render("login", {})
+}
+const renderRegister = (req, res) => {
+  res.render("register", {})
+}
+const renderProfile = (req, res) => {
+  const user = req.user
+  res.render("profile", user)
+}
+
+
 //Ruta principal
-router.get("/", (req, res) => {
-  res.render("index", {});
-});
+router.get("/", (req, res) => res.render("index", {}));
 
 //Iniciar sesión
-router.get("/login", (req, res) => {
-  if (req.session?.user) return res.redirect("/profile");
+router.get("/login", auth, renderLogin);
 
-  res.render("login", {});
-});
+//Registro
+router.get("/register", auth, renderRegister);
+
+//Perfil
+router.get("/profile", profile, renderProfile);
 
 //Iniciar session Github
 router.get(
   "/login-github",
   passport.authenticate("github", { scope: ["user:email"] }),
   async (req, res) => {}
-);
-
-//Registro
-router.get("/register", (req, res) => {
-  if (req.session?.user) return res.redirect("/profile");
-
-  res.render("register", {});
-});
-
-//Perfil
-router.get(
-  "/profile",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const user = req.session.user;
-
-    console.log(user);
-    res.render("profile", user);
-  }
 );
 
 //Perfil admin (CHEQUEAR NO FUNCIONA)
@@ -61,13 +62,6 @@ router.get(
     }
   }
 );
-
-// Productos Real-times
-// router.get("/products", async (req, res) => {
-//   const products = await producto.getProducts();
-
-//   res.render("products", { products });
-// });
 
 // PAGINATE
 router.get("/products/paginate", async (req, res) => {
@@ -113,5 +107,13 @@ router.get("/products/paginate", async (req, res) => {
 router.get("/messages", (req, res) => {
   res.render("messages", {});
 });
+
+// Productos Real-times
+// router.get("/products", async (req, res) => {
+//   const products = await producto.getProducts();
+
+//   res.render("products", { products });
+// });
+
 
 export default router;
