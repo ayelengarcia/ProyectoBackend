@@ -26,31 +26,37 @@ export const extractCookie = (req) => {
   return req && req.cookies ? req.cookies[config.secret_cookie] : null;
 };
 
-export const currentStrategy = (strategy) => {
-
-  return async(req, res, next) => {
-      passport.authenticate(strategy, function(err, user, info){
-          if(err) return next(err)
-          if(!user) {
-              return res.status(401).send({
-                  error: info.messages? info.messages : info.toString()
-              })
-          }
-          req.user = user;
-          next()
-      }) (req, res, next)
-  }
-};
-
-export const authorization = (rol) => {
-
+export const authorizationStrategy = (strategy) => {
   return async (req, res, next) => {
-      const user = req.user;
-
-      if(!user) return res.status(401).send({error: "No autorizado"})
-      if(user.user.roles !== rol) return res.status(403).send({error: "Usuario no autorizado"})
-  
-      next()
-  }
+    passport.authenticate(strategy, function (err, user, info) {
+      if (err) return next(err);
+      if (!user) {
+        return res.status(401).send({
+          error: info.messages ? info.messages : info.toString(),
+        });
+      }
+      req.user = user;
+      next();
+    })(req, res, next);
+  };
 };
 
+export const authorizationRol = (rol) => {
+  return async (req, res, next) => {
+    const user = req.user;
+
+    if (!user) return res.status(401).send({ error: "No autorizado" });
+    if (user.user.roles !== rol)
+      return res.status(403).send({ error: "Usuario no autorizado" });
+
+    next();
+  };
+};
+
+export const extractNonSensitiveUserInfo = (req, res, next) => {
+  if (req.user) {
+    const { first_name, last_name, email, age } = req.user.user;
+    req.nonSensitiveUserInfo = { first_name, last_name, email, age };
+  }
+  next();
+};

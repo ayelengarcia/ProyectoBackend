@@ -1,6 +1,10 @@
 import { Router } from "express";
 import passport from "passport";
-import {currentStrategy, authorization} from "../utils.js"
+import {
+  authorizationRol,
+  authorizationStrategy,
+  extractNonSensitiveUserInfo,
+} from "../utils.js";
 import {
   loginGithub,
   loginLocal,
@@ -11,7 +15,8 @@ import {
 const router = Router();
 
 //Register local
-router.post("/register",
+router.post(
+  "/register",
   passport.authenticate("register", { failureRedirect: "/register" }),
   registerLocal
 );
@@ -23,18 +28,35 @@ router.post("/login", passport.authenticate("login"), loginLocal);
 router.get("/logout", logout);
 
 //Iniciar session Github
-router.get("/githubcallback",
+router.get(
+  "/githubcallback",
   passport.authenticate("github", { failureRedirect: "/" }),
   loginGithub
 );
 
 //ruta datos de usuario - Solo acceso al usuario logueado
-router.get("/current", 
-currentStrategy("jwt",{ session:false}), 
-authorization("Usuario"), (req, res) => {
+router.get(
+  "/current",
+  authorizationStrategy("jwt", { session: false }),
+  authorizationRol("Usuario"),
+  (req, res) => {
+    res.send({ status: "success", payload: req.user });
+  }
+);
 
-  res.send({status: "success", payload: req.user })
-
-})
+//ruta datos de usuario - Informacion no sensible
+router.get(
+  "/currentUser",
+  authorizationStrategy("jwt", { session: false }),
+  authorizationRol("Usuario"),
+  extractNonSensitiveUserInfo,
+  (req, res) => {
+    if (req.nonSensitiveUserInfo) {
+      res.send({ status: "success", payload: req.nonSensitiveUserInfo });
+    } else {
+      res.status(401).send({ error: "No autorizado" });
+    }
+  }
+);
 
 export default router;
