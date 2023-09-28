@@ -71,19 +71,6 @@ mongoose
     let messages = [];
 
     io.on("connection", (socket) => {
-      // socket.on("new-product", async (data) => {
-      //   await producto.addProduct(
-      //     data.title,
-      //     data.description,
-      //     data.price,
-      //     data.thumbnail
-      //   );
-      //   console.log(data);
-
-      //   const products = await producto.getProducts();
-      //   io.emit("update-products", products);
-      // });
-
       socket.on("new", (user) =>
         console.log(`${user} se acaba de conectar al chat`)
       );

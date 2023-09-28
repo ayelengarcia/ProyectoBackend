@@ -1,43 +1,47 @@
 import { Router } from "express";
 import ProductModel from "../Dao/mongoManager/models/productModel.js";
+import { authorizationRol, authorizationStrategy } from "../utils.js";
 import passport from "passport";
 
 const router = Router();
 
 //vistas de session
 function auth(req, res, next) {
-  if(req.user) return res.redirect("/")
-  return next()
+  if (req.user) return res.redirect("/");
+  return next();
 }
 // Perfil de usuario
 function profile(req, res, next) {
-  if(req.user) return next()
-  return res.redirect("/login")
+  if (req.user) return next();
+  return res.redirect("/login");
 }
-
-const renderLogin = (req, res) => {
-  res.render("login", {})
-}
-const renderRegister = (req, res) => {
-  res.render("register", {})
-}
-const renderProfile = (req, res) => {
-  const user = req.user
-  res.render("profile", user)
-}
-
-
-//Ruta principal
-router.get("/", (req, res) => res.render("index", {}));
 
 //Iniciar sesión
-router.get("/login", auth, renderLogin);
+router.get("/login", auth, (req, res) => {
+  res.render("login", {});
+});
 
 //Registro
-router.get("/register", auth, renderRegister);
+router.get("/register", auth, (req, res) => {
+  res.render("register", {});
+});
 
 //Perfil
-router.get("/profile", profile, renderProfile);
+router.get("/profile", profile, (req, res) => {
+  const user = req.user;
+  res.render("profile", user);
+});
+//Perfil admin // user: admin@coder.com // contraseña: 1234
+
+//Ruta para admins
+router.get(
+  "/admin",
+  authorizationStrategy("jwt", { session: false }),
+  authorizationRol("Admin"),
+  (req, res) => {
+    res.render("admin");
+  }
+);
 
 //Iniciar session Github
 router.get(
@@ -46,27 +50,10 @@ router.get(
   async (req, res) => {}
 );
 
-//Perfil admin (CHEQUEAR NO FUNCIONA)
-// user: admincoder@coder.com
-// contraseña: 1234
-router.get(
-  "/admin",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const user = req.user;
-
-    if (user.roles === "Admin") {
-      res.render("admin", user);
-    } else {
-      res.status(403).send("Acceso denegado para usuarios no administradores");
-    }
-  }
-);
-
-// PAGINATE
-router.get("/products/paginate", async (req, res) => {
+//Ruta principal PAGINATE PRODUCTS
+router.get("/", async (req, res) => {
   const page = parseInt(req.query?.page || 1);
-  const limit = parseInt(req.query?.limit || 3);
+  const limit = parseInt(req.query?.limit || 6);
 
   const queryParams = req.query?.query || "";
   const query = {};
@@ -90,10 +77,10 @@ router.get("/products/paginate", async (req, res) => {
     });
 
     products.prevLink = products.hasPrevPage
-      ? `/products/paginate/?page=${products.prevPage}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}`
+      ? `/?page=${products.prevPage}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}`
       : "";
     products.nextLink = products.hasNextPage
-      ? `/products/paginate/?page=${products.nextPage}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}`
+      ? `/?page=${products.nextPage}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}`
       : "";
 
     return res.render("paginate", products);
@@ -101,19 +88,11 @@ router.get("/products/paginate", async (req, res) => {
     return res.status(500).send("Error al enviar products.");
   }
 });
-//127.0.0.1:8080/products/paginate/?page=&limit=7&sortField=price&sortOrder=desc
+//127.0.0.1:8080/?page=&limit=7&sortField=price&sortOrder=desc
 
 //Chat socket io
 router.get("/messages", (req, res) => {
   res.render("messages", {});
 });
-
-// Productos Real-times
-// router.get("/products", async (req, res) => {
-//   const products = await producto.getProducts();
-
-//   res.render("products", { products });
-// });
-
 
 export default router;

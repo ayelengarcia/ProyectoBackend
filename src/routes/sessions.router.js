@@ -34,11 +34,11 @@ router.get(
   loginGithub
 );
 
-//ruta datos de usuario - Solo acceso al usuario logueado
+//ruta datos de usuario logueado - Admin
 router.get(
   "/current",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Usuario"),
+  authorizationRol("Admin"),
   (req, res) => {
     res.send({ status: "success", payload: req.user });
   }
@@ -48,7 +48,7 @@ router.get(
 router.get(
   "/currentUser",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Usuario"),
+  authorizationRol(["Usuario", "Admin"]),
   extractNonSensitiveUserInfo,
   (req, res) => {
     if (req.nonSensitiveUserInfo) {

@@ -41,15 +41,17 @@ export const authorizationStrategy = (strategy) => {
   };
 };
 
-export const authorizationRol = (rol) => {
+export const authorizationRol = (validRoles) => {
   return async (req, res, next) => {
     const user = req.user;
 
     if (!user) return res.status(401).send({ error: "No autorizado" });
-    if (user.user.roles !== rol)
-      return res.status(403).send({ error: "Usuario no autorizado" });
 
-    next();
+    if (validRoles.includes(user.user.roles)) {
+      next();
+    } else {
+      res.status(403).send({ error: "Usuario no autorizado" });
+    }
   };
 };
 
