@@ -1,5 +1,40 @@
-<h2>Administrador</h2>
+<h2>Sección Administradores</h2>
 
-<ul>
-  <li>Seccion para administradores</li>
-</ul>
+<form class="displayColumn" action="/api/products" method="post">
+  <p class="campos">Añadir producto</p>
+
+  <input id="title" type="text" name="title" placeholder="Nombre del producto" />
+  <input id="description" type="text" name="description" placeholder="Descripción" />
+  <input id="thumbnail" type="text" name="thumbnail" placeholder="Imagen" />
+  <input id="price" type="number" name="price" placeholder="Precio" />
+  <input id="stock" type="number" name="stock" placeholder="Stock" />
+  <input id="code" type="text" name="code" placeholder="Código" />
+  <button class="btn-session" type="submit">Añadir</button>
+</form>
+
+<form class="displayColumn" id="updateProducts">
+  <p class="campos">Actualizar producto</p>
+
+  <input id="inputID" type="text" name="inputID" placeholder="Ingresa el id del producto" />
+  <input id="title" type="text" name="title" placeholder="Nombre del producto" />
+  <input id="description" type="text" name="description" placeholder="Descripción" />
+  <input id="thumbnail" type="text" name="thumbnail" placeholder="Imagen" />
+  <input id="price" type="number" name="price" placeholder="Precio" />
+  <input id="stock" type="number" name="stock" placeholder="Stock" />
+  <input id="code" type="text" name="code" placeholder="Código" />
+  <button id="btnActualizar" class="btn-session" type="submit">Actualizar</button>
+
+  <div id="response-container"></div>
+
+</form>
+
+<form class="displayColumn" id="deleteProducts">
+  <p class="campos">Eliminar producto</p>
+
+  <input id="idDelete" type="text" name="idDelete" placeholder="Ingresar ID" />
+  <button id="btnEliminar" class="btn-session" type="submit">Eliminar</button>
+
+  <div id="container-delete"></div>
+</form>
+
+<script src="/static/js/admin-products.js"></script>

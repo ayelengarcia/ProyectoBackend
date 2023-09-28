@@ -212,3 +212,12 @@ h1 {
   color: #ce87ec;
   transition: 1s;
 }
+
+.campos {
+  background-color: #48384e;
+  padding: 5px;
+}
+
+form {
+  padding-bottom: 25px;
+}
