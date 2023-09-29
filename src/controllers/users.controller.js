@@ -51,7 +51,6 @@ export const createUser = async (req, res) => {
   
       res.send({ status: "Usuario actualizado exitosamente", payload: result });
     } catch (error) {
-      console.error("Error al actualizar el usuario:", error);
       res.status(500).json({ error: "Error al actualizar el usuario" });
     }
   };
