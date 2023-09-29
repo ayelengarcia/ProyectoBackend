@@ -39,7 +39,7 @@ router.get(
   authorizationStrategy("jwt", { session: false }),
   authorizationRol("Admin"),
   (req, res) => {
-    res.render("admin");
+    res.render("admin", {});
   }
 );
 
@@ -48,6 +48,25 @@ router.get(
   "/login-github",
   passport.authenticate("github", { scope: ["user:email"] }),
   async (req, res) => {}
+);
+
+//Chat socket io
+router.get(
+  "/messages",
+  authorizationStrategy("jwt", { session: false }),
+  authorizationRol("Usuario"),
+  (req, res) => {
+    res.render("messages", {});
+  }
+);
+
+router.get(
+  "/cart",
+  authorizationStrategy("jwt", { session: false }),
+  authorizationRol("Usuario"),
+  (req, res) => {
+    res.render("cart", {});
+  }
 );
 
 //Ruta principal PAGINATE PRODUCTS
@@ -89,10 +108,5 @@ router.get("/", async (req, res) => {
   }
 });
 //127.0.0.1:8080/?page=&limit=7&sortField=price&sortOrder=desc
-
-//Chat socket io
-router.get("/messages", (req, res) => {
-  res.render("messages", {});
-});
 
 export default router;

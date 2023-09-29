@@ -23,6 +23,7 @@ export const getCartById = async (req, res) => {
   const cid = req.params.cid;
   try {
     const cart = await cartService.getCartById(cid);
+    console.log(cart);
     res.send({ message: "Carrito obtenido exitosamente", payload: cart });
   } catch (error) {
     res.status(500).json({ error: "Error al obtener el carrito" });

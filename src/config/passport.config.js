@@ -66,7 +66,8 @@ const initPassport = () => {
 
   //Register local
   passport.use(
-    "register",new LocalStrategy(
+    "register",
+    new LocalStrategy(
       // Objeto de configuracion
       {
         passReqToCallback: true,
@@ -77,14 +78,15 @@ const initPassport = () => {
         const { first_name, last_name, email, age, roles } = req.body;
         try {
           const user = await UserModel.findOne({ email: username });
-          const cart = await CartModel.findOne();
+          const cart = new CartModel();
+          await cart.save();
 
           if (user) {
             console.log("El user ya existe ");
             const token = generateToken(user);
             user.token = token;
 
-            return done(null, user) //prueba
+            return done(null, user); //prueba
           } else {
             const newUser = {
               first_name,
@@ -144,13 +146,16 @@ const initPassport = () => {
   );
 
   //Autenticación. Extrae y valida el JWT
-  passport.use( "jwt", new JWTStrategy({
+  passport.use(
+    "jwt",
+    new JWTStrategy(
+      {
         jwtFromRequest: ExtractJwt.fromExtractors([extractCookie]),
         secretOrKey: config.secret_jwt,
       },
-        async (jwt_payload, done) => {
-          return done(null, jwt_payload);
-        }
+      async (jwt_payload, done) => {
+        return done(null, jwt_payload);
+      }
     )
   );
 
@@ -165,4 +170,3 @@ const initPassport = () => {
 };
 
 export default initPassport;
-

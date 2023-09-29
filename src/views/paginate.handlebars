@@ -9,7 +9,7 @@
 
   <button class="btn" type="submit">Ir</button>|
 </form>
-
+<p id="msgAddProduct"></p>
 <div class="container">
   {{#each docs}}
     <div class="tarjeta">
@@ -22,13 +22,16 @@
         <span class="description">Precio: ${{this.price}}</span>
       </div>
       <div class="pie">
-        <button class="btn" onclick="showDetail('{{this._id}}')">Ver detalle</button>
-        <button class="btn" onclick="addToCart('{{this._id}}')">Agregar al
+        <button
+          id="btnAddToCart"
+          class="btn"
+          onclick="showDetail('{{this._id}}')"
+        >Ver detalle</button>
+        <button class="btn" onclick="addProductCart('{{this._id}}')">Agregar al
           carrito</button>
       </div>
     </div>
   {{/each}}
-
 </div>
 
 <div class="container">

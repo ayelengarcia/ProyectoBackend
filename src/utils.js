@@ -57,8 +57,8 @@ export const authorizationRol = (validRoles) => {
 
 export const extractNonSensitiveUserInfo = (req, res, next) => {
   if (req.user) {
-    const { first_name, last_name, email, age } = req.user.user;
-    req.nonSensitiveUserInfo = { first_name, last_name, email, age };
+    const { first_name, last_name, email, age, cart } = req.user.user;
+    req.nonSensitiveUserInfo = { first_name, last_name, email, age, cart };
   }
   next();
 };

@@ -6,6 +6,7 @@ import {
   getCartById,
   getCarts,
 } from "../controllers/carts.controller.js";
+import { authorizationRol, authorizationStrategy } from "../utils.js";
 
 const router = Router();
 
@@ -16,7 +17,12 @@ router.post("/carts", createCart);
 router.get("/carts", getCarts);
 
 // Agregar productos a carrito existente
-router.post("/carts/:cid/:pid", addProductCart);
+router.post(
+  "/carts/:cid/:pid",
+  authorizationStrategy("jwt", { session: false }),
+  authorizationRol("Usuario"),
+  addProductCart
+);
 
 //Mostrar carrito por ID
 router.get("/carts/:cid", getCartById);
