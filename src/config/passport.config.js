@@ -32,7 +32,8 @@ const initPassport = () => {
           const user = await UserModel.findOne({ email: profile._json.email })
             .lean()
             .exec();
-          const cart = await CartModel.findOne();
+          const cart = new CartModel();
+          await cart.save();
 
           if (user) {
             console.log("El user ya existe ");

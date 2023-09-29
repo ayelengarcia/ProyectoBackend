@@ -1,8 +1,9 @@
-// import {Router} from 'express'
-// import { createTicket, getTicketByCode } from '../controllers/tickets.controller.js'
-// const router = Router()
+import {Router} from 'express'
+import { createTicket, getTicketByCode } from '../controllers/tickets.controller.js'
+const router = Router()
 
-// router.get('/', createTicket)
-// router.get('/:code', getTicketByCode)
+router.get('/', createTicket)
 
-// export default router
+router.get('/:code', getTicketByCode)
+
+export default router
