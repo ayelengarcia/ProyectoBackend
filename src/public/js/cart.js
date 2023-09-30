@@ -1,15 +1,12 @@
 const obtenerCartId = async () => {
   try {
     const response = await fetch("/api/sessions/currentuser");
-    if (!response.ok) {
-      throw new Error("Error al obtener los datos del usuario logueado");
-    }
+    if (!response.ok) throw new Error("Error al obtener los datos del usuario logueado")
+
     const responseData = await response.json();
     const cartId = responseData.payload.cart;
-    console.log("Cart ID del usuario logueado:", cartId);
     return cartId;
   } catch (error) {
-    console.error(error);
     throw error;
   }
 };
@@ -18,12 +15,10 @@ const obtenerCart = async () => {
   try {
     const cartId = await obtenerCartId();
     const response = await fetch(`/api/carts/${cartId}`);
-    if (!response.ok) {
-      throw new Error("Error al obtener carrito");
-    }
+    if (!response.ok) throw new Error("Error al obtener carrito")
+    
     const responseData = await response.json();
-    const cartData = responseData.payload.products;
-    console.log("Cart del usuario", cartData);
+    const cartData = responseData.payload.products
     return cartData;
   } catch (error) {
     console.error(error);
@@ -71,6 +66,7 @@ const recorrerObjetos = (array, template, contenedor) => {
   }
 };
 
+//RENDERIZAR CARRITO
 (async () => {
   try {
     const cart = await obtenerCart();
@@ -83,6 +79,7 @@ const recorrerObjetos = (array, template, contenedor) => {
   }
 })();
 
+//FINALIZAR COMPRA Y MOSTRAR TICKET
 const btnPurchease = document.getElementById("btn-purchease");
 const contenedorTicket = document.getElementById("contenedorTicket");
 
@@ -97,6 +94,7 @@ const mostrarDetallesDelTicket = (ticket) => {
   `;
 };
 
+//EVENTO COMPRAR
 btnPurchease.addEventListener("click", async () => {
   try {
     const cid = await obtenerCartId();
@@ -104,9 +102,7 @@ btnPurchease.addEventListener("click", async () => {
       method: "POST",
     });
 
-    if (!response.ok) {
-      throw new Error("Error al finalizar la compra");
-    }
+    if (!response.ok) throw new Error("Error al finalizar la compra");
 
     const amount = await totalCarrito();
     const ticketData = {
@@ -122,9 +118,7 @@ btnPurchease.addEventListener("click", async () => {
       },
     });
 
-    if (!ticketResponse.ok) {
-      throw new Error("Error al crear el ticket");
-    }
+    if (!ticketResponse.ok) throw new Error("Error al crear el ticket");
 
     const ticket = await ticketResponse.json();
     console.log(ticket);
