@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   addProductCart,
+  checkStock,
   createCart,
   deleteCartById,
   getCartById,
@@ -23,6 +24,8 @@ router.post(
   authorizationRol("Usuario"),
   addProductCart
 );
+
+router.post("/cart/:cid/purchase", checkStock);
 
 //Mostrar carrito por ID
 router.get("/carts/:cid", getCartById);

@@ -221,3 +221,9 @@ h1 {
 form {
   padding-bottom: 25px;
 }
+
+.flex-end {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}

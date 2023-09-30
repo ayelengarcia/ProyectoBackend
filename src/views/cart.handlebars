@@ -1,10 +1,27 @@
 <h1>My cart</h1>
 
-<div class="tabla">
-  <h2>carrito</h2>
-  {{#each cart.products}}
-    <div>{{this.pid.title}}</div>
-    <div>{{this.quantity}}</div>
-    <div>{{this._id}}</div>
-  {{/each}}
+<table>
+  <thead class="tabla">
+    <tr>
+      <th>Code</th>
+      <th>Img</th>
+      <th>Title</th>
+      <th>Cantidad</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody id="template-cart">
+  </tbody>
+  <tfoot class="tabla">
+    <tr>
+      <td colspan="4">Total</td>
+      <td id="template-total"></td>
+    </tr>
+  </tfoot>
+</table>
+
+<div class="flex-end">
+  <button class="btn-session">Comprar</button>
 </div>
+
+<script src="/static/js/cart.js"></script>

@@ -23,7 +23,6 @@ export const getCartById = async (req, res) => {
   const cid = req.params.cid;
   try {
     const cart = await cartService.getCartById(cid);
-    console.log(cart);
     res.send({ message: "Carrito obtenido exitosamente", payload: cart });
   } catch (error) {
     res.status(500).json({ error: "Error al obtener el carrito" });
@@ -44,6 +43,17 @@ export const addProductCart = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: "Error al agregar el producto al carrito" });
+  }
+};
+
+export const checkStock = async (req, res) => {
+  const cid = req.params.cid;
+  const email = req.query.purchaser;
+  try {
+    const result = await cartService.checkStock(cid, email);
+    res.send({ status: "success", payload: result });
+  } catch (error) {
+    res.status(404).send({ succes: false, message: error.message });
   }
 };
 
