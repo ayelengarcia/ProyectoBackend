@@ -61,9 +61,8 @@ export const finishPurchase = async (req, res) => {
 
   try {
     const result = await cartService.finishPurchase(cid);
-    res.send({ status: "success", payload: result });
+    res.send({ status: "Compra realizada con éxito", payload: result });
   } catch (error) {
-    console.log(error);
     res.status(404).send({ status: "error al finalizar compra" });
   }
 };

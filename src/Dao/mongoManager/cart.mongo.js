@@ -53,23 +53,23 @@ export default class Cart {
 
   finishPurchase = async (cid) => {
     try {
-      const cartUser = await CartModel.findOne({ _id: cid });
+      const cart = await CartModel.findById(cid);
 
-      if (!cartUser) {
+      if (!cart) {
         throw new Error("Carrito no encontrado");
       }
 
-      const cartProducts = cartUser.products;
+      const cartProducts = cart.products;
 
       for (const product of cartProducts) {
-        const productInStock = await ProductModel.findById(product._id);
+        const productInStock = await ProductModel.findById(product.pid);
 
         if (!productInStock) {
           throw new Error(`Producto  no encontrado en stock`);
         }
 
-        if (productInStock.stock >= product.products.quantity) {
-          productInStock.stock -= product.products.quantity;
+        if (productInStock.stock >= product.quantity) {
+          productInStock.stock -= product.quantity;
 
           await productInStock.save();
         } else {

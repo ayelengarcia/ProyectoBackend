@@ -84,21 +84,23 @@ const recorrerObjetos = (array, template, contenedor) => {
 })();
 
 const btnPurchease = document.getElementById("btn-purchease");
-const contenedorTicket = document.querySelector("contenedorTicket");
+const contenedorTicket = document.getElementById("contenedorTicket");
 
 const mostrarDetallesDelTicket = (ticket) => {
   contenedorTicket.innerHTML = `
-      <div> ${ticket.code}</div>
-      <div> ${ticket.purchase_datetime}</div>
-      <div> ${ticket.amount}</div>
-      <div> ${ticket.purchaser}</div>
+      <h3>¡Tu compra ha sido realizada con éxito!!</h3>
+      <p>Este es el resumen de tu pedido:</p>
+      <div>Órden: ${ticket.payload.code}</div>
+      <div>Fecha: ${ticket.payload.purchase_datetime}</div>
+      <div>Comprador: ${ticket.payload.purchaser}</div>
+      <div>Total: $ ${ticket.payload.amount}</div>
   `;
 };
 
 btnPurchease.addEventListener("click", async () => {
   try {
     const cid = await obtenerCartId();
-    const response = await fetch(`/api/carts/purchase/${cid}`, {
+    const response = await fetch(`/api/carts/purchase/buy/${cid}`, {
       method: "POST",
     });
 
@@ -125,6 +127,7 @@ btnPurchease.addEventListener("click", async () => {
     }
 
     const ticket = await ticketResponse.json();
+    console.log(ticket);
 
     mostrarDetallesDelTicket(ticket);
   } catch (error) {

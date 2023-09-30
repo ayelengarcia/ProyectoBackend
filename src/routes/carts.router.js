@@ -20,19 +20,19 @@ router.get("/carts", getCarts);
 // Agregar productos a carrito existente
 router.post(
   "/carts/:cid/:pid",
-  // authorizationStrategy("jwt", { session: false }),
-  // authorizationRol("Usuario"),
+  authorizationStrategy("jwt", { session: false }),
+  authorizationRol("Usuario"),
   addProductCart
 );
 
 //Mostrar carrito por ID
 router.get("/carts/:cid", getCartById);
 
-//Finalizar compra
-router.post("/carts/purchase/:cid", finishPurchase);
-
 //Eliminar carrito
 router.delete("/carts/:cid", deleteCartById);
+
+//Finalizar compra
+router.post("/carts/purchase/buy/:cid", finishPurchase);
 
 //añadir eliminar product to cart
 
