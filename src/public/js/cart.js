@@ -1,7 +1,8 @@
 const obtenerCartId = async () => {
   try {
     const response = await fetch("/api/sessions/currentuser");
-    if (!response.ok) throw new Error("Error al obtener los datos del usuario logueado")
+    if (!response.ok)
+      throw new Error("Error al obtener los datos del usuario logueado");
 
     const responseData = await response.json();
     const cartId = responseData.payload.cart;
@@ -15,10 +16,10 @@ const obtenerCart = async () => {
   try {
     const cartId = await obtenerCartId();
     const response = await fetch(`/api/carts/${cartId}`);
-    if (!response.ok) throw new Error("Error al obtener carrito")
-    
+    if (!response.ok) throw new Error("Error al obtener carrito");
+
     const responseData = await response.json();
-    const cartData = responseData.payload.products
+    const cartData = responseData.payload.products;
     return cartData;
   } catch (error) {
     console.error(error);
@@ -95,7 +96,7 @@ const mostrarDetallesDelTicket = (ticket) => {
 };
 
 //EVENTO COMPRAR
-btnPurchease.addEventListener("click", async () => {
+btnPurchease.addEventListener("click", async (req, res) => {
   try {
     const cid = await obtenerCartId();
     const response = await fetch(`/api/carts/purchase/buy/${cid}`, {
@@ -107,7 +108,6 @@ btnPurchease.addEventListener("click", async () => {
     const amount = await totalCarrito();
     const ticketData = {
       amount: amount,
-      purchaser: "ayeleng@gmail.com",
     };
 
     const ticketResponse = await fetch("/api/tickets", {

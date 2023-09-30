@@ -2,24 +2,15 @@ import { ticketService } from "../services/index.js";
 
 export const createTicket = async (req, res) => {
   try {
-    if (req.user) {
-      const { email } = req.user.user;
-      const ticketData = {
-        amount: req.body.amount,
-        purchaser: email,
-      };
+    const ticketData = {
+      amount: req.body.amount,
+      purchaser: req.nonSensitiveUserInfo
+        ? req.nonSensitiveUserInfo.email
+        : req.body.purchaser,
+    };
 
-      const ticketCreate = await ticketService.createTicket(ticketData);
-      res.send({ status: "success", payload: ticketCreate });
-    } else {
-      const ticketData = {
-        amount: req.body.amount,
-        purchaser: req.body.purchaser,
-      };
-
-      const ticketCreate = await ticketService.createTicket(ticketData);
-      res.send({ status: "success", payload: ticketCreate });
-    }
+    const ticketCreate = await ticketService.createTicket(ticketData);
+    res.send({ status: "success", payload: ticketCreate });
   } catch (e) {
     console.log(e);
     res.status(500).send("Error al crear ticket");

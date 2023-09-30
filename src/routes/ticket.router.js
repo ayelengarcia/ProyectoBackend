@@ -6,10 +6,21 @@ import {
   updateTicketById,
   deleteTicket,
 } from "../controllers/tickets.controller.js";
+import {
+  authorizationRol,
+  authorizationStrategy,
+  extractNonSensitiveUserInfo,
+} from "../utils.js";
 
 const router = Router();
 
-router.post("/tickets", createTicket);
+router.post(
+  "/tickets",
+  authorizationStrategy("jwt", { session: false }),
+  authorizationRol("Usuario"),
+  extractNonSensitiveUserInfo,
+  createTicket
+);
 
 router.get("/tickets", getTickets);
 
