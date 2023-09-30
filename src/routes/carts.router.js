@@ -1,9 +1,9 @@
 import { Router } from "express";
 import {
   addProductCart,
-  checkStock,
   createCart,
   deleteCartById,
+  finishPurchase,
   getCartById,
   getCarts,
 } from "../controllers/carts.controller.js";
@@ -20,17 +20,20 @@ router.get("/carts", getCarts);
 // Agregar productos a carrito existente
 router.post(
   "/carts/:cid/:pid",
-  authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Usuario"),
+  // authorizationStrategy("jwt", { session: false }),
+  // authorizationRol("Usuario"),
   addProductCart
 );
-
-router.post("/cart/:cid/purchase", checkStock);
 
 //Mostrar carrito por ID
 router.get("/carts/:cid", getCartById);
 
+//Finalizar compra
+router.post("/carts/purchase/:cid", finishPurchase);
+
 //Eliminar carrito
 router.delete("/carts/:cid", deleteCartById);
+
+//añadir eliminar product to cart
 
 export default router;

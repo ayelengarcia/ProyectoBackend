@@ -46,17 +46,6 @@ export const addProductCart = async (req, res) => {
   }
 };
 
-export const checkStock = async (req, res) => {
-  const cid = req.params.cid;
-  const email = req.query.purchaser;
-  try {
-    const result = await cartService.checkStock(cid, email);
-    res.send({ status: "success", payload: result });
-  } catch (error) {
-    res.status(404).send({ succes: false, message: error.message });
-  }
-};
-
 export const deleteCartById = async (req, res) => {
   const cid = req.params.cid;
   try {
@@ -64,5 +53,17 @@ export const deleteCartById = async (req, res) => {
     res.send({ message: "Carrito eliminado exitosamente", payload: result });
   } catch (error) {
     res.status(500).json({ error: "Error al eliminar el carrito" });
+  }
+};
+
+export const finishPurchase = async (req, res) => {
+  const cid = req.params.cid;
+
+  try {
+    const result = await cartService.finishPurchase(cid);
+    res.send({ status: "success", payload: result });
+  } catch (error) {
+    console.log(error);
+    res.status(404).send({ status: "error al finalizar compra" });
   }
 };

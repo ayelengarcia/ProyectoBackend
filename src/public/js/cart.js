@@ -82,3 +82,52 @@ const recorrerObjetos = (array, template, contenedor) => {
     console.error(error);
   }
 })();
+
+const btnPurchease = document.getElementById("btn-purchease");
+const contenedorTicket = document.querySelector("contenedorTicket");
+
+const mostrarDetallesDelTicket = (ticket) => {
+  contenedorTicket.innerHTML = `
+      <div> ${ticket.code}</div>
+      <div> ${ticket.purchase_datetime}</div>
+      <div> ${ticket.amount}</div>
+      <div> ${ticket.purchaser}</div>
+  `;
+};
+
+btnPurchease.addEventListener("click", async () => {
+  try {
+    const cid = await obtenerCartId();
+    const response = await fetch(`/api/carts/purchase/${cid}`, {
+      method: "POST",
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al finalizar la compra");
+    }
+
+    const amount = await totalCarrito();
+    const ticketData = {
+      amount: amount,
+      purchaser: "ayeleng@gmail.com",
+    };
+
+    const ticketResponse = await fetch("/api/tickets", {
+      method: "POST",
+      body: JSON.stringify(ticketData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!ticketResponse.ok) {
+      throw new Error("Error al crear el ticket");
+    }
+
+    const ticket = await ticketResponse.json();
+
+    mostrarDetallesDelTicket(ticket);
+  } catch (error) {
+    console.error(error);
+  }
+});

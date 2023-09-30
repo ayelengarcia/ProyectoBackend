@@ -50,4 +50,36 @@ export default class Cart {
     await cart.save();
     return cart;
   };
+
+  finishPurchase = async (cid) => {
+    try {
+      const cartUser = await CartModel.findOne({ _id: cid });
+
+      if (!cartUser) {
+        throw new Error("Carrito no encontrado");
+      }
+
+      const cartProducts = cartUser.products;
+
+      for (const product of cartProducts) {
+        const productInStock = await ProductModel.findById(product._id);
+
+        if (!productInStock) {
+          throw new Error(`Producto  no encontrado en stock`);
+        }
+
+        if (productInStock.stock >= product.products.quantity) {
+          productInStock.stock -= product.products.quantity;
+
+          await productInStock.save();
+        } else {
+          throw new Error(`Stock insuficiente para el producto`);
+        }
+      }
+
+      return cartProducts;
+    } catch (error) {
+      throw error;
+    }
+  };
 }

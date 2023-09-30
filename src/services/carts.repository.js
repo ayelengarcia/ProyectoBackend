@@ -27,4 +27,8 @@ export default class CartDTO {
   addProductCart = async (cid, pid, quantity) => {
     return await this.dao.addProductCart(cid, pid, quantity);
   };
+
+  finishPurchase = async (cid) => {
+    return await this.dao.finishPurchase(cid);
+  };
 }
