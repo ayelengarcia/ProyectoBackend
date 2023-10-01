@@ -1,9 +1,9 @@
+import UserMongo from "../Dao/mongoManager/user.mongo.js";
+import CartMongo from "../Dao/mongoManager/cart.mongo.js";
 import passport from "passport";
 import local from "passport-local";
 import GitHubStrategy from "passport-github2";
 import passportJWT from "passport-jwt";
-import UserModel from "../Dao/mongoManager/models/userModel.js";
-import CartModel from "../Dao/mongoManager/models/cartModel.js";
 import config from "./config.js";
 import {
   createHash,
@@ -11,6 +11,11 @@ import {
   extractCookie,
   generateToken,
 } from "../utils.js";
+
+// import { getUserByEmail } from "../controllers/users.controller.js";
+
+const userMongo = new UserMongo();
+const cartMongo = new CartMongo();
 
 const LocalStrategy = local.Strategy;
 const JWTStrategy = passportJWT.Strategy;
@@ -29,14 +34,10 @@ const initPassport = () => {
       async (accessToken, refreshToken, profile, done) => {
         console.log(profile);
         try {
-          const user = await UserModel.findOne({ email: profile._json.email })
-            .lean()
-            .exec();
-          const cart = new CartModel();
-          await cart.save();
+          const user = await userMongo.getUserByEmail(profile._json.email);
+          const cart = await cartMongo.createCart();
 
           if (user) {
-            console.log("El user ya existe ");
             const token = generateToken(user);
             user.token = token;
             return done(null, user);
@@ -51,7 +52,7 @@ const initPassport = () => {
               roles: "Usuario",
             };
 
-            const result = await UserModel.create(newUser);
+            const result = await userMongo.createUser(newUser);
             console.log(result);
 
             const token = generateToken(result);
@@ -69,37 +70,34 @@ const initPassport = () => {
   passport.use(
     "register",
     new LocalStrategy(
-      // Objeto de configuracion
       {
         passReqToCallback: true,
         usernameField: "email",
       },
-      //Lo que debe hacer
       async (req, username, password, done) => {
         const { first_name, last_name, email, age, roles } = req.body;
         try {
-          const user = await UserModel.findOne({ email: username });
-          const cart = new CartModel();
-          await cart.save();
+          const user = await userMongo.getUserByEmail(username);
+          const cart = await cartMongo.createCart();
 
           if (user) {
             console.log("El user ya existe ");
             const token = generateToken(user);
             user.token = token;
 
-            return done(null, user); //prueba
+            return done(null, user);
           } else {
             const newUser = {
               first_name,
               last_name,
               email,
-              password: createHash(password),
-              age,
-              cart: cart._id,
               roles,
+              age,
+              password: createHash(password),
+              cart: cart._id,
             };
 
-            const result = await UserModel.create(newUser);
+            const result = await userMongo.createUser(newUser);
             console.log(result);
 
             const token = generateToken(result);
@@ -120,9 +118,8 @@ const initPassport = () => {
       { usernameField: "email" },
       async (username, password, done) => {
         try {
-          const user = await UserModel.findOne({ email: username })
-            .lean()
-            .exec();
+          const user = await userMongo.getUserByEmail(username);
+
           if (!user) {
             console.log("El usuario no existe");
             return done(null, false);
@@ -165,7 +162,7 @@ const initPassport = () => {
   });
 
   passport.deserializeUser(async (id, done) => {
-    const user = await UserModel.findById(id);
+    const user = await userMongo.getUserById(id);
     done(null, user);
   });
 };

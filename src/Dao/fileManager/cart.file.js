@@ -1,4 +1,5 @@
 import FileManager from "./managers/FileManager.js";
+import FileProducts from "./product.file.js";
 
 export default class Cart extends FileManager {
   constructor(filename = "./ddbb/carrito.json") {
@@ -9,7 +10,7 @@ export default class Cart extends FileManager {
   createCart = async () => {
     const cartsAll = await this.getObjects();
     const newIndex = cartsAll.length;
-  
+
     const newCart = {
       id: newIndex + 1,
       code: this.generarCode(newIndex),
@@ -18,10 +19,9 @@ export default class Cart extends FileManager {
 
     cartsAll.push(newCart);
     await this.writeObjects(cartsAll);
-  
+
     return newCart;
   };
-  
 
   getCarts = async (limit) => {
     if (limit) {
@@ -40,45 +40,63 @@ export default class Cart extends FileManager {
     return await this.deleteObjets(id);
   };
 
-  getProductById = async (productId) => {
-    const data = await fs.promises.readFile("./ddbb/productos.json", "utf-8");
-    JSON.parse(data);
-    const product = data.find(
-      (product) => product.id === parseInt(productId)
-    );
+  addProductCart = async (cartId, productId, quantity) => {
+    const cartsAll = await this.getObjects();
+    const cartIndex = cartsAll.findIndex((c) => c.id === parseInt(cartId));
 
-    if (!product) {
-      throw new Error("No se encuentra.");
+    if (cartIndex === -1) {
+      return null;
     }
 
-    return product;
+    const existingProductIndex = cartsAll[cartIndex].products.findIndex(
+      (product) => product.product.id === productId
+    );
+
+    if (existingProductIndex !== -1) {
+      cartsAll[cartIndex].products[existingProductIndex].quantity += quantity;
+    } else {
+      const product = {
+        product: { id: productId },
+        quantity: quantity,
+      };
+      cartsAll[cartIndex].products.push(product);
+    }
+
+    await this.writeObjects(cartsAll);
+
+    return cartsAll[cartIndex];
   };
 
+  finishPurchase = async (cid) => {
+    try {
+      const cart = await this.getObjectsById(cid);
 
-addProductCart = async (cartId, productId, quantity) => {
-  const cartsAll = await this.getObjects();
-  const cartIndex = cartsAll.findIndex((c) => c.id === parseInt(cartId));
+      if (!cart) {
+        throw new Error("Carrito no encontrado");
+      }
 
-  if (cartIndex === -1) {
-    return null;
-  }
+      const cartProducts = cart.products;
+      const productsFile = new FileProducts();
 
-  const existingProductIndex = cartsAll[cartIndex].products.findIndex((product) => product.product.id === productId);
+      for (const product of cartProducts) {
+        const productInStock = await productsFile.getObjectsById(product.id);
 
-  if (existingProductIndex !== -1) {
-    cartsAll[cartIndex].products[existingProductIndex].quantity += quantity;
-  } else {
-    const product = {
-      product: { id: productId },
-      quantity: quantity
-    };
-    cartsAll[cartIndex].products.push(product);
-  }
+        if (!productInStock) {
+          throw new Error(`Producto no encontrado en stock`);
+        }
 
-  await this.writeObjects(cartsAll);
+        if (productInStock.stock >= product.quantity) {
+          productInStock.stock -= product.quantity;
 
-  return cartsAll[cartIndex];
-};
+          await this.writeObjects(productInStock);
+        } else {
+          throw new Error(`Stock insuficiente para el producto`);
+        }
+      }
 
-  
+      return cartProducts;
+    } catch (error) {
+      throw error;
+    }
+  };
 }

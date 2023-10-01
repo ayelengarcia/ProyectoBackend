@@ -16,10 +16,14 @@ switch (config.persistence) {
       dbName: config.dbName,
     });
 
-    const { default: ProductMongo } = await import("./mongoManager/product.mongo.js");
+    const { default: ProductMongo } = await import(
+      "./mongoManager/product.mongo.js"
+    );
     const { default: CartMongo } = await import("./mongoManager/cart.mongo.js");
     const { default: UserMongo } = await import("./mongoManager/user.mongo.js");
-    const { default: TicketMongo } = await import("./mongoManager/ticket.mongo.js");
+    const { default: TicketMongo } = await import(
+      "./mongoManager/ticket.mongo.js"
+    );
 
     Product = ProductMongo;
     Cart = CartMongo;
@@ -28,13 +32,19 @@ switch (config.persistence) {
     break;
 
   case "FILE":
-    const { default: ProductFile } = await import("./fileManager/product.file.js");
+    const { default: ProductFile } = await import(
+      "./fileManager/product.file.js"
+    );
     const { default: CartFile } = await import("./fileManager/cart.file.js");
     const { default: UserFile } = await import("./fileManager/user.file.js");
+    const { default: TicketFile } = await import(
+      "./fileManager/ticket.file.js"
+    );
 
     Product = ProductFile;
     Cart = CartFile;
     User = UserFile;
+    Ticket = TicketFile;
     break;
 
   default:

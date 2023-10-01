@@ -3,7 +3,8 @@ import ProductModel from "./models/productModel.js";
 
 export default class Cart {
   createCart = async () => {
-    return await CartModel.create({ products: [] });
+    const cart = await CartModel.create({ products: [] });
+    return await cart.save();
   };
 
   getCarts = async (limit) => {

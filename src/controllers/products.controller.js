@@ -31,7 +31,6 @@ export const getProductById = async (req, res) => {
 
     res.send({ message: "Producto encontrado", payload: result });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Error al obtener el producto" });
   }
 };
@@ -49,7 +48,10 @@ export const updatedProductById = async (req, res) => {
   };
 
   try {
-    const result = await productService.updatedProductById(productId, updatedProduct);
+    const result = await productService.updatedProductById(
+      productId,
+      updatedProduct
+    );
 
     res.send({ status: "Producto actualizado exitosamente", payload: result });
   } catch (error) {
@@ -57,18 +59,16 @@ export const updatedProductById = async (req, res) => {
   }
 };
 
-
 export const deletedProduct = async (req, res) => {
   const productId = req.params.pid;
   try {
     const result = await productService.deleteProduct(productId);
 
-    if(result){
+    if (result) {
       res.send({ status: "Producto eliminado exitosamente", payload: result });
-    }else{
-      res.send({ status: "No se pudo eliminar"});
+    } else {
+      res.send({ status: "No se pudo eliminar" });
     }
-   
   } catch (error) {
     res.status(500).json({ error: "Error al eliminar el producto" });
   }
