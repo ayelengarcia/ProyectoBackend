@@ -20,12 +20,16 @@ export default class CartDTO {
     return await this.dao.getCartById(id);
   };
 
-  deleteCartById = async (id) => {
-    return await this.dao.deleteCartById(id);
-  };
-
   addProductCart = async (cid, pid, quantity) => {
     return await this.dao.addProductCart(cid, pid, quantity);
+  };
+
+  deleteProductCart = async (cid, pid) => {
+    return await this.dao.deleteProductCart(cid, pid);
+  };
+
+  deleteCartById = async (id) => {
+    return await this.dao.deleteCartById(id);
   };
 
   finishPurchase = async (cid) => {

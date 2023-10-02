@@ -56,7 +56,6 @@ chatbox.addEventListener("keyup", (e) => {
 // Recibir Mensajes
 socket.on("logs", (data) => {
   const divLogs = document.getElementById("logs");
-  console.log(data);
   let messages = "";
 
   data.forEach((msn) => {

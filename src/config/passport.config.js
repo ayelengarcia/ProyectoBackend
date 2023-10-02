@@ -12,6 +12,7 @@ import {
   generateToken,
 } from "../utils.js";
 
+//Preguntar error de controller en passport.
 // import { getUserByEmail } from "../controllers/users.controller.js";
 
 const userMongo = new UserMongo();
@@ -32,7 +33,7 @@ const initPassport = () => {
         callbackURL: config.callback_url_gith,
       },
       async (accessToken, refreshToken, profile, done) => {
-        console.log(profile);
+        // console.log(profile);
         try {
           const user = await userMongo.getUserByEmail(profile._json.email);
           const cart = await cartMongo.createCart();
@@ -40,6 +41,7 @@ const initPassport = () => {
           if (user) {
             const token = generateToken(user);
             user.token = token;
+            console.log("Usuario existente logueado con github");
             return done(null, user);
           } else {
             const newUser = {
@@ -53,14 +55,14 @@ const initPassport = () => {
             };
 
             const result = await userMongo.createUser(newUser);
-            console.log(result);
+            console.log("Nuevo usuario logueado con github");
 
             const token = generateToken(result);
             result.token = token;
             return done(null, result);
           }
         } catch (e) {
-          return done(e);
+          return done("Error de login GITHUB", e);
         }
       }
     )
@@ -81,7 +83,7 @@ const initPassport = () => {
           const cart = await cartMongo.createCart();
 
           if (user) {
-            console.log("El user ya existe ");
+            console.log("El user ya existe");
             const token = generateToken(user);
             user.token = token;
 
@@ -98,7 +100,7 @@ const initPassport = () => {
             };
 
             const result = await userMongo.createUser(newUser);
-            console.log(result);
+            console.log("Usuario creado");
 
             const token = generateToken(result);
             result.token = token;
@@ -137,7 +139,7 @@ const initPassport = () => {
           const token = generateToken(payload);
           return done(null, user, { token });
         } catch (e) {
-          return done(e);
+          return done("Error de login LOCAL", e);
         }
       }
     )

@@ -32,12 +32,17 @@ const contenedorTotal = document.getElementById("template-total");
 
 //TEMPLATE CART
 const templateCart = (cart) => {
+  const stockText = cart.pid.stock <= 0 ? "Sin stock" : "En stock";
+  const priceDisplay =
+    cart.pid.stock <= 0 ? `<s>${cart.pid.price}</s>` : `${cart.pid.price}`;
+
   return `<tr>
       <td>${cart.pid.code}</td>
       <td>${cart.pid.thumbnail}</td>
       <td>${cart.pid.title}</td>
+      <td>${stockText}</td>
       <td>${cart.quantity}</td>
-      <td>$ ${cart.pid.price}</td>
+      <td>$ ${priceDisplay}</td>
     </tr>`;
 };
 
@@ -46,8 +51,12 @@ const totalCarrito = async () => {
   try {
     const cart = await obtenerCart();
     const total = cart.reduce((accumulator, currentItem) => {
-      const subtotal = currentItem.pid.price * currentItem.quantity;
-      return accumulator + subtotal;
+      if (currentItem.pid.stock > 0) {
+        const subtotal = currentItem.pid.price * currentItem.quantity;
+        return accumulator + subtotal;
+      } else {
+        return accumulator;
+      }
     }, 0);
 
     return total;
@@ -70,11 +79,11 @@ const recorrerObjetos = (array, template, contenedor) => {
 //RENDERIZAR CARRITO
 (async () => {
   try {
-    const cart = await obtenerCart();
     const total = await totalCarrito();
-
-    recorrerObjetos(cart, templateCart, contenedorCart);
     contenedorTotal.innerHTML = `$ ${total}`;
+
+    const cart = await obtenerCart();
+    recorrerObjetos(cart, templateCart, contenedorCart);
   } catch (error) {
     console.error(error);
   }
@@ -105,25 +114,30 @@ btnPurchease.addEventListener("click", async (req, res) => {
 
     if (!response.ok) throw new Error("Error al finalizar la compra");
 
-    const amount = await totalCarrito();
-    const ticketData = {
-      amount: amount,
-    };
+    const responseData = await response.json();
 
-    const ticketResponse = await fetch("/api/tickets", {
-      method: "POST",
-      body: JSON.stringify(ticketData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    if (responseData.payload !== undefined) {
+      const amountTotalBuy = responseData.payload.amountTotalBuy;
 
-    if (!ticketResponse.ok) throw new Error("Error al crear el ticket");
+      const ticketData = {
+        amount: amountTotalBuy,
+      };
 
-    const ticket = await ticketResponse.json();
-    console.log(ticket);
+      const ticketResponse = await fetch("/api/tickets", {
+        method: "POST",
+        body: JSON.stringify(ticketData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    mostrarDetallesDelTicket(ticket);
+      if (!ticketResponse.ok) throw new Error("Error al crear el ticket");
+
+      const ticket = await ticketResponse.json();
+      console.log(ticket);
+
+      mostrarDetallesDelTicket(ticket);
+    }
   } catch (error) {
     console.error(error);
   }

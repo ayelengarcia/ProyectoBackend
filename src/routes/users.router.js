@@ -7,7 +7,6 @@ import {
   getUsers,
   updatedUserById,
 } from "../controllers/users.controller.js";
-import { authorizationStrategy } from "../utils.js";
 
 const router = Router();
 

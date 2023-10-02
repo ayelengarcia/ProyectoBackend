@@ -52,9 +52,8 @@ thead {
   flex-direction: column;
   justify-content: space-between;
   width: 420px;
-  border: 1px solid lightgray;
-  box-shadow: -2px 2px 1px #d3d3d3d1;
-  border-radius: 15px;
+  border: 1px solid #d3d3d38a;
+  border-radius: 10px;
   font-family: sans-serif;
   margin: 5px;
   height: 250px;
@@ -76,7 +75,7 @@ img {
 
 .pie {
   background: #9c59b6a2;
-  border-radius: 0 0 15px 15px;
+  border-radius: 0 0 10px 10px;
   padding: 10px;
   text-align: center;
 }

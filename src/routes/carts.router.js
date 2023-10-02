@@ -3,6 +3,7 @@ import {
   addProductCart,
   createCart,
   deleteCartById,
+  deleteProductCart,
   finishPurchase,
   getCartById,
   getCarts,
@@ -17,6 +18,9 @@ router.post("/carts", createCart);
 //Mostrar todos los carritos
 router.get("/carts", getCarts);
 
+//Mostrar carrito por ID
+router.get("/carts/:cid", getCartById);
+
 // Agregar productos a carrito existente
 router.post(
   "/carts/:cid/:pid",
@@ -25,15 +29,28 @@ router.post(
   addProductCart
 );
 
-//Mostrar carrito por ID
-router.get("/carts/:cid", getCartById);
+//añadir eliminar product to cart
+router.delete(
+  "/carts/:cid/:pid",
+  authorizationStrategy("jwt", { session: false }),
+  authorizationRol("Usuario"),
+  deleteProductCart
+);
 
 //Eliminar carrito
-router.delete("/carts/:cid", deleteCartById);
+router.delete(
+  "/carts/:cid",
+  authorizationStrategy("jwt", { session: false }),
+  authorizationRol("Usuario"),
+  deleteCartById
+);
 
 //Finalizar compra
-router.post("/carts/purchase/buy/:cid", finishPurchase);
-
-//añadir eliminar product to cart
+router.post(
+  "/carts/purchase/buy/:cid",
+  authorizationStrategy("jwt", { session: false }),
+  authorizationRol("Usuario"),
+  finishPurchase
+);
 
 export default router;

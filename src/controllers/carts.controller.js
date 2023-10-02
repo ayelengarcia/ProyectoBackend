@@ -46,6 +46,24 @@ export const addProductCart = async (req, res) => {
   }
 };
 
+export const deleteProductCart = async (req, res) => {
+  const cid = req.params.cid;
+  const pid = req.params.pid;
+
+  try {
+    const result = await cartService.deleteProductCart(cid, pid);
+    if (result) {
+      res.send({ status: "Producto eliminado del carrito", payload: result });
+    } else {
+      res.status(404).json({ error: "Carrito no encontrado" });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error al eliminar el producto del carrito" });
+  }
+};
+
 export const deleteCartById = async (req, res) => {
   const cid = req.params.cid;
   try {

@@ -72,7 +72,7 @@ router.get(
 //Ruta principal PAGINATE PRODUCTS
 router.get("/", async (req, res) => {
   const page = parseInt(req.query?.page || 1);
-  const limit = parseInt(req.query?.limit || 6);
+  const limit = parseInt(req.query?.limit || 9);
 
   const queryParams = req.query?.query || "";
   const query = {};

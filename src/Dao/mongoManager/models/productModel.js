@@ -12,7 +12,7 @@ const productsSchema = new mongoose.Schema({
   code: String,
 });
 
-productsSchema.plugin(mongoosePagination)
+productsSchema.plugin(mongoosePagination);
 
 const ProductModel = mongoose.model(productsCollections, productsSchema);
 

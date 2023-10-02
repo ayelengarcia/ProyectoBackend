@@ -15,6 +15,7 @@ import initPassport from "./config/passport.config.js";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 import config from "./config/config.js";
+import { finishPurchase } from "./controllers/carts.controller.js";
 
 const app = express();
 
