@@ -1,13 +1,15 @@
 import { productService } from "../services/index.js";
+import config from "../config/config.js";
+import { handleError } from "../utils.js";
 
 export const getProducts = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit);
     const result = await productService.getProducts(limit);
 
-    res.send({ status: "success", payload: result });
+    res.send({ status: "Success", payload: result });
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener los productos" });
+    handleError(config.product_not_found, res);
   }
 };
 
@@ -19,7 +21,7 @@ export const addProducts = async (req, res) => {
       .status(201)
       .json({ message: "Producto agregado exitosamente", payload: result });
   } catch (error) {
-    res.status(500).json({ error: "Error al agregar el producto" });
+    handleError(config.product_not_add, res);
   }
 };
 
@@ -31,7 +33,7 @@ export const getProductById = async (req, res) => {
 
     res.send({ message: "Producto encontrado", payload: result });
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener el producto" });
+    handleError(config.product_not_add, res);
   }
 };
 
@@ -55,7 +57,7 @@ export const updatedProductById = async (req, res) => {
 
     res.send({ status: "Producto actualizado exitosamente", payload: result });
   } catch (error) {
-    res.status(500).json({ error: "Error al actualizar el producto" });
+    handleError(config.product_not_update, res);
   }
 };
 
@@ -70,6 +72,6 @@ export const deletedProduct = async (req, res) => {
       res.send({ status: "No se pudo eliminar" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Error al eliminar el producto" });
+    handleError(config.product_not_delete, res);
   }
 };

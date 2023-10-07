@@ -1,4 +1,5 @@
 import { fileURLToPath } from "url";
+import { faker } from "@faker-js/faker/locale/es";
 import { dirname } from "path";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -61,4 +62,23 @@ export const extractNonSensitiveUserInfo = (req, res, next) => {
     req.nonSensitiveUserInfo = { first_name, last_name, email, age, cart };
   }
   next();
+};
+
+//Mocking Products
+export const generateProducts = () => {
+  return {
+    id: faker.commerce.isbn(),
+    title: faker.commerce.productName(),
+    code: faker.number.hex({ min: 100, max: 65535 }),
+    description: faker.commerce.productDescription(),
+    price: faker.commerce.price(),
+    stock: faker.number.int(1000),
+    thumbnail: faker.image.urlLoremFlickr({ category: "moda" }),
+  };
+};
+
+//Manejador de errores
+export const handleError = (code, res) => {
+  const message = code || "Error desconocido";
+  res.status(500).json({ error: message });
 };

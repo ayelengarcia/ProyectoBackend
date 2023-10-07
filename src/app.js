@@ -5,6 +5,8 @@ import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import usersRouter from "./routes/users.router.js";
 import ticketsRouter from "./routes/ticket.router.js";
+import mailingRouter from "./routes/mailing.router.js";
+import mockingProducts from "./routes/mockingProducts.router.js";
 import viewsRouter from "./routes/views.router.js";
 import sessionsRouter from "./routes/sessions.router.js";
 import __dirname from "./utils.js";
@@ -15,7 +17,6 @@ import initPassport from "./config/passport.config.js";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 import config from "./config/config.js";
-import { finishPurchase } from "./controllers/carts.controller.js";
 
 const app = express();
 
@@ -55,6 +56,8 @@ app.use(passport.session());
 
 //Rutas
 app.use("/", viewsRouter);
+app.use("/", mailingRouter);
+app.use("/api", mockingProducts);
 app.use("/api", productsRouter);
 app.use("/api", cartsRouter);
 app.use("/api", usersRouter);
