@@ -1,4 +1,6 @@
 import { userService } from "../services/index.js";
+import config from "../config/config.js";
+import { handleError } from "../utils.js";
 
 export const createUser = async (req, res) => {
   const user = req.body;
@@ -6,7 +8,8 @@ export const createUser = async (req, res) => {
     const userCreate = userService.createUser(user);
     res.send({ status: "success", payload: userCreate });
   } catch (e) {
-    res.status(500).send("Error al crear el user");
+    req.logger.error("No se pudo crear usuario");
+    handleError(config.user_not_add, res);
   }
 };
 
@@ -18,7 +21,8 @@ export const getUsers = async (req, res) => {
     res.send({ status: "success", payload: result });
     return result;
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener los usuarios" });
+    req.logger.error("No se pudo obtener usuarios");
+    handleError(config.user_not_found, res);
   }
 };
 
@@ -29,7 +33,8 @@ export const getUserByEmail = async (req, res) => {
 
     res.send({ message: "Usuario encontrado", payload: user });
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener el usuario con email" });
+    req.logger.error("No se pudo obtener usuario por email");
+    handleError(config.user_not_found, res);
   }
 };
 
@@ -40,7 +45,8 @@ export const getUserById = async (req, res) => {
 
     res.send({ message: "Usuario encontrado", payload: user });
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener el usuario con id" });
+    req.logger.error("No se pudo obtener usuario por id");
+    handleError(config.user_not_found, res);
   }
 };
 
@@ -62,7 +68,8 @@ export const updatedUserById = async (req, res) => {
 
     res.send({ status: "Usuario actualizado exitosamente", payload: result });
   } catch (error) {
-    res.status(500).json({ error: "Error al actualizar el usuario" });
+    req.logger.error("No se pudo actualizar usuario");
+    handleError(config.user_not_update, res);
   }
 };
 
@@ -74,9 +81,11 @@ export const deletedUser = async (req, res) => {
     if (result) {
       res.send({ status: "Usuario eliminado exitosamente", payload: result });
     } else {
+      req.logger.warning("No se pudo eliminar usuario");
       res.send({ status: "No se pudo eliminar" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Error al eliminar el usuario" });
+    req.logger.error("Error al eliminar usuario");
+    handleError(config.user_not_delete, res);
   }
 };

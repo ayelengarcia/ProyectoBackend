@@ -7,6 +7,7 @@ import usersRouter from "./routes/users.router.js";
 import ticketsRouter from "./routes/ticket.router.js";
 import mailingRouter from "./routes/mailing.router.js";
 import mockingProducts from "./routes/mockingProducts.router.js";
+import loggerTest from "./routes/loggerTest.js";
 import viewsRouter from "./routes/views.router.js";
 import sessionsRouter from "./routes/sessions.router.js";
 import __dirname from "./utils.js";
@@ -17,6 +18,7 @@ import initPassport from "./config/passport.config.js";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 import config from "./config/config.js";
+import { addLogger, logger } from "./config/logger.js";
 
 const app = express();
 
@@ -25,6 +27,7 @@ app.use(express.json());
 app.use("/static", express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()); //Conectamos cookies con nuestro sv
+app.use(addLogger);
 
 //Handlebars
 app.engine("handlebars", handlebars.engine());
@@ -55,6 +58,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Rutas
+app.use("/", loggerTest);
 app.use("/", viewsRouter);
 app.use("/", mailingRouter);
 app.use("/api", mockingProducts);
@@ -69,16 +73,16 @@ mongoose.set("strictQuery", false);
 mongoose
   .connect(config.dbURL, { dbName: config.dbName })
   .then(() => {
-    console.log("DB connectada");
+    logger.info("DB conectada");
     const httpServer = app.listen(config.port, () =>
-      console.log("Listening...")
+      logger.http("Listening...")
     );
     const io = new Server(httpServer);
     let messages = [];
 
     io.on("connection", (socket) => {
       socket.on("new", (user) =>
-        console.log(`${user} se acaba de conectar al chat`)
+        logger.info(`${user} se acaba de conectar al chat`)
       );
 
       socket.on("message", (data) => {
@@ -88,5 +92,5 @@ mongoose
     });
   })
   .catch((e) => {
-    console.log("Error al conectar a la DB");
+    logger.falal("Error al conectar la DB");
   });

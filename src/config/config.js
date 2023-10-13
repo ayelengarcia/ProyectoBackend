@@ -4,6 +4,7 @@ dotenv.config();
 
 export default {
   persistence: process.env.PERSISTENCE,
+  entorno: process.env.ENTORNO, //PRODUCCION o DESARROLLO
   port: process.env.PORT || 8080,
   dbName: process.env.DB_NAME,
   dbURL: process.env.MONGO_URL,
@@ -30,4 +31,14 @@ export default {
   cart_not_purchase: "Error al finalizar compra",
   cart_not_add_product: "Error al agregar producto al carrito",
   cart_not_delete_product: "Error al eliminar producto del carrito",
+
+  user_not_add: "Error al agregar usuario",
+  user_not_found: "Error al obtener usuario",
+  user_not_update: "Error al actualizar usuario",
+  user_not_delete: "Error al eliminar usuario",
+
+  ticket_not_add: "Error al agregar ticket",
+  ticket_not_found: "Error al obtener ticket",
+  ticket_not_update: "Error al actualizar ticket",
+  ticket_not_delete: "Error al eliminar ticket",
 };

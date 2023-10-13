@@ -9,9 +9,9 @@ import {
   extractCookie,
   generateToken,
 } from "../utils.js";
-
 import { userService } from "../services/index.js";
 import { cartService } from "../services/index.js";
+import logger from "./config.js";
 
 const LocalStrategy = local.Strategy;
 const JWTStrategy = passportJWT.Strategy;
@@ -28,7 +28,7 @@ const initPassport = () => {
         callbackURL: config.callback_url_gith,
       },
       async (accessToken, refreshToken, profile, done) => {
-        // console.log(profile);
+        logger.info(profile);
         try {
           const user = await userService.getUserByEmail(profile._json.email);
           const cart = await cartService.createCart();
@@ -36,7 +36,7 @@ const initPassport = () => {
           if (user) {
             const token = generateToken(user);
             user.token = token;
-            console.log("Usuario existente logueado con github");
+            logger.info("Usuario existente logueado con github");
             return done(null, user);
           } else {
             const newUser = {
@@ -50,7 +50,7 @@ const initPassport = () => {
             };
 
             const result = await userService.createUser(newUser);
-            console.log("Nuevo usuario logueado con github");
+            logger.info("Nuevo usuario logueado con github");
 
             const token = generateToken(result);
             result.token = token;
@@ -78,7 +78,7 @@ const initPassport = () => {
           const cart = await cartService.createCart();
 
           if (user) {
-            console.log("El user ya existe");
+            logger.info("El user ya existe");
             const token = generateToken(user);
             user.token = token;
 
@@ -95,7 +95,7 @@ const initPassport = () => {
             };
 
             const result = await userService.createUser(newUser);
-            console.log("Usuario creado");
+            logger.info("Usuario creado");
 
             const token = generateToken(result);
             result.token = token;
@@ -118,11 +118,11 @@ const initPassport = () => {
           const user = await userService.getUserByEmail(username);
 
           if (!user) {
-            console.log("El usuario no existe");
+            logger.info("El usuario no existe");
             return done(null, false);
           }
           if (!isValidPass(user, password)) {
-            console.log("Contraseña incorrecta");
+            logger.info("Contraseña incorrecta");
             return done(null, false);
           }
 

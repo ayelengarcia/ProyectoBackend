@@ -1,4 +1,6 @@
 import { ticketService } from "../services/index.js";
+import config from "../config/config.js";
+import { handleError } from "../utils.js";
 
 export const createTicket = async (req, res) => {
   try {
@@ -13,7 +15,8 @@ export const createTicket = async (req, res) => {
     res.send({ status: "success", payload: ticketCreate });
   } catch (e) {
     console.log(e);
-    res.status(500).send("Error al crear ticket");
+    req.logger.error("No se pudo crear ticket");
+    handleError(config.ticket_not_add, res);
   }
 };
 
@@ -24,7 +27,8 @@ export const getTickets = async (req, res) => {
 
     res.send({ status: "success", payload: result });
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener ticket" });
+    req.logger.error("Error al obtener tickets");
+    handleError(config.ticket_not_found, res);
   }
 };
 
@@ -36,7 +40,8 @@ export const getTicketById = async (req, res) => {
     res.send({ message: "Ticket encontrado", payload: ticket });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error al obtener el ticket" });
+    req.logger.error("Error al obtener ticket por id");
+    handleError(config.ticket_not_found, res);
   }
 };
 
@@ -57,7 +62,8 @@ export const updateTicketById = async (req, res) => {
 
     res.send({ status: "Ticket actualizado", payload: result });
   } catch (error) {
-    res.status(500).json({ error: "Error al actualizar ticket" });
+    req.logger.error("Error al actualizar ticket");
+    handleError(config.ticket_not_update, res);
   }
 };
 
@@ -69,9 +75,11 @@ export const deleteTicket = async (req, res) => {
     if (result) {
       res.send({ status: "Ticket eliminado exitosamente", payload: result });
     } else {
+      req.logger.warning("No se puso eliminar el ticket");
       res.send({ status: "No se pudo eliminar ticket" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Error al eliminar ticket" });
+    req.logger.error("Error al eliminar ticket");
+    handleError(config.ticket_not_delete, res);
   }
 };
