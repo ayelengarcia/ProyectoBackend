@@ -2,6 +2,8 @@ import { Router } from "express";
 import ProductModel from "../Dao/mongoManager/models/productModel.js";
 import { authorizationRol, authorizationStrategy } from "../utils.js";
 import passport from "passport";
+import config from "../config/config.js";
+import jwt from "jsonwebtoken";
 
 const router = Router();
 
@@ -19,6 +21,33 @@ function profile(req, res, next) {
 //Iniciar sesión
 router.get("/login", auth, (req, res) => {
   res.render("login", {});
+});
+
+//Reestablecer Pass
+router.get("/resetPass", auth, (req, res) => {
+  res.render("resetPass", {});
+});
+
+//Reestablecer Pass
+router.get("/resetPassError", auth, (req, res) => {
+  res.render("resetPassError", {});
+});
+
+// Reestablecer Pass confirm
+router.get("/resetPassConfirm", auth, (req, res) => {
+  const token = req.query.token;
+
+  try {
+    const decoded = jwt.verify(token, config.secret_jwt);
+    const isExpired = Date.now() > decoded.exp * 1000;
+    if (isExpired) {
+      res.render("resetPassError", { message: "El enlace ha expirado" });
+    } else {
+      res.render("resetPassConfirm", { token });
+    }
+  } catch (error) {
+    res.render("resetPassError", { message: "Error al verificar el enlace" });
+  }
 });
 
 //Registro

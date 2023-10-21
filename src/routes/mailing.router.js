@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import twilio from "twilio";
 import __dirname from "../utils.js";
 import config from "../config/config.js";
+import { generateTokenPass } from "../utils.js";
 
 const router = Router();
 
@@ -33,35 +34,40 @@ router.get("/sms", async (req, res) => {
   }
 });
 
-router.get("/mail", async (req, res) => {
+router.post("/sent-email", async (req, res) => {
   try {
+    const userEmail = req.body.email;
+    const token = generateTokenPass({ user: userEmail });
+    const resetLink = `http://127.0.0.1:8080/resetPassConfirm?token=${token}`;
+
     const result = await transport.sendMail({
       from: "ayelengarcia7@gmail.com",
-      to: "ayelengarcia7@gmail.com",
-      subject: "Notificación de registro",
+      to: userEmail,
+      subject: "Restablecimiento de Contraseña",
       html: `
       <div>
-        <h2>REGISTRO EXITOSO</h2>
-        <p>Tu usuario registrado es: <b>ayelengarcia7@gmail.com</b></p>
-        <br>
-        <img src="cid:img1" />
+        <h2>Restablecimiento de Contraseña</h2>
+        <p>Hemos recibido una solicitud para restablecer tu contraseña.</p>
+        <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+        <a href="${resetLink}">${resetLink}</a>;
       </div>
       `,
-      attachments: [
-        {
-          filename: "zorro.png",
-          path: `${__dirname}/public/img/zorro.png`,
-          cid: "img1",
-        },
-      ],
     });
 
     console.log(result);
-    res.send("Email sent");
+    res.send("Email enviado");
   } catch (error) {
     console.error(error);
-    res.status(500).send("Email send failed");
+    res.status(500).send("Fallo al enviar el correo electrónico");
   }
 });
 
 export default router;
+
+// attachments: [
+//   {
+//     filename: "zorro.png",
+//     path: `${__dirname}/public/img/zorro.png`,
+//     cid: "img1",
+//   },
+// ],

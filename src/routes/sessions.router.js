@@ -10,6 +10,7 @@ import {
   loginLocal,
   logout,
   registerLocal,
+  resetPassword,
 } from "../controllers/sessions.controller.js";
 
 const router = Router();
@@ -24,15 +25,18 @@ router.post(
 //Login local
 router.post("/login", passport.authenticate("login"), loginLocal);
 
-// Cerrar sesión
-router.get("/logout", logout);
-
 //Iniciar session Github
 router.get(
   "/githubcallback",
   passport.authenticate("github", { failureRedirect: "/" }),
   loginGithub
 );
+
+// Cerrar sesión
+router.get("/logout", logout);
+
+//Reset pass
+router.post("/resetPassConfirm", resetPassword);
 
 //ruta datos de usuario logueado - Admin
 router.get(

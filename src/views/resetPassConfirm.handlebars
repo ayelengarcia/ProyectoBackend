@@ -1,0 +1,22 @@
+<h2>Reestablecer contraseña</h2>
+
+<form
+  class="displayColumn"
+  action="/api/sessions/resetPassConfirm"
+  method="post"
+>
+
+  <label for="email">Confirmar email</label>
+  <input id="email" type="text" name="email" placeholder="Ingresar email" />
+
+  <label for="password">Contraseña nueva</label>
+  <input
+    id="password"
+    type="password"
+    name="password"
+    placeholder="Ingresar password"
+  />
+
+  <button class="btn-session" type="submit">Enviar</button>
+
+</form>

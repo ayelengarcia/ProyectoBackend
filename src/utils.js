@@ -23,6 +23,10 @@ export const generateToken = (user) => {
   return jwt.sign({ user }, config.secret_jwt, { expiresIn: "24h" });
 };
 
+export const generateTokenPass = (user) => {
+  return jwt.sign({ user }, config.secret_jwt, { expiresIn: "1h" });
+};
+
 export const extractCookie = (req) => {
   return req && req.cookies ? req.cookies[config.secret_cookie] : null;
 };

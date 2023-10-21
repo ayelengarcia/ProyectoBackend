@@ -11,7 +11,7 @@ import {
 } from "../utils.js";
 import { userService } from "../services/index.js";
 import { cartService } from "../services/index.js";
-import logger from "./config.js";
+import { logger } from "./logger.js";
 
 const LocalStrategy = local.Strategy;
 const JWTStrategy = passportJWT.Strategy;
@@ -102,6 +102,7 @@ const initPassport = () => {
             return done(null, result);
           }
         } catch (e) {
+          console.error(e);
           return done("Error de registro LOCAL", e);
         }
       }
