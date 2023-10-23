@@ -60,13 +60,15 @@ router.get("/profile", profile, (req, res) => {
   const user = req.user;
   res.render("profile", user);
 });
+
 //Perfil admin // user: admin@coder.com // contraseña: 1234
+//Perfil Premium // user: premium@coder.com // contraseña: 1234
 
 //Ruta para admins
 router.get(
   "/admin",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Admin"),
+  authorizationRol(["Premium", "Admin"]),
   (req, res) => {
     res.render("admin", {});
   }

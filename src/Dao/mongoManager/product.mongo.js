@@ -14,6 +14,9 @@ export default class Product {
     return await ProductModel.create(data);
   };
 
+  //Perfil admin // user: admin@coder.com // contraseña: 1234
+  //Perfil Premium // user: premium@coder.com // contraseña: 1234
+
   getProductById = async (id) => {
     return await ProductModel.findById(id);
   };

@@ -1,3 +1,5 @@
+import { userService } from "./index.js";
+
 export default class ProductRepository {
   constructor(dao) {
     this.dao = dao;

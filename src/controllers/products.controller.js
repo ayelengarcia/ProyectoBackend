@@ -16,6 +16,9 @@ export const getProducts = async (req, res) => {
 
 export const addProducts = async (req, res) => {
   const data = req.body;
+  const { email } = req.user.user;
+  data.owner = email;
+
   try {
     const result = await productService.addProducts(data);
 
@@ -23,6 +26,7 @@ export const addProducts = async (req, res) => {
       .status(201)
       .json({ message: "Producto agregado exitosamente", payload: result });
   } catch (error) {
+    console.error(error);
     req.logger.error("No se pudo agregar el producto");
     handleError(config.product_not_add, res);
   }
@@ -43,7 +47,7 @@ export const getProductById = async (req, res) => {
 
 export const updatedProductById = async (req, res) => {
   const productId = req.params.pid;
-  const { title, description, price, thumbnail, stock, code } = req.body;
+  const { title, description, price, thumbnail, stock, code, owner } = req.body;
   const updatedProduct = {
     title,
     description,
@@ -51,6 +55,7 @@ export const updatedProductById = async (req, res) => {
     thumbnail,
     stock,
     code,
+    owner,
   };
 
   try {

@@ -52,7 +52,7 @@ router.get(
 router.get(
   "/currentUser",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol(["Usuario", "Admin"]),
+  authorizationRol(["Usuario", "Admin", "Premium"]),
   extractNonSensitiveUserInfo,
   (req, res) => {
     if (req.nonSensitiveUserInfo) {

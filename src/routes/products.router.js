@@ -16,9 +16,12 @@ router.get("/products", getProducts);
 router.post(
   "/products",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Admin"),
+  authorizationRol(["Premium", "Admin"]),
   addProducts
 );
+
+//Perfil admin // user: admin@coder.com // contraseña: 1234
+//Perfil Premium // user: premium@coder.com // contraseña: 1234
 
 router.get("/products/:pid", getProductById);
 
