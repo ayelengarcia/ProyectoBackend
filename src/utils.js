@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import config from "./config/config.js";
 import passport from "passport";
+import { productService } from "./services/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -58,6 +59,42 @@ export const authorizationRol = (validRoles) => {
       res.status(403).send({ error: "Usuario no autorizado" });
     }
   };
+};
+
+//limita la eliminación de productos
+export const authorizationProduct = async (req, res, next) => {
+  const id = req.params.pid;
+  const { email, roles } = req.user.user;
+
+  const product = await productService.getProductById(id);
+
+  if (roles === "Admin") {
+    console.log("Producto eliminado por Administrador");
+    return next();
+  } else if (product.owner === email && roles === "Premium") {
+    console.log("Producto eliminado por usuario Premium");
+    return next();
+  } else {
+    console.log("No tienes permisos");
+    res.status(403).send({ status: "No tienes permisos" });
+  }
+};
+
+// Limita add products al carrito para usuarios Premium
+export const authorizationAddToCart = async (req, res, next) => {
+  const id = req.params.pid;
+  const { email, roles } = req.user.user;
+
+  const product = await productService.getProductById(id);
+
+  if (roles === "Premium" && product.owner === email) {
+    console.log("User Premium no puede agregar su propio producto al carrito");
+    return res
+      .status(403)
+      .send({ status: "No puedes agregar tu propio producto al carrito." });
+  }
+
+  next();
 };
 
 export const extractNonSensitiveUserInfo = (req, res, next) => {

@@ -6,6 +6,7 @@ import {
   getUserById,
   getUsers,
   updatedUserById,
+  updatedUserRole,
 } from "../controllers/users.controller.js";
 
 const router = Router();
@@ -19,6 +20,8 @@ router.get("/users/:email", getUserByEmail);
 router.get("/users/id/:id", getUserById);
 
 router.put("/users/:id", updatedUserById);
+
+router.put("/users/premium/:id", updatedUserRole);
 
 router.delete("/users/:id", deletedUser);
 

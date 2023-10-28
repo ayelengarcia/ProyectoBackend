@@ -94,7 +94,7 @@ router.get(
 router.get(
   "/cart",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Usuario"),
+  authorizationRol(["Usuario", "Premium"]),
   (req, res) => {
     res.render("cart", {});
   }

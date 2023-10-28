@@ -8,7 +8,11 @@ import {
   getCartById,
   getCarts,
 } from "../controllers/carts.controller.js";
-import { authorizationRol, authorizationStrategy } from "../utils.js";
+import {
+  authorizationAddToCart,
+  authorizationRol,
+  authorizationStrategy,
+} from "../utils.js";
 
 const router = Router();
 
@@ -25,11 +29,12 @@ router.get("/carts/:cid", getCartById);
 router.post(
   "/carts/:cid/:pid",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Usuario"),
+  authorizationRol(["Usuario", "Premium"]),
+  authorizationAddToCart,
   addProductCart
 );
 
-//añadir eliminar product to cart
+//eliminar product to cart
 router.delete(
   "/carts/:cid/:pid",
   authorizationStrategy("jwt", { session: false }),

@@ -26,6 +26,10 @@ export default class User {
     return await UserModel.findByIdAndUpdate(id, updatedUser);
   };
 
+  updatedUserRole = async (id, updatedRole) => {
+    return await UserModel.findByIdAndUpdate(id, updatedRole);
+  };
+
   deletedUser = async (id) => {
     return await UserModel.findByIdAndDelete(id);
   };

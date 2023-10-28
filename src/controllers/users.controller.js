@@ -73,6 +73,21 @@ export const updatedUserById = async (req, res) => {
   }
 };
 
+export const updatedUserRole = async (req, res) => {
+  const userId = req.params.id;
+  const { roles } = req.body;
+  const updatedRole = { roles };
+
+  try {
+    const result = await userService.updatedUserById(userId, updatedRole);
+
+    res.send({ status: "Rol actualizado exitosamente", payload: result });
+  } catch (error) {
+    req.logger.error("No se pudo actualizar rol");
+    handleError(config.user_not_update, res);
+  }
+};
+
 export const deletedUser = async (req, res) => {
   const userId = req.params.id;
   try {

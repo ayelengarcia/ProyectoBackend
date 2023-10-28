@@ -6,7 +6,11 @@ import {
   getProducts,
   updatedProductById,
 } from "../controllers/products.controller.js";
-import { authorizationRol, authorizationStrategy } from "../utils.js";
+import {
+  authorizationProduct,
+  authorizationRol,
+  authorizationStrategy,
+} from "../utils.js";
 
 const router = Router();
 
@@ -35,7 +39,8 @@ router.put(
 router.delete(
   "/products/:pid",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Admin"),
+  authorizationRol(["Premium", "Admin"]),
+  authorizationProduct,
   deletedProduct
 );
 

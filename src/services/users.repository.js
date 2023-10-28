@@ -23,6 +23,10 @@ export default class UserRepository {
     return await this.dao.updatedUserById(id, updatedUser);
   };
 
+  updatedUserRole = async (id, updatedRole) => {
+    return await this.dao.updatedUserById(id, updatedRole);
+  };
+
   deletedUser = async (id) => {
     return await this.dao.deletedUser(id);
   };

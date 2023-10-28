@@ -34,11 +34,15 @@ export const addProducts = async (req, res) => {
 
 export const getProductById = async (req, res) => {
   const id = req.params.pid;
-
   try {
     const result = await productService.getProductById(id);
 
-    res.send({ message: "Producto encontrado", payload: result });
+    if (result) {
+      res.send({ status: "Producto encontrado", payload: result });
+    } else {
+      req.logger.warning("No se encontró");
+      res.send({ status: "No se encontró" });
+    }
   } catch (error) {
     req.logger.error("No se pudo obtener el producto");
     handleError(config.product_not_found, res);

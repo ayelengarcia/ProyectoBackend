@@ -68,7 +68,6 @@ function deleteProduct() {
     })
     .then((responseData) => {
       console.log("Producto eliminado exitosamente", responseData);
-      form.reset();
       responseContainer.innerHTML = "Producto Eliminado";
     })
     .catch((error) => {
