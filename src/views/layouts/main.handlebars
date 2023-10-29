@@ -9,35 +9,74 @@
       href="https://fonts.googleapis.com/css2?family=Belanosima&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/static/css/styles.css" />
   </head>
-  
-  <body>
-    <ul class="displayRow">
-      <li>
-        <a class="Home" href="/"><h3>Home</h3></a>
-      </li>
-      <li>
-        <a href="/login">Iniciar sesión</a>
-      </li>
-      <li>
-        <a href="/register">Registrarme</a>
-      </li>
-      <li>
-        <a href="/profile">Perfil</a>
-      </li>
-      <li>
-        <a href="/messages">Chat</a>
-      </li>
-      <li>
-        <a href="/cart">Cart</a>
-      </li>
-      <li>
-        <a href="/admin">Admin</a>
-      </li>
-    </ul>
-    <hr />
 
-    {{{body}}}
+  <body>
+
+    <div class="header-content displayRow">
+
+      <div class="header-background displayRow">
+        <div>
+          <h2>BIKININFA</h2>
+        </div>
+
+        <ul class="displayRow">
+          <li>
+            <a class="Home" href="/"><h3>Home</h3></a>
+          </li>
+          <li>
+            <a class="Home" href="/productos"><h3>Productos</h3></a>
+          </li>
+          <li>
+            <a class="Home" href="/#"><h3>Contacto</h3></a>
+          </li>
+
+        </ul>
+
+        <div class="displayRow">
+          <ul class="displayRow">
+            <li>
+              <a href="/cart">Cart</a>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <a href="/login">Iniciar sesión</a>
+            </li>
+            <li>
+              <a href="/register">Registrarme</a>
+            </li>
+            <li>
+              <a href="/profile">Perfil</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="main-content">
+      {{{body}}}
+    </div>
+
+    <footer class="footer-content">
+      <hr />
+
+      <div class="displayRow">
+        <div>
+          <p>Copyright</p>
+        </div>
+        <li>
+          <a href="/messages">Chat</a>
+        </li>
+      </div>
+    </footer>
+
   </body>
 </html>

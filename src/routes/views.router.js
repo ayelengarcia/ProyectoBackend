@@ -100,8 +100,11 @@ router.get(
   }
 );
 
-//Ruta principal PAGINATE PRODUCTS
-router.get("/", async (req, res) => {
+//Ruta HOME
+router.get("/", async (req, res) => res.render("home", {}));
+
+//Ruta PAGINATE PRODUCTS
+router.get("/productos", async (req, res) => {
   const page = parseInt(req.query?.page || 1);
   const limit = parseInt(req.query?.limit || 9);
 
@@ -127,10 +130,10 @@ router.get("/", async (req, res) => {
     });
 
     products.prevLink = products.hasPrevPage
-      ? `/?page=${products.prevPage}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}`
+      ? `/productos?page=${products.prevPage}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}`
       : "";
     products.nextLink = products.hasNextPage
-      ? `/?page=${products.nextPage}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}`
+      ? `/productos?page=${products.nextPage}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}`
       : "";
 
     return res.render("paginate", products);
