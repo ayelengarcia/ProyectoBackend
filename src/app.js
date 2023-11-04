@@ -20,6 +20,9 @@ import cookieParser from "cookie-parser";
 import config from "./config/config.js";
 import { addLogger, logger } from "./config/logger.js";
 
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
+
 const app = express();
 
 //Data for post JSON
@@ -52,6 +55,19 @@ app.use(
   })
 );
 
+//Documentacion
+const swaggerOptions = {
+  definition:{
+    openapi: "3.0.1",
+    info:{
+      title: "Documentacion de Ecommerce Bikininfa",
+      description: "Este proyecto es un Ecommerce de bikinis"
+    }
+  },
+  apis: [ `${__dirname}/docs/**/*.yaml` ]
+}
+const specs = swaggerJSDoc(swaggerOptions)
+
 //Passport
 initPassport();
 app.use(passport.initialize());
@@ -67,6 +83,8 @@ app.use("/api", cartsRouter);
 app.use("/api", usersRouter);
 app.use("/api", ticketsRouter);
 app.use("/api/sessions", sessionsRouter);
+
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 mongoose.set("strictQuery", false);
 
