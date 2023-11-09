@@ -7,6 +7,7 @@ export default {
   entorno: process.env.ENTORNO, //PRODUCCION o DESARROLLO
   port: process.env.PORT || 8080,
   dbName: process.env.DB_NAME,
+  dbNameTest: process.env.DB_NAME_TEST,
   dbURL: process.env.MONGO_URL,
 
   client_id_gith: process.env.CLIENT_ID_GITHUB,
