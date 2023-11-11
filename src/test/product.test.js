@@ -1,6 +1,5 @@
 import Product from "../Dao/mongoManager/product.mongo.js";
 import Assert from "assert";
-// import chai from "chai";
 import mongoose from "mongoose";
 import config from "../config/config.js";
 
@@ -11,8 +10,6 @@ mongoose
 
 //Nativo de node
 const assert = Assert.strict;
-//Chai Libreria mas usada
-// const expect = chai.expect;
 
 describe("Testing Product DAO", () => {
   it("El DAO debe poder obtener los Productos", async function () {
@@ -21,7 +18,6 @@ describe("Testing Product DAO", () => {
     const result = await productDao.getProducts();
 
     assert.strictEqual(Array.isArray(result), true);
-    // expect(result).to.be.deep.equal([]);
   });
 
   it("El DAO debe poder crear Productos", async function () {
