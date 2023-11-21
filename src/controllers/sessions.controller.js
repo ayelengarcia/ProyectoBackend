@@ -23,6 +23,8 @@ export const loginLocal = async (req, res) => {
     if (!req.user)
       return res.status(400).json({ message: "Credenciales inválidas" });
     const user = req.user;
+    user.last_connection = new Date().toLocaleString();
+    await user.save();
 
     try {
       const access_token = generateToken(user);
@@ -42,6 +44,9 @@ export const loginLocal = async (req, res) => {
 
 export const loginGithub = async (req, res) => {
   const user = req.user;
+  user.last_connection = new Date().toLocaleString();
+  await user.save();
+
   const access_token = generateToken(user);
 
   res
@@ -83,6 +88,10 @@ export const resetPassword = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
+    const user = req.user;
+    user.last_connection = new Date().toLocaleString();
+    await user.save();
+
     const session = req.session;
 
     session.destroy((err) => {

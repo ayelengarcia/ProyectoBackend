@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import config from "./config/config.js";
 import passport from "passport";
 import { productService } from "./services/index.js";
+import multer from 'multer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -122,4 +123,33 @@ export const generateProducts = () => {
 export const handleError = (code, res) => {
   const message = code || "Error desconocido";
   res.status(500).json({ error: message });
+};
+
+export const upload = (type) => {
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      let uploadPath = `${__dirname}/public/`;
+
+      switch (type) {
+        case 'profile':
+          uploadPath += 'profiles/';
+          break;
+        case 'product':
+          uploadPath += 'products/';
+          break;
+        case 'document':
+          uploadPath += 'documents/';
+          break;
+        default:
+          return cb(new Error('Invalid fileType'));
+      }
+
+      cb(null, uploadPath);
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  });
+
+  return multer({ storage });
 };

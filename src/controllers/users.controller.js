@@ -1,6 +1,37 @@
 import { userService } from "../services/index.js";
 import config from "../config/config.js";
-import { handleError } from "../utils.js";
+import { handleError, upload } from "../utils.js";
+
+export const createDocuments = async (req, res) => {
+  try {
+    upload(req, res, async (err) => {
+      if (err instanceof multer.MulterError) {
+        return res.status(400).json({ message: 'Error al cargar el archivo', error: err.message });
+      } else if (err) {
+        return res.status(500).json({ message: 'Hubo un error al procesar la solicitud', error: err.message });
+      }
+      const { id } = req.params;
+      const user = await userService.getUserById(id);
+
+      if (!user) res.status(404).json({ message: 'Usuario no encontrado' });
+
+      const files = req.files;
+
+      if (files && files.length > 0) {
+        user.documents = user.documents.concat(files.map(file => ({
+          name: file.originalname,
+          reference: file.path,
+        })));
+
+        await user.save();
+        return res.status(200).json({ message: 'Documentos subidos exitosamente', user });
+      }
+      return res.status(400).json({ message: 'No se han subido archivos' });
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Hubo un error al procesar la solicitud', error: error.message });
+  }
+};
 
 export const createUser = async (req, res) => {
   const user = req.body;

@@ -5,6 +5,9 @@ export default class User {
     return await UserModel.create(data);
   };
 
+  createDocuments = async () => {
+  };
+
   getUsers = async (limit) => {
     if (limit) {
       const users = await UserModel.find();

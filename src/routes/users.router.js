@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createUser,
+  createDocuments,
   deletedUser,
   getUserByEmail,
   getUserById,
@@ -12,6 +13,8 @@ import {
 const router = Router();
 
 router.post("/users", createUser);
+
+router.post("/users/:id/documents", createDocuments)
 
 router.get("/users", getUsers);
 

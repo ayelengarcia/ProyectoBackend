@@ -37,6 +37,7 @@ const initPassport = () => {
             const token = generateToken(user);
             user.token = token;
             logger.info("Usuario existente logueado con github");
+
             return done(null, user);
           } else {
             const newUser = {
@@ -129,7 +130,7 @@ const initPassport = () => {
 
           const payload = {
             sub: user._id,
-            roles: user.roles,
+            roles: user.roles
           };
 
           const token = generateToken(payload);
