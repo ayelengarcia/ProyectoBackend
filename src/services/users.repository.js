@@ -7,6 +7,10 @@ export default class UserRepository {
     return await this.dao.createUser(data);
   };
 
+  createDocuments = async (id, files) =>{
+    return await this.dao.createDocuments(id, files)
+  }
+
   getUsers = async (limit) => {
     return await this.dao.getUsers(limit);
   };

@@ -1,37 +1,40 @@
 import { userService } from "../services/index.js";
 import config from "../config/config.js";
 import { handleError, upload } from "../utils.js";
+import multer from 'multer';
+
+const uploadDocuments = upload('document');
 
 export const createDocuments = async (req, res) => {
   try {
-    upload(req, res, async (err) => {
+    uploadDocuments(req, res, async (err) => {
       if (err instanceof multer.MulterError) {
         return res.status(400).json({ message: 'Error al cargar el archivo', error: err.message });
       } else if (err) {
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud', error: err.message });
       }
+
       const { id } = req.params;
       const user = await userService.getUserById(id);
 
-      if (!user) res.status(404).json({ message: 'Usuario no encontrado' });
+      if (!user) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
 
       const files = req.files;
 
-      if (files && files.length > 0) {
-        user.documents = user.documents.concat(files.map(file => ({
-          name: file.originalname,
-          reference: file.path,
-        })));
-
-        await user.save();
-        return res.status(200).json({ message: 'Documentos subidos exitosamente', user });
+      if (!files || files.length === 0) {
+        return res.status(400).json({ message: 'No se han subido archivos' });
       }
-      return res.status(400).json({ message: 'No se han subido archivos' });
+
+      const result = await userService.createDocuments(id, files);
+      return res.status(200).json(result);
     });
   } catch (error) {
     return res.status(500).json({ message: 'Hubo un error al procesar la solicitud', error: error.message });
   }
 };
+
 
 export const createUser = async (req, res) => {
   const user = req.body;

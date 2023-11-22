@@ -132,13 +132,13 @@ export const upload = (type) => {
 
       switch (type) {
         case 'profile':
-          uploadPath += 'profiles/';
+          uploadPath += 'img/profiles/';
           break;
         case 'product':
-          uploadPath += 'products/';
+          uploadPath += 'img/products/';
           break;
         case 'document':
-          uploadPath += 'documents/';
+          uploadPath += 'img/documents/';
           break;
         default:
           return cb(new Error('Invalid fileType'));
@@ -151,5 +151,5 @@ export const upload = (type) => {
     },
   });
 
-  return multer({ storage });
+  return multer({ storage }).array('files', 5);
 };

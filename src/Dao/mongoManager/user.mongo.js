@@ -5,7 +5,29 @@ export default class User {
     return await UserModel.create(data);
   };
 
-  createDocuments = async () => {
+  createDocuments = async (id, files) => {
+    try {
+      const user = await UserModel.findById(id);
+
+      if (!user) {
+        throw new Error('Usuario no encontrado');
+      }
+
+      if (files && files.length > 0) {
+        const updatedDocuments = files.map(file => ({
+          name: file.originalname,
+          reference: file.path,
+        }));
+
+        user.documents = user.documents.concat(updatedDocuments);
+        await user.save();
+        return { message: 'Documentos subidos exitosamente', user };
+      }
+
+      throw new Error('No se han subido archivos');
+    } catch (error) {
+      throw new Error('Hubo un error al procesar la solicitud: ' + error.message);
+    }
   };
 
   getUsers = async (limit) => {
