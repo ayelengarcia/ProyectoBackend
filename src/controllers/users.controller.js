@@ -3,7 +3,7 @@ import config from "../config/config.js";
 import { handleError, upload } from "../utils.js";
 import multer from 'multer';
 
-const uploadDocuments = upload('document');
+const uploadDocuments = upload('product');
 
 export const createDocuments = async (req, res) => {
   try {
@@ -26,6 +26,9 @@ export const createDocuments = async (req, res) => {
       if (!files || files.length === 0) {
         return res.status(400).json({ message: 'No se han subido archivos' });
       }
+
+      user.status = 'file uploaded';
+      await user.save();
 
       const result = await userService.createDocuments(id, files);
       return res.status(200).json(result);
