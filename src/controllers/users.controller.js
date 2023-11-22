@@ -3,6 +3,7 @@ import config from "../config/config.js";
 import { handleError, upload } from "../utils.js";
 import multer from 'multer';
 
+//modificar desde el front para que sea dinamico
 const uploadDocuments = upload('product');
 
 export const createDocuments = async (req, res) => {
@@ -22,6 +23,7 @@ export const createDocuments = async (req, res) => {
       }
 
       const files = req.files;
+      const fileType = req.body.fileType; 
 
       if (!files || files.length === 0) {
         return res.status(400).json({ message: 'No se han subido archivos' });
@@ -30,7 +32,7 @@ export const createDocuments = async (req, res) => {
       user.status = 'file uploaded';
       await user.save();
 
-      const result = await userService.createDocuments(id, files);
+      const result = await userService.createDocuments(id, files, fileType);
       return res.status(200).json(result);
     });
   } catch (error) {
@@ -116,14 +118,31 @@ export const updatedUserRole = async (req, res) => {
   const updatedRole = { roles };
 
   try {
-    const result = await userService.updatedUserById(userId, updatedRole);
+    const user = await userService.getUserById(userId);
 
-    res.send({ status: "Rol actualizado exitosamente", payload: result });
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    // Verificar si el usuario ha cargado los documentos requeridos
+    const documents = user.documents.map(doc => doc.fileType);
+    const requiredDocuments = ['Identificacion', 'Domicilio', 'Estado_cuenta'];
+
+    const hasRequiredDocuments = requiredDocuments.every(doc => documents.includes(doc));
+
+    if (!hasRequiredDocuments) {
+      return res.status(400).json({ message: 'El usuario no ha cargado todos los documentos requeridos' });
+    }
+
+    // Actualizar el rol solo si tiene los documentos requeridos
+    const result = await userService.updatedUserById(userId, updatedRole);
+    return res.send({ status: 'Rol actualizado exitosamente', payload: result });
   } catch (error) {
-    req.logger.error("No se pudo actualizar rol");
-    handleError(config.user_not_update, res);
+    console.error('Error al actualizar el rol del usuario:', error);
+    return res.status(500).json({ message: 'Error al actualizar el rol del usuario', error: error.message });
   }
 };
+
 
 export const deletedUser = async (req, res) => {
   const userId = req.params.id;

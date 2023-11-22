@@ -7,8 +7,8 @@ export default class UserRepository {
     return await this.dao.createUser(data);
   };
 
-  createDocuments = async (id, files) =>{
-    return await this.dao.createDocuments(id, files)
+  createDocuments = async (id, files, fileType) =>{
+    return await this.dao.createDocuments(id, files, fileType)
   }
 
   getUsers = async (limit) => {

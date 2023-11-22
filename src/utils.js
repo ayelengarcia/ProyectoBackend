@@ -132,13 +132,13 @@ export const upload = (type) => {
 
       switch (type) {
         case 'profile':
-          uploadPath += 'img/profiles/';
+          uploadPath += 'files/profiles/';
           break;
         case 'product':
-          uploadPath += 'img/products/';
+          uploadPath += 'files/products/';
           break;
         case 'document':
-          uploadPath += 'img/documents/';
+          uploadPath += 'files/documents/';
           break;
         default:
           return cb(new Error('Invalid fileType'));

@@ -12,6 +12,7 @@ const UserModel = mongoose.model(
     roles: { type: String, default: "Usuario" },
     documents: [{
       name: String,
+      fileType: String,
       reference: String
     }],
     last_connection:{type: String, default: ""},
