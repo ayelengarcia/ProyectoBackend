@@ -45,8 +45,9 @@ async function addProductCart(productId) {
       const responseData = await response.json();
       console.log("Producto agregado exitosamente", responseData);
       msgAddProduct.innerHTML = "Producto agregado al carrito";
+      toast(`Producto agregado al 🛒`);
     } else {
-      throw new Error("Error al agregar el producto al carrito");
+      throw toast(`Error al agregar el producto`);
     }
   } catch (error) {
     console.error(error);
@@ -57,3 +58,17 @@ const btnAddToCart = document.getElementById("btnAddToCart");
 btnAddToCart.addEventListener("click", function () {
   addProductCart(productId);
 });
+
+const toast = (text) => {
+  Toastify({
+    text: text,
+    duration: 3000,
+    close: true,
+    gravity: "bottom",
+    position: "center",
+    stopOnFocus: true,
+    style: {
+      background: "#ff3f72dd",
+    },
+  }).showToast();
+};

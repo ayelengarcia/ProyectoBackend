@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import config from "./config/config.js";
 import passport from "passport";
 import { productService } from "./services/index.js";
-import multer from 'multer';
+import multer from "multer";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,7 +26,7 @@ export const generateToken = (user) => {
 };
 
 export const generateTokenPass = (user) => {
-  return jwt.sign({ user }, config.secret_jwt, { expiresIn: "1h" });
+  return jwt.sign({ user }, config.secret_jwt, { expiresIn: "12h" });
 };
 
 export const extractCookie = (req) => {
@@ -131,17 +131,17 @@ export const upload = (type) => {
       let uploadPath = `${__dirname}/public/`;
 
       switch (type) {
-        case 'profile':
-          uploadPath += 'files/profiles/';
+        case "profile":
+          uploadPath += "files/profiles/";
           break;
-        case 'product':
-          uploadPath += 'files/products/';
+        case "product":
+          uploadPath += "files/products/";
           break;
-        case 'document':
-          uploadPath += 'files/documents/';
+        case "document":
+          uploadPath += "files/documents/";
           break;
         default:
-          return cb(new Error('Invalid fileType'));
+          return cb(new Error("Invalid fileType"));
       }
 
       cb(null, uploadPath);
@@ -151,5 +151,5 @@ export const upload = (type) => {
     },
   });
 
-  return multer({ storage }).array('files', 5);
+  return multer({ storage }).array("files", 5);
 };

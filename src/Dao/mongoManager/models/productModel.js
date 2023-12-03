@@ -10,6 +10,7 @@ const productsSchema = new mongoose.Schema({
   stock: Number,
   price: Number,
   code: String,
+  category: String,
   owner: { type: String, default: "Admin" },
 });
 

@@ -1,3 +1,6 @@
+const contenedorCart = document.getElementById("template-cart");
+const contenedorTotal = document.getElementById("template-total");
+
 const obtenerCartId = async () => {
   try {
     const response = await fetch("/api/sessions/currentuser");
@@ -27,8 +30,34 @@ const obtenerCart = async () => {
   }
 };
 
-const contenedorCart = document.getElementById("template-cart");
-const contenedorTotal = document.getElementById("template-total");
+async function deleteProductCart(productId) {
+  try {
+    const cartId = await obtenerCartId();
+
+    const response = await fetch(`/api/carts/${cartId}/${productId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const errorResponseData = await response.json();
+      throw new Error(
+        errorResponseData.message || "Error al eliminar el producto"
+      );
+    }
+
+    const productRow = document.getElementById(`product_${productId}`);
+    if (productRow) productRow.remove();
+
+    const responseData = await response.json();
+    console.log("Producto eliminado", responseData);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
 
 //TEMPLATE CART
 const templateCart = (cart) => {
@@ -36,13 +65,13 @@ const templateCart = (cart) => {
   const priceDisplay =
     cart.pid.stock <= 0 ? `<s>${cart.pid.price}</s>` : `${cart.pid.price}`;
 
-  return `<tr>
-      <td>${cart.pid.code}</td>
-      <td>${cart.pid.thumbnail}</td>
+  return `<tr id="product_${cart.pid._id}">
+      <td><img class="class_img_cart" src="${cart.pid.thumbnail}" /></td>
       <td>${cart.pid.title}</td>
       <td>${stockText}</td>
       <td>${cart.quantity}</td>
       <td>$ ${priceDisplay}</td>
+      <td><button id="btnDeleteToCart" class="btn" onclick="deleteProductCart('${cart.pid._id}')">Eliminar</button></td>
     </tr>`;
 };
 

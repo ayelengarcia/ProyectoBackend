@@ -17,7 +17,7 @@ const router = Router();
 router.post(
   "/tickets",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Usuario"),
+  authorizationRol(["Usuario", "Premium"]),
   extractNonSensitiveUserInfo,
   createTicket
 );

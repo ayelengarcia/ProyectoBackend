@@ -4,7 +4,7 @@ import { handleError, upload } from "../utils.js";
 import multer from 'multer';
 
 //modificar desde el front para que sea dinamico
-const uploadDocuments = upload('product');
+const uploadDocuments = upload('profile');
 
 export const createDocuments = async (req, res) => {
   try {

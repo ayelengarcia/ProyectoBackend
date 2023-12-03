@@ -11,12 +11,13 @@ function updateProduct() {
   const url = `/api/products/${productId}`;
 
   const data = {
+    code: formData.get("code"),
     title: formData.get("title"),
     description: formData.get("description"),
-    thumbnail: formData.get("thumbnail"),
-    price: formData.get("price"),
     stock: formData.get("stock"),
-    code: formData.get("code"),
+    price: formData.get("price"),
+    thumbnail: formData.get("thumbnail"),
+    category: formData.get("category"),
   };
 
   fetch(url, {

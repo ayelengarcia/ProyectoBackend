@@ -51,14 +51,16 @@ export const getProductById = async (req, res) => {
 
 export const updatedProductById = async (req, res) => {
   const productId = req.params.pid;
-  const { title, description, price, thumbnail, stock, code, owner } = req.body;
+  const { code, title, description, stock, price, thumbnail, category, owner } =
+    req.body;
   const updatedProduct = {
+    code,
     title,
     description,
+    stock,
     price,
     thumbnail,
-    stock,
-    code,
+    category,
     owner,
   };
 

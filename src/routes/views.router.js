@@ -106,7 +106,7 @@ router.get("/", async (req, res) => res.render("home", {}));
 //Ruta PAGINATE PRODUCTS
 router.get("/productos", async (req, res) => {
   const page = parseInt(req.query?.page || 1);
-  const limit = parseInt(req.query?.limit || 9);
+  const limit = parseInt(req.query?.limit || 10);
 
   const queryParams = req.query?.query || "";
   const query = {};

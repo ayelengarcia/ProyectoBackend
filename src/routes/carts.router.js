@@ -38,7 +38,7 @@ router.post(
 router.delete(
   "/carts/:cid/:pid",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Usuario"),
+  authorizationRol(["Usuario", "Premium"]),
   deleteProductCart
 );
 
@@ -46,7 +46,7 @@ router.delete(
 router.delete(
   "/carts/:cid",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Usuario"),
+  authorizationRol(["Usuario", "Premium"]),
   deleteCartById
 );
 
@@ -54,7 +54,7 @@ router.delete(
 router.post(
   "/carts/purchase/buy/:cid",
   authorizationStrategy("jwt", { session: false }),
-  authorizationRol("Usuario"),
+  authorizationRol(["Usuario", "Premium"]),
   finishPurchase
 );
 

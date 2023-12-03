@@ -1,32 +1,33 @@
 <form id="form-paginate">
-  |<label for="page">Página:</label>
+  <label for="page">Página:</label>
   <input id="page" type="number" />
 
   <label for="limit">Limite:</label>
   <input id="limit" type="number" />
 
-  <button class="btn" type="submit">Ir</button>|
+  <button class="btn2" type="submit">Ir</button>
 </form>
 <p id="msgAddProduct"></p>
-<div class="container">
+<div class="container_products">
   {{#each docs}}
     <div class="tarjeta">
-      <div class="titulo">{{this.title}}</div>
       <div class="cuerpo">
-        <img src="{{this.thumbnail}}" alt="muestra" />
-        <br />
-        <span class="description">Descripción: {{this.description}}</span>
-        <br />
-        <span class="description">Precio: ${{this.price}}</span>
+        <img class="class_img" src="{{this.thumbnail}}" alt="muestra" />
       </div>
       <div class="pie">
-        <button
-          id="btnAddToCart"
-          class="btn"
-          onclick="showDetail('{{this._id}}')"
-        >Ver detalle</button>
-        <button class="btn" onclick="addProductCart('{{this._id}}')">Agregar al
-          carrito</button>
+        <div class="description_container">
+          <span class="description">{{this.title}}</span>
+          <span class="description">${{this.price}}</span>
+        </div>
+        <div class="container_btn">
+          <button
+            id="btnAddToCart"
+            class="btn"
+            onclick="showDetail('{{this._id}}')"
+          >Ver detalle</button>
+          <button class="btn" onclick="addProductCart('{{this._id}}')">Agregar
+            al carrito</button>
+        </div>
       </div>
     </div>
   {{/each}}
