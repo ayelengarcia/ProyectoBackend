@@ -1,13 +1,15 @@
-<form id="form-paginate">
-  <label for="page">Página:</label>
-  <input id="page" type="number" />
+<div class="contain_form_paginate">
+  <form id="form-paginate">
+    <label for="page">Página:</label>
+    <input id="page" type="number" />
 
-  <label for="limit">Limite:</label>
-  <input id="limit" type="number" />
+    <label for="limit">Limite:</label>
+    <input id="limit" type="number" />
 
-  <button class="btn2" type="submit">Ir</button>
-</form>
-<p id="msgAddProduct"></p>
+    <button class="btn2" type="submit">Ir</button>
+  </form>
+</div>
+
 <div class="container_products">
   {{#each docs}}
     <div class="tarjeta">

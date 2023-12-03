@@ -1,20 +1,24 @@
-<h2>Reestablecer contraseña</h2>
-
 <form
-  class="displayColumn"
+  class="displayColumn contain_input"
   action="/api/sessions/resetPassConfirm"
   method="post"
 >
+  <h2>Reestablecer contraseña</h2>
 
-  <label for="email">Confirmar email</label>
-  <input id="email" type="text" name="email" placeholder="Ingresar email" />
+  <input
+    id="email"
+    type="text"
+    name="email"
+    placeholder="Confirmar email"
+    class="style_input"
+  />
 
-  <label for="password">Contraseña nueva</label>
   <input
     id="password"
     type="password"
     name="password"
-    placeholder="Ingresar password"
+    placeholder="Contraseña nueva"
+    class="style_input"
   />
 
   <button class="btn-session" type="submit">Enviar</button>

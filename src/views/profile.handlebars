@@ -1,17 +1,19 @@
-<h2 class="">Mi perfil</h2>
+<div class="contain_profile">
 
-<ul>
-  <li>Nombre: <span>{{first_name}}</span></li>
-  <li>Apellido: <span>{{last_name}}</span></li>
-  <li>Edad: <span>{{age}}</span></li>
-  <li>Rol: <span>{{roles}}</span></li>
-  <li>Email: <span>{{email}}</span></li>
-</ul>
+  <h2 class="">Mi perfil</h2>
 
-<form action="/api/sessions/logout" method="get">
-  <button class="btn-session" type="submit">Cerrar sesión</button>
-</form>
+  <ul>
+    <li>Nombre: <span>{{first_name}}</span></li>
+    <li>Apellido: <span>{{last_name}}</span></li>
+    <li>Edad: <span>{{age}}</span></li>
+    <li>Rol: <span>{{roles}}</span></li>
+    <li>Email: <span>{{email}}</span></li>
+  </ul>
 
-<li>
-  <a href="/admin">Administrar productos</a>
-</li>
+  <a href="/admin">
+    <button class="btn_git">
+      Administrar productos
+    </button>
+  </a>
+
+</div>

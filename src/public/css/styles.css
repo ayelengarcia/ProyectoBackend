@@ -37,7 +37,6 @@ body {
   min-height: 80vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
@@ -62,6 +61,13 @@ body {
 .class_img_cart {
   width: 50px;
   height: 50px;
+}
+
+.carrito_vacio {
+  width: 100%;
+  display: flex;
+  justify-content: start  ;
+  padding: 30px 10px;
 }
 
 .footer-content {
@@ -241,6 +247,20 @@ h1 {
 .nickname {
   color: #f9f9f9;
   margin-right: 10px;
+}
+
+.contain_form_paginate {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+}
+
+.contain_profile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
 }
 
 #form-paginate {

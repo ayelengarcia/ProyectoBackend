@@ -1,32 +1,18 @@
 const contenedorCart = document.getElementById("template-cart");
 const contenedorTotal = document.getElementById("template-total");
 
-const obtenerCartId = async () => {
-  try {
-    const response = await fetch("/api/sessions/currentuser");
-    if (!response.ok)
-      throw new Error("Error al obtener los datos del usuario logueado");
+const actualizarCantidadProduct = (productId) => {
+  const productRow = document.getElementById(`product_${productId}`);
+  const productQuantityCell = productRow.querySelector("td:nth-child(4)");
 
-    const responseData = await response.json();
-    const cartId = responseData.payload.cart;
-    return cartId;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const obtenerCart = async () => {
-  try {
-    const cartId = await obtenerCartId();
-    const response = await fetch(`/api/carts/${cartId}`);
-    if (!response.ok) throw new Error("Error al obtener carrito");
-
-    const responseData = await response.json();
-    const cartData = responseData.payload.products;
-    return cartData;
-  } catch (error) {
-    console.error(error);
-    throw error;
+  if (productQuantityCell) {
+    let quantity = parseInt(productQuantityCell.textContent);
+    if (quantity > 1) {
+      quantity--;
+      productQuantityCell.textContent = quantity;
+    } else {
+      productRow.remove();
+    }
   }
 };
 
@@ -41,18 +27,15 @@ async function deleteProductCart(productId) {
       },
     });
 
-    if (!response.ok) {
-      const errorResponseData = await response.json();
-      throw new Error(
-        errorResponseData.message || "Error al eliminar el producto"
-      );
+    if (response.ok) {
+      actualizarCantidadProduct(productId);
+      actualizarCounter();
+      const total = await totalCarrito();
+      contenedorTotal.innerHTML = `$ ${total}`;
+      toast(`Producto eliminado`);
+    } else {
+      toast(`Error al eliminar producto`);
     }
-
-    const productRow = document.getElementById(`product_${productId}`);
-    if (productRow) productRow.remove();
-
-    const responseData = await response.json();
-    console.log("Producto eliminado", responseData);
   } catch (error) {
     console.error(error);
     throw error;
@@ -106,17 +89,21 @@ const recorrerObjetos = (array, template, contenedor) => {
 };
 
 //RENDERIZAR CARRITO
-(async () => {
-  try {
-    const total = await totalCarrito();
-    contenedorTotal.innerHTML = `$ ${total}`;
+const renderCarrito = () => {
+  (async () => {
+    try {
+      const total = await totalCarrito();
+      contenedorTotal.innerHTML = `$ ${total}`;
 
-    const cart = await obtenerCart();
-    recorrerObjetos(cart, templateCart, contenedorCart);
-  } catch (error) {
-    console.error(error);
-  }
-})();
+      const cart = await obtenerCart();
+      recorrerObjetos(cart, templateCart, contenedorCart);
+    } catch (error) {
+      console.error(error);
+    }
+  })();
+};
+
+renderCarrito();
 
 //FINALIZAR COMPRA Y MOSTRAR TICKET
 const btnPurchease = document.getElementById("btn-purchease");
@@ -171,3 +158,31 @@ btnPurchease.addEventListener("click", async (req, res) => {
     console.error(error);
   }
 });
+
+const toast = (text) => {
+  Toastify({
+    text: text,
+    duration: 3000,
+    close: true,
+    gravity: "bottom",
+    position: "center",
+    stopOnFocus: true,
+    style: {
+      background: "#ff3f72dd",
+    },
+  }).showToast();
+};
+
+// const obtenerCartId = async () => {
+//   try {
+//     const response = await fetch("/api/sessions/currentuser");
+//     if (!response.ok)
+//       throw new Error("Error al obtener los datos del usuario logueado");
+
+//     const responseData = await response.json();
+//     const cartId = responseData.payload.cart;
+//     return cartId;
+//   } catch (error) {
+//     throw error;
+//   }
+// };

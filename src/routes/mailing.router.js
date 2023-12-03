@@ -55,7 +55,7 @@ router.post("/sent-email", async (req, res) => {
     });
 
     console.log(result);
-    res.send("Email enviado");
+    res.render("resetPassOk", {});
   } catch (error) {
     console.error(error);
     res.status(500).send("Fallo al enviar el correo electrónico");
