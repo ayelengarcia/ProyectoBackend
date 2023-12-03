@@ -1,35 +1,49 @@
-<h2>Registrarme</h2>
+<form
+  class="displayColumn contain_input"
+  action="/api/sessions/register"
+  method="post"
+>
+  <h2>Registrarme</h2>
 
-<form class="displayColumn" action="/api/sessions/register" method="post">
-
-  <label for="first_name">Nombre</label>
   <input
     id="first_name"
     type="text"
     name="first_name"
-    placeholder="Tu nombre"
+    placeholder="Nombre"
+    class="style_input"
   />
 
-  <label for="last_name">Apellido</label>
   <input
     id="last_name"
     type="text"
     name="last_name"
-    placeholder="Tu apellido"
+    placeholder="Apellido"
+    class="style_input"
   />
 
-  <label for="age">Edad</label>
-  <input id="age" type="number" name="age" placeholder="Tu edad" min="0" />
+  <input
+    id="age"
+    type="number"
+    name="age"
+    placeholder="Edad"
+    min="0"
+    class="style_input"
+  />
 
-  <label for="email">Email</label>
-  <input id="email" type="text" name="email" placeholder="Tu email" />
+  <input
+    id="email"
+    type="text"
+    name="email"
+    placeholder="Email"
+    class="style_input"
+  />
 
-  <label for="password">Contraseña</label>
   <input
     id="password"
     type="password"
     name="password"
-    placeholder="Tu contraseña"
+    placeholder="Contraseña"
+    class="style_input"
   />
 
   <button class="btn-session" type="submit">Enviar</button>

@@ -35,6 +35,10 @@ body {
   padding-top: 110px;
   margin: 0px 15px;
   min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .fondo-home {
@@ -264,6 +268,7 @@ h1 {
 .btn:hover {
   cursor: pointer;
   background-color: #ff3f72;
+  color: white;
   transition: 0.5s;
 }
 
@@ -331,4 +336,55 @@ h1 {
   width: 100%;
   display: flex;
   justify-content: end;
+}
+
+.contain_input {
+  gap: 30px;
+  width: 40%;
+  justify-content: center;
+  padding: 10px 50px;
+  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.187);
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.style_input {
+  border: 0px;
+  border-bottom: 2px solid #ff3f723b;
+  background: rgba(252, 238, 247, 0.994);
+  border-radius: 2px;
+  font-family: "Belanosima", sans-serif;
+  text-indent: 10px;
+  width: 100%;
+  padding: 5px 0px;
+  color: #1f1722;
+}
+
+.style_input::placeholder {
+  color: #928f8f;
+}
+
+.style_input:focus-visible {
+  outline: none;
+  border: 2px solid #ff3f729e;
+}
+
+.olvido_pass {
+  margin: -30px 0px 10px 0px;
+}
+
+.btn_git {
+  background-color: black;
+  color: white;
+  border-radius: 3px;
+  border: 1px solid black;
+  padding: 4px 20px;
+}
+
+.btn_git:hover {
+  background-color: white;
+  color: black;
+  border-radius: 3px;
+  transition: 0.5s;
 }

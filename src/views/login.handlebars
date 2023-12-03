@@ -1,21 +1,30 @@
-<h2>Iniciar sesión</h2>
+<form
+  class="displayColumn contain_input"
+  action="/api/sessions/login"
+  method="post"
+>
+  <h2>Iniciar sesión</h2>
 
-<form class="displayColumn" action="/api/sessions/login" method="post">
+  <input
+    id="email"
+    type="text"
+    name="email"
+    placeholder="Ingresar email"
+    class="style_input"
+  />
 
-  <label for="email">Email</label>
-  <input id="email" type="text" name="email" placeholder="Ingresar email" />
-
-  <label for="password">Contraseña</label>
   <input
     id="password"
     type="password"
     name="password"
     placeholder="Ingresar password"
+    class="style_input"
   />
 
   <button class="btn-session" type="submit">Iniciar sesión</button>
 
-  <a href="/resetPass">Olvide mi contraseña</a>
-  <a href="/login-github">Iniciar sesión con GitHub</a>
+  <a href="/resetPass" class="olvido_pass">Olvidé mi contraseña</a>
 
 </form>
+
+<a href="/login-github" class="btn_git">Iniciar sesión con GitHub</a>
