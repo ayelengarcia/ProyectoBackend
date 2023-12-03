@@ -42,6 +42,13 @@ body {
   height: 600px;
   width: 100%;
   background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel {
+  background-color: #1f1722b2;
 }
 
 .contain-cart {
