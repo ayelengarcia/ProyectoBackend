@@ -73,7 +73,7 @@ const initPassport = () => {
         usernameField: "email",
       },
       async (req, username, password, done) => {
-        const { first_name, last_name, email, age, roles } = req.body;
+        const { first_name, last_name, email, age } = req.body;
         try {
           const user = await userService.getUserByEmail(username);
           const cart = await cartService.createCart();
@@ -89,7 +89,6 @@ const initPassport = () => {
               first_name,
               last_name,
               email,
-              roles,
               age,
               password: createHash(password),
               cart: cart._id,
@@ -130,7 +129,7 @@ const initPassport = () => {
 
           const payload = {
             sub: user._id,
-            roles: user.roles
+            roles: user.roles,
           };
 
           const token = generateToken(payload);

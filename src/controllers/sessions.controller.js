@@ -5,14 +5,14 @@ import bcrypt from "bcrypt";
 
 export const registerLocal = async (req, res) => {
   try {
-    const user = req.body;
+    const user = await userService.getUserByEmail(req.body.email);
     const access_token = generateToken(user);
 
     res.cookie(config.secret_cookie, access_token, {
       maxAge: 60 * 60 * 10000,
       httpOnly: true,
     });
-    res.redirect("/login");
+    res.redirect("/profile");
   } catch (error) {
     throw error;
   }
