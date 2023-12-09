@@ -2,7 +2,7 @@ import TicketModel from "./models/ticketModel.js";
 
 export default class Ticket {
   createTicket = async (ticketData) => {
-    const currentDateTime = new Date();
+    const currentDateTime = new Date().toLocaleString();
     const ticket = {
       ...ticketData,
       purchase_datetime: currentDateTime,

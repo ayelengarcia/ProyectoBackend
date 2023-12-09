@@ -47,11 +47,12 @@ export const getTicketById = async (req, res) => {
 
 export const updateTicketById = async (req, res) => {
   const ticketId = req.params.id;
-  const { purchase_datetime, amount, purchaser } = req.body;
+  const { purchase_datetime, amount, purchaser, products } = req.body;
   const updatedTicket = {
     purchase_datetime,
     amount,
     purchaser,
+    products,
   };
 
   try {

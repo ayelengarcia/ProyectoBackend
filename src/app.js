@@ -10,6 +10,7 @@ import mockingProducts from "./routes/mockingProducts.router.js";
 import loggerTest from "./routes/loggerTest.js";
 import viewsRouter from "./routes/views.router.js";
 import sessionsRouter from "./routes/sessions.router.js";
+import paymentsRouter from "./routes/payments.router.js";
 import __dirname from "./utils.js";
 import mongoose from "mongoose";
 import session from "express-session";
@@ -29,7 +30,7 @@ const app = express();
 app.use(express.json());
 app.use("/static", express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser()); //Conectamos cookies con nuestro sv
+app.use(cookieParser());
 app.use(addLogger);
 
 //Handlebars
@@ -57,16 +58,16 @@ app.use(
 
 //Documentacion
 const swaggerOptions = {
-  definition:{
+  definition: {
     openapi: "3.0.1",
-    info:{
+    info: {
       title: "Documentacion de Ecommerce Bikininfa",
-      description: "Este proyecto es un Ecommerce de bikinis"
-    }
+      description: "Este proyecto es un Ecommerce de bikinis",
+    },
   },
-  apis: [ `${__dirname}/docs/**/*.yaml` ]
-}
-const specs = swaggerJSDoc(swaggerOptions)
+  apis: [`${__dirname}/docs/**/*.yaml`],
+};
+const specs = swaggerJSDoc(swaggerOptions);
 
 //Passport
 initPassport();
@@ -82,9 +83,10 @@ app.use("/api", productsRouter);
 app.use("/api", cartsRouter);
 app.use("/api", usersRouter);
 app.use("/api", ticketsRouter);
+app.use("/api/payments", paymentsRouter);
 app.use("/api/sessions", sessionsRouter);
 
-app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 mongoose.set("strictQuery", false);
 

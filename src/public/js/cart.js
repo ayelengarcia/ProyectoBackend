@@ -107,53 +107,19 @@ renderCarrito();
 
 //FINALIZAR COMPRA Y MOSTRAR TICKET
 const btnPurchease = document.getElementById("btn-purchease");
-const contenedorTicket = document.getElementById("contenedorTicket");
-
-const mostrarDetallesDelTicket = (ticket) => {
-  contenedorTicket.innerHTML = `
-      <h3>¡Tu compra ha sido realizada con éxito!!</h3>
-      <p>Este es el resumen de tu pedido:</p>
-      <div>Órden: ${ticket.payload.code}</div>
-      <div>Fecha: ${ticket.payload.purchase_datetime}</div>
-      <div>Comprador: ${ticket.payload.purchaser}</div>
-      <div>Total: $ ${ticket.payload.amount}</div>
-  `;
-};
 
 //EVENTO COMPRAR
 btnPurchease.addEventListener("click", async (req, res) => {
   try {
     const cid = await obtenerCartId();
-    const response = await fetch(`/api/carts/purchase/buy/${cid}`, {
+    const res = await fetch(`/api/payments/createCheckoutSession/${cid}`, {
       method: "POST",
     });
 
-    if (!response.ok) throw new Error("Error al finalizar la compra");
+    const data = await res.json();
+    console.log(data);
 
-    const responseData = await response.json();
-
-    if (responseData.payload !== undefined) {
-      const amountTotalBuy = responseData.payload.amountTotalBuy;
-
-      const ticketData = {
-        amount: amountTotalBuy,
-      };
-
-      const ticketResponse = await fetch("/api/tickets", {
-        method: "POST",
-        body: JSON.stringify(ticketData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!ticketResponse.ok) throw new Error("Error al crear el ticket");
-
-      const ticket = await ticketResponse.json();
-      console.log(ticket);
-
-      mostrarDetallesDelTicket(ticket);
-    }
+    window.location.href = data.url;
   } catch (error) {
     console.error(error);
   }
@@ -172,17 +138,3 @@ const toast = (text) => {
     },
   }).showToast();
 };
-
-// const obtenerCartId = async () => {
-//   try {
-//     const response = await fetch("/api/sessions/currentuser");
-//     if (!response.ok)
-//       throw new Error("Error al obtener los datos del usuario logueado");
-
-//     const responseData = await response.json();
-//     const cartId = responseData.payload.cart;
-//     return cartId;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
