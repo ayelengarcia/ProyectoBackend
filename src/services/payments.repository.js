@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import config from "../config/config.js";
 import { ticketService, cartService } from "./index.js";
+import { sent_success } from "../controllers/mailing.controller.js";
 
 export default class PaymentRepository {
   constructor() {
@@ -55,6 +56,8 @@ export default class PaymentRepository {
 
       const newTicket = await ticketService.createTicket(ticketData);
       console.log(newTicket);
+
+      await sent_success(email, amountTotalBuy, products, newTicket);
 
       return newTicket;
     } else {
