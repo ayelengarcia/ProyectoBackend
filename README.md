@@ -2,7 +2,7 @@
 
 *En desarrollo*
 
-Deploy: https://proyecto-backend.com
+Deploy: [https://proyecto-backend.com](https://proyectobackend-production-a5d4.up.railway.app)
 
 Proyecto final del Curso de Programación Backend de CoderHouse. Ecommerce con integración frontend desde handlebars. 
 Desarrollo de Server Express con tecnologías actuales, persistencia de datos, escalabilidad, lógica de Session con Passport (local, github), 
@@ -18,7 +18,7 @@ estrategias de autenticacion y autorizacion con JWT, cookies, documentación de 
 
 ⚫ PERSISTENCE = FILE _ carrito, productos y users _ funcionalidades back
 
-⚫ SWAGGER _ /apidocs
+⚫ SWAGGER _ [/apidocs](https://proyectobackend-production-a5d4.up.railway.app/apidocs/)
 
 ⚫ Otras variables _ Solicitar
 
