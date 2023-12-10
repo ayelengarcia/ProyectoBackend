@@ -25,8 +25,8 @@ export default class PaymentRepository {
     const session = await this.stripe.checkout.sessions.create({
       line_items: lineItems,
       mode: "payment",
-      success_url: `https://proyectobackend-production-a5d4.up.railway.app//api/payments/success/${cid}`,
-      cancel_url: `https://proyectobackend-production-a5d4.up.railway.app//api/payments/cancel/${cid}`,
+      success_url: `https://proyectobackend-production-a5d4.up.railway.app/api/payments/success/${cid}`,
+      cancel_url: `https://proyectobackend-production-a5d4.up.railway.app/api/payments/cancel/${cid}`,
     });
 
     return session;
