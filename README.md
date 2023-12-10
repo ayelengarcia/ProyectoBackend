@@ -44,4 +44,4 @@ Java Script, Express, MongoDB, NodeJS, JWT token, Cookies, Swaggger, Handlebars,
 
 ⚫ https://brujulaportfolio.netlify.app/
 
-⚫ ayelengarcia7@gmail.com
+⚫ ayelengarcia7@gmail.com 

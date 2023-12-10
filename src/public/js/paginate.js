@@ -52,4 +52,3 @@ const btnAddToCart = document.getElementById("btnAddToCart");
 btnAddToCart.addEventListener("click", function () {
   addProductCart(productId);
 });
-
