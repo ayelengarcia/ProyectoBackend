@@ -10,7 +10,7 @@ estrategias de autenticacion y autorizacion con JWT, cookies, documentación de 
 
 # Utilidades
 
-⚫ npm run dev _ Despliegue de la aplicación
+⚫ npm run start _ Despliegue de la aplicación
 
 ⚫ npm run test _ Despliegue de testing
 
