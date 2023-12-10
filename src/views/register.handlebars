@@ -1,0 +1,50 @@
+<form
+  class="displayColumn contain_input"
+  action="/api/sessions/register"
+  method="post"
+>
+  <h2>Registrarme</h2>
+
+  <input
+    id="first_name"
+    type="text"
+    name="first_name"
+    placeholder="Nombre"
+    class="style_input"
+  />
+
+  <input
+    id="last_name"
+    type="text"
+    name="last_name"
+    placeholder="Apellido"
+    class="style_input"
+  />
+
+  <input
+    id="age"
+    type="number"
+    name="age"
+    placeholder="Edad"
+    min="0"
+    class="style_input"
+  />
+
+  <input
+    id="email"
+    type="text"
+    name="email"
+    placeholder="Email"
+    class="style_input"
+  />
+
+  <input
+    id="password"
+    type="password"
+    name="password"
+    placeholder="Contraseña"
+    class="style_input"
+  />
+
+  <button class="btn-session" type="submit">Enviar</button>
+</form>

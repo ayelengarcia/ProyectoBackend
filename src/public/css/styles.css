@@ -1,0 +1,439 @@
+*,
+p,
+ul {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Belanosima", sans-serif;
+  font-weight: 300;
+}
+
+body {
+  font-family: "Belanosima", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: #fbfbfb;
+  color: #1f1722;
+  overflow-x: hidden;
+}
+
+.header-content {
+  font-family: "Kanit", sans-serif;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
+
+.header-background {
+  background-color: #ff3f72dd;
+  width: 100%;
+  margin: 15px;
+}
+
+.main-content {
+  padding-top: 110px;
+  margin: 0px 15px;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fondo-home {
+  background-image: url("https://img.freepik.com/vector-gratis/fondo-degradado-verano-videollamadas_23-2148957811.jpg?w=826&t=st=1698618842~exp=1698619442~hmac=c96a13459c3cc3ad6cba1e1fc74ca89df1030451978b64c2e28f4d962748cedd");
+  height: 600px;
+  width: 100%;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel {
+  background-color: #1f1722b2;
+}
+
+.contain-cart {
+  width: 100%;
+}
+
+.class_img_cart {
+  width: 50px;
+  height: 50px;
+}
+
+.carrito_vacio {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  padding: 30px 10px;
+}
+
+.footer-content {
+  width: 100%;
+  padding: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgb(223, 222, 222);
+}
+::-webkit-scrollbar-thumb {
+  background: #fe5f502f;
+  border-radius: 10px;
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 0px;
+}
+.parrafo-reset {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+.columna {
+  color: #1f1722;
+}
+
+.tabla {
+  margin-top: 10px;
+  background-color: black;
+  color: white;
+}
+
+hr {
+  margin: 20px 0px;
+}
+
+thead {
+  background-color: #f9f9f9;
+}
+
+.container_products {
+  display: flex;
+  justify-content: space-around;
+  align-items: start;
+  flex-wrap: wrap;
+}
+
+.container-chat {
+  padding: 20px;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #d3d3d38a;
+  border-radius: 10px;
+  font-family: sans-serif;
+  margin: 5px;
+  min-height: 400px;
+  width: 310px;
+}
+
+.titulo {
+  font-size: 24px;
+  padding: 10px 10px 0 10px;
+}
+
+.class_img {
+  width: 308px;
+  height: 450px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.pie {
+  background: black;
+  border-radius: 0 0 10px 10px;
+  padding: 15px;
+  text-align: center;
+}
+
+.description_container {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.description {
+  text-align: start;
+  font-size: 1.2rem;
+}
+
+.container_btn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+li {
+  list-style: none;
+  padding: 0 15px;
+}
+
+a {
+  color: #1f1722;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.pie a {
+  text-decoration: none;
+  color: white;
+}
+
+h1 {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f9f9f9;
+}
+
+.burbuja_chat{
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff3f72dd;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10000;
+  cursor: pointer;
+}
+
+.burbuja_chat:hover{
+  background-color: #fc507e;
+  transition: 1s;
+}
+
+.chat_title {
+  color: #ff3f72dd;
+  text-indent: 5px;
+}
+
+.dialogo {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  color: #1f1722; 
+  width: 80vw;
+  padding: 20px;
+}
+
+#username {
+  color: #ff3f72dd;
+  margin-right: 10px;
+  width: 30%;
+}
+
+#chatbox {
+  color: #1f1722;
+  border: 2px solid rgba(167, 167, 167, 0.795);
+  border-radius: 3px;
+  width: 70%;
+  padding: 3px;
+  outline: none;
+}
+
+#chatbox:focus {
+  border: 2px solid #ff3f72;
+}
+
+#logs {
+  margin-top: 20px;
+  background-color: #ffffffa2;
+  color: rgb(150, 148, 148);
+  border: 2px solid rgba(167, 167, 167, 0.795);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.nickname {
+  color: #ff3f72;
+  margin-right: 10px;
+}
+
+.contain_form_paginate {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+}
+
+.contain_profile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+#form-paginate {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 0 0 0 1%;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  gap: 12px;
+}
+
+#limit,
+#page {
+  width: 50px;
+}
+
+.btn {
+  background-color: white;
+  color: black;
+  border-radius: 3px;
+  border: none;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: #ff3f72;
+  color: white;
+  transition: 0.5s;
+}
+
+.btn2 {
+  padding: 1px 20px;
+  background-color: #ff3f72;
+  color: black;
+  border-radius: 3px;
+  border: 1px solid #ff3f72;
+}
+
+.btn2:hover {
+  cursor: pointer;
+  background-color: white;
+  transition: 0.5s;
+  border: 1px solid #ff3f72;
+}
+
+.btn-session {
+  margin: 10px;
+  padding: 3px 20px;
+  background-color: #f75b85;
+  color: #f9f9f9;
+  border-radius: 3px;
+  border: none;
+}
+
+.btn-session:hover {
+  cursor: pointer;
+  background-color: #ff3f72;
+  transition: 0.5s;
+}
+
+.displayColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.displayRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 0px;
+}
+
+#contenedorTicket {
+  width: 100%;
+  margin-bottom: 15px;
+  margin-top: -20px;
+}
+
+.Home {
+  color: white;
+  text-decoration: none;
+}
+
+.Home:hover {
+  color: black;
+  transition: 1s;
+}
+
+.campos {
+  padding: 5px;
+}
+
+.flex-end {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.contain_input {
+  gap: 30px;
+  width: 40%;
+  justify-content: center;
+  padding: 10px 50px;
+  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.187);
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.style_input {
+  border: 0px;
+  border-bottom: 2px solid #ff3f723b;
+  background: rgba(252, 238, 247, 0.994);
+  border-radius: 2px;
+  font-family: "Belanosima", sans-serif;
+  text-indent: 10px;
+  width: 100%;
+  padding: 5px 0px;
+  color: #1f1722;
+}
+
+.style_input::placeholder {
+  color: #928f8f;
+}
+
+.style_input:focus-visible {
+  outline: none;
+  border: 2px solid #ff3f729e;
+}
+
+.olvido_pass {
+  margin: -30px 0px 10px 0px;
+}
+
+.btn_git {
+  background-color: black;
+  color: white;
+  border-radius: 3px;
+  border: 1px solid black;
+  padding: 4px 20px;
+}
+
+.btn_git:hover {
+  background-color: white;
+  color: black;
+  border-radius: 3px;
+  transition: 0.5s;
+}

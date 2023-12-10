@@ -1,0 +1,204 @@
+paths:
+
+  /api/products:
+    get:
+      summary: Obtiene todos los productos
+      tags: 
+        - Productos
+      responses: 
+        "200":
+          description: Productos obtenidos
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Producto"
+        "404":
+            description: No se encontraron los productos
+        "500":
+          description: Error interno del server
+    post:
+      summary: Crear producto
+      tags:
+        - Productos
+      responses:
+        "200":
+          description: Producto creado exitosamente
+        "404":
+          description: Error al crear el producto
+        "500": 
+          description: Error interno del server
+      requestBody:
+        required: true
+        content:
+          aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/requestBodies/createProduct"
+
+
+  /api/products/{pid}:
+      get:
+        summary: Obtiene un producto por ID
+        tags: 
+          - Productos
+        parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto que se solicita
+          schema:
+            $type: String
+        responses: 
+          "200":
+            description: Producto obtenido
+          "404":
+            description: No se encontro el producto por ese ID
+          "500":
+            description: Error interno del server
+      put:
+        summary: Actualiza un producto por ID
+        tags:
+          - Productos
+        parameters:
+          - name: pid
+            in: path
+            required: true
+            description: ID del producto que se va a actualizar
+            schema:
+              type: string
+          - name: body
+            in: body
+            required: true
+            description: Datos del producto a actualizar
+            schema:
+              $ref: "#components/requestBodies/updateProduct"
+        responses:
+          "200":
+            description: Producto actualizado exitosamente
+          "404":
+            description: No se encontró el producto por ese ID
+          "500":
+            description: Error interno del servidor
+      delete:
+        summary: Elimina un producto por ID
+        tags:
+          - Productos
+        parameters:
+          - name: pid
+            in: path
+            required: true
+            description: ID del producto que se va a eliminar
+            schema:
+              type: string
+        responses:
+          "200":
+            description: Producto eliminado exitosamente
+          "404":
+            description: No se encontró el producto por ese ID
+          "500":
+            description: Error interno del servidor
+
+components:
+  schemas:
+    Producto:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID autogenerado por Mongo
+        title: 
+          type: string
+          description: Nombre del producto
+        thumbnail:
+          type: string
+          description: Imagen del producto
+        description:
+          type: string
+          description: Descripcion del producto
+        stock: 
+          type: number
+          description: Cantidad/stock disponible del producto
+        price:
+          type: number
+          description: Precio del producto
+        code:
+          type: string
+          description: Código de referencia del producto
+        owner:
+          type: string
+          description: creador del producto
+      example:
+        _id: ObjectId("64cff6b08df0d0bd14dd22a1")
+        title: Pañales
+        thumbnail: url/imagen.com
+        description: Pañales Talle XL mayor absorsión
+        stock: 482
+        price: 1256
+        code: code01
+        owner: Admin
+  requestBodies:
+    createProduct:
+      type: object
+      properties:
+        title: 
+          type: string
+          description: Nombre del producto
+        thumbnail:
+          type: string
+          description: Imagen del producto
+        description:
+          type: string
+          description: Descripcion del producto
+        stock: 
+          type: number
+          description: Cantidad/stock disponible del producto
+        price:
+          type: number
+          description: Precio del producto
+        code:
+          type: string
+          description: Código de referencia del producto
+      example:
+        title: Pañales
+        thumbnail: url/imagen.com
+        description: Pañales Talle XL mayor absorsión
+        stock: 482
+        price: 1256
+        code: code01
+    updateProduct:
+      type: object
+      properties:
+        title: 
+          type: string
+          description: Nombre del producto
+        thumbnail:
+          type: string
+          description: Imagen del producto
+        description:
+          type: string
+          description: Descripcion del producto
+        stock: 
+          type: number
+          description: Cantidad/stock disponible del producto
+        price:
+          type: number
+          description: Precio del producto
+        code:
+          type: string
+          description: Código de referencia del producto
+        owner:
+          type: string
+          description: Email o Rol del creador (solo admin o premium)
+      example:
+        title: Pañales
+        thumbnail: url/imagen.com
+        description: Pañales Talle XL mayor absorsión
+        stock: 482
+        price: 1256
+        code: code01
+        owner: Admin
+      
+      

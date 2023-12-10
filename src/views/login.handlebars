@@ -1,0 +1,30 @@
+<form
+  class="displayColumn contain_input"
+  action="/api/sessions/login"
+  method="post"
+>
+  <h2>Iniciar sesión</h2>
+
+  <input
+    id="email"
+    type="text"
+    name="email"
+    placeholder="Ingresar email"
+    class="style_input"
+  />
+
+  <input
+    id="password"
+    type="password"
+    name="password"
+    placeholder="Ingresar password"
+    class="style_input"
+  />
+
+  <button class="btn-session" type="submit">Iniciar sesión</button>
+
+  <a href="/resetPass" class="olvido_pass">Olvidé mi contraseña</a>
+
+</form>
+
+<a href="/login-github" class="btn_git">Iniciar sesión con GitHub</a>

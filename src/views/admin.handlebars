@@ -1,0 +1,145 @@
+<h2>Sección Administrador</h2>
+
+<div class="contain_input">
+  <form id="addProducts" class="displayColumn">
+    <p class="campos">Añadir producto</p>
+
+    <input
+      id="code"
+      type="text"
+      name="code"
+      placeholder="Código"
+      class="style_input"
+    />
+    <input
+      id="title"
+      type="text"
+      name="title"
+      placeholder="Nombre del producto"
+      class="style_input"
+    />
+    <input
+      id="description"
+      type="text"
+      name="description"
+      placeholder="Descripción"
+      class="style_input"
+    />
+    <input
+      id="stock"
+      type="number"
+      name="stock"
+      placeholder="Stock"
+      class="style_input"
+    />
+    <input
+      id="price"
+      type="number"
+      name="price"
+      placeholder="Precio"
+      class="style_input"
+    />
+    <input
+      id="thumbnail"
+      type="text"
+      name="thumbnail"
+      placeholder="Imagen"
+      class="style_input"
+    />
+    <input
+      id="category"
+      type="text"
+      name="category"
+      placeholder="Categoria"
+      class="style_input"
+    />
+    <button id="btnAgregar" class="btn-session" type="submit">Añadir</button>
+  </form>
+</div>
+
+<div class="contain_input">
+  <form class="displayColumn" id="updateProducts">
+    <p class="campos">Actualizar producto</p>
+
+    <input
+      id="inputID"
+      type="text"
+      name="inputID"
+      placeholder="Ingresa el id del producto"
+      class="style_input"
+    />
+    <input
+      id="code"
+      type="text"
+      name="code"
+      placeholder="Código"
+      class="style_input"
+    />
+    <input
+      id="title"
+      type="text"
+      name="title"
+      placeholder="Nombre del producto"
+      class="style_input"
+    />
+    <input
+      id="description"
+      type="text"
+      name="description"
+      placeholder="Descripción"
+      class="style_input"
+    />
+    <input
+      id="stock"
+      type="number"
+      name="stock"
+      placeholder="Stock"
+      class="style_input"
+    />
+    <input
+      id="price"
+      type="number"
+      name="price"
+      placeholder="Precio"
+      class="style_input"
+    />
+    <input
+      id="thumbnail"
+      type="text"
+      name="thumbnail"
+      placeholder="Imagen"
+      class="style_input"
+    />
+    <input
+      id="category"
+      type="text"
+      name="category"
+      placeholder="Categoria"
+      class="style_input"
+    />
+    <button
+      id="btnActualizar"
+      class="btn-session"
+      type="submit"
+    >Actualizar</button>
+
+  </form>
+</div>
+
+<div class="contain_input">
+  <form class="displayColumn" id="deleteProducts">
+    <p class="campos">Eliminar producto</p>
+
+    <input
+      id="idDelete"
+      type="text"
+      name="idDelete"
+      placeholder="Ingresar ID"
+      class="style_input"
+    />
+    <button id="btnEliminar" class="btn-session" type="submit">Eliminar</button>
+
+  </form>
+</div>
+
+<script src="/static/js/admin-products.js"></script>

@@ -1,0 +1,114 @@
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BIKININFA</title>
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Belanosima&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+
+<body>
+
+  <div class="header-content displayRow">
+
+    <div class="header-background displayRow">
+      <div>
+        <h2>BIKININFA</h2>
+      </div>
+
+      <ul class="displayRow">
+        <li>
+          <a class="Home" href="/">
+            <p>Home</p>
+          </a>
+        </li>
+        <li>
+          <a class="Home" href="/productos">
+            <p>Productos</p>
+          </a>
+        </li>
+        <li>
+          <a class="Home" href="/contacto">
+            <p>Contacto</p>
+          </a>
+        </li>
+
+      </ul>
+
+      <div class="displayRow">
+        <ul class="displayRow">
+          <li>
+            <a href="/cart">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-basket3-fill" viewBox="0 0 16 16">
+                <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z"/>
+              </svg>
+              <span id="counterCart">0</span>
+            </a>
+          </li>
+        </ul>
+        <ul>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+              </svg>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/login">Iniciar sesión</a></li>
+              <li><a class="dropdown-item" href="/register">Registrarme</a></li>
+              <li><a class="dropdown-item" href="/profile">Perfil</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <form action="/api/sessions/logout" method="get">
+                  <button class="dropdown-item" type="submit">Cerrar sesión</button>
+                </form> 
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="main-content">
+    {{{body}}}
+  </div>
+
+  <footer class="footer-content">
+    <hr />
+
+    <div class="displayColumn">
+      <div>
+        <p>Copyright</p>
+      </div>
+      <li class="burbuja_chat">
+        <a href="/messages"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-chat-fill" viewBox="0 0 16 16">
+         <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15"/>
+        </svg></a>
+      </li>
+    </div>
+  </footer>
+
+  <script src="/static/js/cart-assets.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+</body>
+
+</html>
