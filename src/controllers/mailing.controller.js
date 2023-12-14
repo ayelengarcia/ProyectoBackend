@@ -35,7 +35,7 @@ export const sent_email = async (req, res) => {
   try {
     const userEmail = req.body.email;
     const token = generateTokenPass({ user: userEmail });
-    const resetLink = `https://proyectobackend-production-a5d4.up.railway.app//resetPassConfirm?token=${token}`;
+    const resetLink = `https://proyectobackend-production-a5d4.up.railway.app/resetPassConfirm?token=${token}`;
 
     const result = await transport.sendMail({
       from: "ayelengarcia7@gmail.com",
