@@ -35,7 +35,7 @@ export const sent_email = async (req, res) => {
   try {
     const userEmail = req.body.email;
     const token = generateTokenPass({ user: userEmail });
-    const resetLink = `http://127.0.0.1:8080/resetPassConfirm?token=${token}`;
+    const resetLink = `https://proyectobackend-production-a5d4.up.railway.app//resetPassConfirm?token=${token}`;
 
     const result = await transport.sendMail({
       from: "ayelengarcia7@gmail.com",
@@ -98,7 +98,6 @@ export const sent_success = async (
     throw new Error("Error al enviar el correo electrónico");
   }
 };
-
 
 export const sent_contacto = async (req, res) => {
   try {
