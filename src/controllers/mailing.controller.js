@@ -128,6 +128,37 @@ export const sent_contacto = async (req, res) => {
   }
 };
 
+
+export const sent_contacto_nave = async (req, res) => {
+  try {
+    const nombre = req.body.nombre;
+    const apellido = req.body.apellido;
+    const email = req.body.email;
+    const telefono = req.body.telefono;
+    const mensaje = req.body.mensaje;
+
+    const result = await transport.sendMail({
+      from: email,
+      to: "ayelengarcia7@gmail.com",
+      subject: "Fundación Nave - Mensaje de contacto",
+      html: `
+      <div>
+        <h3>Mensaje de ${nombre} ${apellido}</h3>
+        <p><i>Nombre:</i> ${nombre} ${apellido}</p>
+        <p><i>Email:</i> ${email}</p>
+        <p><i>Telefono:</i> ${telefono}</p>
+        <p><i>Mensaje:</i> <br> ${mensaje}</p>
+      </div>
+      `,
+    });
+
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Fallo al enviar el correo electrónico");
+  }
+};
+
 // attachments: [
 //   {
 //     filename: "zorro.png",
