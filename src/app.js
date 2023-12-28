@@ -25,6 +25,14 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
 
 const app = express();
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 //Data for post JSON
 app.use(express.json());
@@ -48,7 +56,7 @@ app.use(
         useNewUrlParser: true,
         useUnifiedTopology: true,
       },
-      ttl:  60 * 60 * 10000,
+      ttl: 60 * 60 * 10000,
     }),
     secret: "mysecret",
     resave: true,
