@@ -1,8 +1,8 @@
 import { MercadoPagoConfig, Preference } from "mercadopago";
+import config from "../config/config.js";
 
 const client = new MercadoPagoConfig({
-  accessToken:
-    "APP_USR-3483111838087991-122901-b314f1a270df6f6bcda0765a651895a3-1472955514",
+  accessToken: config.access_token_nave,
 });
 
 export const createPreferenceMp = async (req, res) => {
@@ -17,9 +17,9 @@ export const createPreferenceMp = async (req, res) => {
         },
       ],
       back_urls: {
-        success: "https://www.linkedin.com/in/ayelen-garc%C3%ADa-595457232/",
-        failure: "https://www.linkedin.com/in/ayelen-garc%C3%ADa-595457232/",
-        pending: "https://www.linkedin.com/in/ayelen-garc%C3%ADa-595457232/",
+        success: "https://fundacion-nave.netlify.app/",
+        failure: "https://fundacion-nave.netlify.app/",
+        pending: "https://fundacion-nave.netlify.app/", 
       },
       auto_return: "approved",
     };

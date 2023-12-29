@@ -36,10 +36,10 @@ app.use("/static", express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(addLogger);
-//CAMBIAR PARA LOS PUSH A  https://fundacion-nave.netlify.app
+//CAMBIAR PARA LOS PUSH A  https://fundacion-nave.netlify.app   http://127.0.0.1:5173
 app.use(
   cors({
-    origin: "http://127.0.0.1:5173",
+    origin: "https://fundacion-nave.netlify.app/",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })
 );

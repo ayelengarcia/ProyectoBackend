@@ -138,7 +138,7 @@ export const sent_contacto_nave = async (req, res) => {
 
     const result = await transport.sendMail({
       from: email,
-      to: "ayelengarcia7@gmail.com",
+      to: "proyectonavecaba@gmail.com",
       subject: "Fundación Nave - Mensaje de contacto",
       html: `
       <div>

@@ -9,8 +9,12 @@ export default {
   dbName: process.env.DB_NAME,
   dbNameTest: process.env.DB_NAME_TEST,
   dbURL: process.env.MONGO_URL,
+
   secretKeyStripe: process.env.SECRET_KEY_STRIPE,
   publicKeyStripe: process.env.PUBLIC_KEY_STRIPE,
+
+  public_key_nave: process.env.PUBLIC_KEY_MP_NAVE,
+  access_token_nave: process.env.ACCESS_TOKEN_MP_NAVE,
 
   client_id_gith: process.env.CLIENT_ID_GITHUB,
   client_secret_gith: process.env.CLIENT_SECRET_GITHUB,
