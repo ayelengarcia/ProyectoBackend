@@ -128,7 +128,6 @@ export const sent_contacto = async (req, res) => {
   }
 };
 
-
 export const sent_contacto_nave = async (req, res) => {
   try {
     const nombre = req.body.nombre;
@@ -153,6 +152,7 @@ export const sent_contacto_nave = async (req, res) => {
     });
 
     console.log(result);
+    res.status(200).send("Mensaje enviado");
   } catch (error) {
     console.error(error);
     res.status(500).send("Fallo al enviar el correo electrónico");

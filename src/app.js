@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 import productsRouter from "./routes/products.router.js";
@@ -25,14 +26,12 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
 
 const app = express();
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+app.use(
+  cors({
+    origin: "http://127.0.0.1:5173",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
+);
 
 //Data for post JSON
 app.use(express.json());
