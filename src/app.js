@@ -1,5 +1,4 @@
 import express from "express";
-import cors from "cors";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 import productsRouter from "./routes/products.router.js";
@@ -21,17 +20,18 @@ import passport from "passport";
 import cookieParser from "cookie-parser";
 import config from "./config/config.js";
 import { addLogger, logger } from "./config/logger.js";
+// import cors from "cors";
 
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
 
 const app = express();
-app.use(
-  cors({
-    origin: "http://127.0.0.1:5173",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://127.0.0.1:5173",
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   })
+// );
 
 //Data for post JSON
 app.use(express.json());
