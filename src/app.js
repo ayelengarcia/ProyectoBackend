@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
+
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import usersRouter from "./routes/users.router.js";
@@ -12,6 +13,8 @@ import loggerTest from "./routes/loggerTest.js";
 import viewsRouter from "./routes/views.router.js";
 import sessionsRouter from "./routes/sessions.router.js";
 import paymentsRouter from "./routes/payments.router.js";
+import mercadopagoRouter from "./routes/mercadopago.router.js";
+
 import __dirname from "./utils.js";
 import mongoose from "mongoose";
 import session from "express-session";
@@ -26,12 +29,6 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
 
 const app = express();
-app.use(
-  cors({
-    origin: "https://fundacion-nave.netlify.app",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  })
-);
 
 //Data for post JSON
 app.use(express.json());
@@ -39,6 +36,13 @@ app.use("/static", express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(addLogger);
+//CAMBIAR PARA LOS PUSH A  https://fundacion-nave.netlify.app
+app.use(
+  cors({
+    origin: "http://127.0.0.1:5173",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
+);
 
 //Handlebars
 app.engine("handlebars", handlebars.engine());
@@ -90,6 +94,7 @@ app.use("/api", productsRouter);
 app.use("/api", cartsRouter);
 app.use("/api", usersRouter);
 app.use("/api", ticketsRouter);
+app.use("/", mercadopagoRouter);
 app.use("/api/payments", paymentsRouter);
 app.use("/api/sessions", sessionsRouter);
 
