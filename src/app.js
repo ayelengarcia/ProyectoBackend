@@ -40,9 +40,10 @@ app.use(addLogger);
 app.use(
   cors({
     origin: [
-      "https://fundacion-nave.netlify.app/",
-      "https://navefundacion.com.ar/",
-      "http://127.0.0.1:5173/",
+      "https://fundacion-nave.netlify.app",
+      "https://navefundacion.com.ar",
+      "https://www.navefundacion.com.ar",
+      "http://127.0.0.1:5173",
     ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })
