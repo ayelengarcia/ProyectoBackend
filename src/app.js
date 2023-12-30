@@ -39,7 +39,11 @@ app.use(addLogger);
 //CAMBIAR PARA LOS PUSH A  https://fundacion-nave.netlify.app   http://127.0.0.1:5173
 app.use(
   cors({
-    origin: "https://fundacion-nave.netlify.app",
+    origin: [
+      "https://fundacion-nave.netlify.app",
+      "https://navefundacion.com.ar",
+      "http://127.0.0.1:5173",
+    ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })
 );
