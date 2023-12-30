@@ -17,9 +17,9 @@ export const createPreferenceMp = async (req, res) => {
         },
       ],
       back_urls: {
-        success: "https://fundacion-nave.netlify.app/",
-        failure: "https://fundacion-nave.netlify.app/",
-        pending: "https://fundacion-nave.netlify.app/", 
+        success: "https://navefundacion.com.ar/",
+        failure: "https://navefundacion.com.ar/",
+        pending: "https://navefundacion.com.ar/",
       },
       auto_return: "approved",
     };
