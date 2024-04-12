@@ -1,7 +1,5 @@
 # BACKEND DE UNA APLICACIÓN ECOMMERCE
 
-*En desarrollo*
-
 Deploy: [ProyectoBackend](https://proyectobackend-production-a5d4.up.railway.app)
 
 Proyecto final del Curso de Programación Backend de CoderHouse. Ecommerce con integración frontend desde handlebars. 
