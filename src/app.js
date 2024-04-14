@@ -43,7 +43,9 @@ app.use(
       "https://fundacion-nave.netlify.app",
       "https://navefundacion.com.ar",
       "https://www.navefundacion.com.ar",
+      "https://brujulaportfolio.netlify.app",
       "http://127.0.0.1:5173",
+      "http://localhost:5173",
     ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })

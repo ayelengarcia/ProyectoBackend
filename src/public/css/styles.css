@@ -205,7 +205,7 @@ h1 {
   color: #f9f9f9;
 }
 
-.burbuja_chat{
+.burbuja_chat {
   width: 60px;
   height: 60px;
   border-radius: 100px;
@@ -220,7 +220,7 @@ h1 {
   cursor: pointer;
 }
 
-.burbuja_chat:hover{
+.burbuja_chat:hover {
   background-color: #fc507e;
   transition: 1s;
 }
@@ -234,7 +234,7 @@ h1 {
   display: flex;
   justify-content: start;
   align-items: center;
-  color: #1f1722; 
+  color: #1f1722;
   width: 80vw;
   padding: 20px;
 }
@@ -416,7 +416,7 @@ h1 {
 
 .style_input:focus-visible {
   outline: none;
-  border: 2px solid #ff3f729e;
+  border: 2px solid #f43fff9e;
 }
 
 .olvido_pass {
